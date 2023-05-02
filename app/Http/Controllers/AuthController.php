@@ -81,12 +81,6 @@ class AuthController extends Controller
                         'message' => 'Your account is not active.',
                     ]);
                 }
-            } else {
-                return response()->json([
-                    'status' => 'success',
-                    'message' => 'Login successful, please verify your email',
-                    'redirect' => route('verification.notice'),
-                ]);
             }
         } else {
             return response()->json([

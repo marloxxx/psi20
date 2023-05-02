@@ -28,20 +28,17 @@ class SettingController extends Controller
     {
         $this->setMeta('Settings');
         $setting = Setting::first();
-        $bot = [];
-        $bot['bot_token'] = env('TELEGRAM_BOT_TOKEN');
-        $bot['bot_channel_id'] = env('TELEGRAM_CHANNEL_ID');
-        return view('pages.admin.settings.index', compact('setting', 'bot'));
+        return view('pages.backend.settings.index', compact('setting'));
     }
 
     public function update_site(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'site_logo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'site_icon' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'site_favicon' => 'file|mimes:jpeg,png,jpg,gif,svg,ico|max:2048',
             'site_name' => 'required',
-            'site_email' => 'required',
+            'site_email' => 'required|email:rfc,dns',
+            'site_phone' => 'required|numeric',
             'site_url' => 'required',
         ]);
 
@@ -65,17 +62,6 @@ class SettingController extends Controller
             $setting->site_logo = $logo_name;
         }
 
-        if ($request->hasFile('site_icon')) {
-            $path = public_path('images/' . $setting->site_icon);
-            if (file_exists($path)) {
-                unlink($path);
-            }
-            $icon = $request->file('site_icon');
-            $icon_name = $icon->getClientOriginalName();
-            $icon->move(public_path('images'), $icon_name);
-            $setting->site_icon = $icon_name;
-        }
-
         if ($request->hasFile('site_favicon')) {
             $path = public_path('images/' . $setting->site_favicon);
             if (file_exists($path)) {
@@ -91,6 +77,7 @@ class SettingController extends Controller
             'site_name' => $request->site_name,
             'site_email' => $request->site_email,
             'site_url' => $request->site_url,
+            'site_phone' => $request->site_phone,
         ]);
 
         return response()->json([
@@ -105,9 +92,9 @@ class SettingController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'username' => 'required',
+                'first_name' => 'required',
+                'last_name' => 'required',
                 'email' => 'required|email|unique:users,email,' . auth()->user()->id,
-                'name' => 'required',
                 'password' => 'required|confirmed',
             ]
         );
@@ -124,7 +111,9 @@ class SettingController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->username = $request->username;
-        $user->password = bcrypt($request->password);
+        if ($request->password) {
+            $user->password = bcrypt($request->password);
+        }
 
         return response()->json([
             'status' => 'success',
