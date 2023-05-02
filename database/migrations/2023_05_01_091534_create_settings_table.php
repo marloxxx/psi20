@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('site_favicon')->nullable();
             $table->string('site_email')->nullable();
             $table->string('site_phone')->nullable();
+            $table->string('site_url')->nullable();
+            $table->json('seo')->nullable();
             $table->timestamps();
         });
     }
