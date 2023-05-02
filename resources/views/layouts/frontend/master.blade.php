@@ -19,6 +19,7 @@
     <link href="{{ asset('guests/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('guests/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('guests/css/vendors.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/sweetalert.css') }}" type="text/css" />
 
 </head>
 

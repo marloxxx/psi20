@@ -36,19 +36,19 @@ class AuthController extends Controller
     public function login()
     {
         $this->setMeta('Login');
-        return view('pages.auth.login');
+        return view('pages.frontend.auth.login');
     }
 
     public function register()
     {
         $this->setMeta('Register');
-        return view('pages.auth.register');
+        return view('pages.frontend.auth.register');
     }
 
     public function forgot()
     {
         $this->setMeta('Forgot Password');
-        return view('pages.auth.forgot');
+        return view('pages.frontend.auth.forgot');
     }
 
     public function do_login(Request $request)

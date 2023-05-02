@@ -59,15 +59,15 @@
                     <a href="#" class="open_close" id="close_in"><i class="icon_set_1_icon-77"></i></a>
                     <ul>
                         <li class="submenu">
-                            <a href="">Home
+                            <a href="{{ route('index') }}">Home
                             </a>
                         </li>
                         <li class="submenu">
-                            <a href="">Homestays
+                            <a href="{{ route('homestays') }}">Homestays
                             </a>
                         </li>
                         <li class="submenu">
-                            <a href="">Events
+                            <a href="{{ route('events') }}">Events
                             </a>
                         </li>
                     </ul>
