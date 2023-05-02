@@ -20,9 +20,13 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
+        'phone_number',
+        'date_of_birth',
         'password',
+        'profile_picture',
     ];
 
     /**
@@ -50,5 +54,21 @@ class User extends Authenticatable implements MustVerifyEmail
     public function profile()
     {
         return $this->hasOne(Profile::class);
+    }
+
+    /**
+     * Get the homestay associated with the user.
+     */
+    public function homestay()
+    {
+        return $this->hasMany(Homestay::class);
+    }
+
+    /**
+     * Get the booking associated with the user.
+     */
+    public function booking()
+    {
+        return $this->hasMany(Booking::class);
     }
 }

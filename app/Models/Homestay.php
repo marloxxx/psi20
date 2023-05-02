@@ -23,8 +23,18 @@ class Homestay extends Model
         return $this->belongsToMany(Facility::class, 'homestay_has_facilities');
     }
 
+    public function getPrimaryImageAttribute()
+    {
+        return $this->images()->where('is_primary', true)->first();
+    }
+
     public function images()
     {
         return $this->hasMany(Image::class);
+    }
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
     }
 }

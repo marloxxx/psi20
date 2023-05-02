@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('homestay_id')->constrained('homestays')->nullable(true);
-            $table->foreignId('event_id')->constrained('events')->nullable(true);
+            $table->foreignId('homestay_id')->nullable()->constrained('homestays');
+            $table->foreignId('event_id')->nullable()->constrained('events');
+            $table->string('name', 50)->nullable(false);
+            $table->integer('size')->nullable(false);
             $table->string('image_path', 255)->nullable(false);
             $table->boolean('is_primary')->nullable(false)->default(false);
             $table->timestamps();

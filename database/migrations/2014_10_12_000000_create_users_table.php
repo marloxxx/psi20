@@ -16,11 +16,11 @@ return new class extends Migration
             $table->string('first_name', 50)->nullable(false);
             $table->string('last_name', 50)->nullable(false);
             $table->string('email')->unique();
-            $table->string('phone_number', 15)->nullable(false);
-            $table->date('date_of_birth')->nullable(false);
+            $table->string('phone_number', 15)->nullable(true);
+            $table->date('date_of_birth')->nullable(true);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('profile_picture')->nullable(false);
+            $table->string('profile_picture')->nullable(true);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

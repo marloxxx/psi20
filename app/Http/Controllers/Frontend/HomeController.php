@@ -29,6 +29,6 @@ class HomeController extends Controller
     public function index()
     {
         $this->setMeta('Home');
-        return view('pages.customer.home.index');
+        return view('pages.frontend.home.index');
     }
 }
