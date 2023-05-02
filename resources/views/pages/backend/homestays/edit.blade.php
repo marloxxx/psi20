@@ -382,7 +382,7 @@
                         myDropzone.files.push(mockFile);
                     });
                 });
-                
+
                 //form submit
                 formEl.on('submit', function(event) {
                     const btn = formEl.find('[data-kt-element="submit"]');
@@ -419,7 +419,24 @@
                                 btn.prop("disabled", false);
                             } else {
                                 $('[name="homestay_id"]').val(response.id);
-                                myDropzone.processQueue();
+                                if (myDropzone.getQueuedFiles().length > 0) {
+                                    myDropzone.processQueue();
+                                } else {
+                                    Swal.fire({
+                                        text: response.message,
+                                        icon: "success",
+                                        buttonsStyling: false,
+                                        confirmButtonText: "Ok!",
+                                        customClass: {
+                                            confirmButton: "btn btn-primary",
+                                        },
+                                    }).then(function(result) {
+                                        if (result.isConfirmed) {
+                                            window.location.href =
+                                                "{{ route('backend.events.index') }}";
+                                        }
+                                    });
+                                }
                             }
 
                         }
