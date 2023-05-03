@@ -12,6 +12,11 @@ class Event extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+    ];
+
     public function images()
     {
         return $this->hasMany(Image::class);

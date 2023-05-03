@@ -9,7 +9,7 @@
     {!! SEO::generate(true) !!}
     <link rel="icon" href="{{ asset('images/' . getSettings('site_favicon')) }}" type="image/x-icon" />
     <link rel="shortcut icon" href="{{ asset('images/' . getSettings('site_favicon')) }}" type="image/x-icon" />
-
+    <script src="https://kit.fontawesome.com/07ad57e463.js" crossorigin="anonymous"></script>
     <!-- GOOGLE WEB FONT -->
     <link
         href="https://fonts.googleapis.com/css2?family=Gochi+Hand&amp;family=Montserrat:wght@300;400;500;600;700&amp;display=swap"
@@ -19,8 +19,9 @@
     <link href="{{ asset('guests/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('guests/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('guests/css/vendors.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/toastr.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ asset('css/sweetalert.css') }}" type="text/css" />
-
+    @stack('custom-styles')
 </head>
 
 <body>

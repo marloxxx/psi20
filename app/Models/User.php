@@ -59,7 +59,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * Get the homestay associated with the user.
      */
-    public function homestay()
+    public function homestays()
     {
         return $this->hasMany(Homestay::class);
     }
@@ -67,8 +67,24 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * Get the booking associated with the user.
      */
-    public function booking()
+    public function bookings()
     {
         return $this->hasMany(Booking::class);
+    }
+
+    /**
+     * Get the review associated with the user.
+     */
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    /**
+     * Get the wishlist associated with the user.
+     */
+    public function wishlists()
+    {
+        return $this->belongsToMany(Homestay::class, 'wishlists');
     }
 }

@@ -1,0 +1,314 @@
+@extends('layouts.frontend.master')
+@section('content')
+    <section class="parallax-window" data-parallax="scroll"
+        data-image-src="{{ asset($homestay->images->first()->image_path) }}" data-natural-width="1400"
+        data-natural-height="470">
+        <div class="parallax-content-2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <span class="rating">
+                            @for ($i = 0; $i < $homestay->rating; $i++)
+                                <i class="icon-star voted"></i>
+                            @endfor
+                            @for ($i = 0; $i < 5 - $homestay->rating; $i++)
+                                <i class="icon-star-empty"></i>
+                            @endfor
+                        </span>
+                        <h1>{{ $homestay->name }}</h1>
+                        <span>{{ $homestay->address }}</span>
+                    </div>
+                    <div class="col-md-4">
+                        <div id="price_single_main" class="hotel">
+                            from/per night
+                            <span><sup>Rp</sup>{{ number_format($homestay->price) }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End section -->
+
+    <main>
+        <div id="position">
+            <div class="container">
+                <ul>
+                    <li><a href="#">Home</a>
+                    </li>
+                    <li><a href="#">Homestays</a>
+                    </li>
+                    <li>{{ $homestay->name }}</li>
+                </ul>
+            </div>
+        </div>
+        <!-- End Position -->
+
+        <div class="collapse" id="collapseMap">
+            <div id="map" class="map"></div>
+        </div>
+        <!-- End Map -->
+
+        <div class="container margin_60">
+            <div class="row">
+                <div class="col-lg-8" id="single_tour_desc">
+                    <div id="single_tour_feat">
+                        <ul>
+                            @foreach ($homestay->facilities as $facility)
+                                <li><i class="{{ $facility->icon }}"></i>{{ $facility->name }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    <p class="d-block d-lg-none">
+                        <a class="btn_map" data-bs-toggle="collapse" href="#collapseMap" aria-expanded="false"
+                            aria-controls="collapseMap" data-text-swap="Hide map" data-text-original="View on map">View on
+                            map</a>
+                    </p>
+                    <!-- Map button for tablets/mobiles -->
+                    <div id="Img_carousel" class="slider-pro">
+                        <div class="sp-slides">
+                            @foreach ($homestay->images->where('is_primary', 0) as $image)
+                                <div class="sp-slide">
+                                    <img alt="Image" class="sp-image" src="{{ asset('guests/css/images/blank.gif') }}"
+                                        data-src="{{ asset($image->image_path) }}" style="width: 50%;" />
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="sp-thumbnails">
+                            @foreach ($homestay->images->where('is_primary', 0) as $image)
+                                <img alt="Image" class="sp-thumbnail" src="{{ asset($image->image_path) }}" />
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <h3>Description</h3>
+                        </div>
+                        <div class="col-lg-9">
+                            {!! $homestay->description !!}
+                            <h4>Homestay facilities</h4>
+                            <p>
+                                Below are the facilities provided by the homestay owner.
+                            </p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="list_ok">
+                                        @foreach ($homestay->facilities->take(ceil($homestay->facilities->count() / 2)) as $facility)
+                                            <li>{{ $facility->name }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="list_ok">
+                                        @foreach ($homestay->facilities->skip(ceil($homestay->facilities->count() / 2)) as $facility)
+                                            <li>{{ $facility->name }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- End row  -->
+                        </div>
+                        <!-- End col-md-9  -->
+                    </div>
+                    <!-- End row  -->
+
+                    <hr>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <h3>Reviews</h3>
+                            <a href="#" class="btn_1 add_bottom_30" data-bs-toggle="modal"
+                                data-bs-target="#myReview">Leave a review
+                            </a>
+                        </div>
+                        <div class="col-lg-9">
+                            @foreach ($reviews as $review)
+                                <div class="review_strip_single">
+                                    <img src="img/avatar1.jpg" alt="Image" class="rounded-circle">
+                                    <small> - {{ \Carbon\Carbon::parse($review->created_at)->format('d M Y') }} -</small>
+                                    <h4>{{ $review->user->name }}</h4>
+                                    <p>
+                                        {{ $review->review }}
+                                    </p>
+                                    <div class="rating">
+                                        @for ($i = 0; $i < $review->rating; $i++)
+                                            <i class="icon-star voted"></i>
+                                        @endfor
+                                        @for ($i = 0; $i < 5 - $review->rating; $i++)
+                                            <i class="icon-star-empty"></i>
+                                        @endfor
+                                    </div>
+                                </div>
+                            @endforeach
+
+                            <!-- End review strip -->
+                        </div>
+                    </div>
+                </div>
+                <!--End  single_tour_desc-->
+
+                <aside class="col-lg-4">
+                    <p class="d-none d-xl-block d-lg-block">
+                        <a class="btn_map" data-bs-toggle="collapse" href="#collapseMap" aria-expanded="false"
+                            aria-controls="collapseMap" data-text-swap="Hide map" data-text-original="View on map">View
+                            on map</a>
+                    </p>
+                    <div class="box_style_1 expose">
+                        <form method="POST" action="{{ route('booking.create', $homestay->id) }}">
+                            @csrf
+                            <h3 class="inner">Check Availability</h3>
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <div class="form-group">
+                                        <label><i class="icon-calendar-7"></i> Check in / Check out</label>
+                                        <input class="date-pick form-control" type="text" placeholder="Select dates"
+                                            name="dates">
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+
+                            <button type="submit" class="btn_full" id="btn_check">
+                                Book Now
+                            </button>
+                        </form>
+                        @if (auth()->user()->wishlists->contains($homestay->id))
+                            <a class="btn_full_outline" href="javascript:void(0)"
+                                onclick="toggleWishlist({{ $homestay->id }})">
+                                <i class="fa fa-heart"></i>
+                                Remove from wishlist</a>
+                        @else
+                            <a class="btn_full_outline" href="javascript:void(0)"
+                                onclick="toggleWishlist({{ $homestay->id }})">
+                                <i class="fa fa-heart-o"></i>
+                                Add to wishlist</a>
+                        @endif
+                    </div>
+                    <!--/box_style_1 -->
+
+                    <div class="box_style_4">
+                        <i class="icon_set_1_icon-90"></i>
+                        <h4><span>Book</span> by phone</h4>
+                        <a href="tel://{{ $homestay->owner->phone_number }}"
+                            class="phone">{{ $homestay->owner->phone_number }}</a>
+                        <small>Monday to Friday 9.00am - 7.30pm</small>
+                    </div>
+
+                </aside>
+            </div>
+            <!--End row -->
+        </div>
+        <!--End container -->
+
+        <div id="overlay"></div>
+        <!-- Mask on input focus -->
+
+    </main>
+    <!-- End main -->
+@endsection
+@push('custom-scripts')
+    <script src="{{ asset('guests/js/jquery.sliderPro.min.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function($) {
+            $('#Img_carousel').sliderPro({
+                width: 960,
+                height: 500,
+                fade: true,
+                arrows: true,
+                buttons: false,
+                fullScreen: false,
+                smallSize: 500,
+                startSlide: 0,
+                mediumSize: 1000,
+                largeSize: 3000,
+                thumbnailArrows: true,
+                autoplay: false
+            });
+        });
+    </script>
+    <script>
+        $(function() {
+            'use strict';
+            // disable button
+            $('#btn_check').addClass('disabled');
+            $('input.date-pick').daterangepicker({
+                autoUpdateInput: false,
+                opens: 'left',
+                minDate: new Date(),
+                locale: {
+                    cancelLabel: 'Clear'
+                }
+            });
+            $('input.date-pick').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('MM-DD-YY') + ' > ' + picker.endDate.format(
+                    'MM-DD-YY'));
+            });
+            $('input.date-pick').on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+            });
+        });
+
+        $('input.date-pick').on('apply.daterangepicker', function(ev, picker) {
+            console.log('change');
+            var dates = $('input.date-pick').val().split(' > ');
+            var check_in = dates[0];
+            var check_out = dates[1];
+            var homestay_id = "{{ $homestay->id }}";
+            $.ajax({
+                url: "{{ route('booking.check') }}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    check_in: check_in,
+                    check_out: check_out,
+                    homestay_id: homestay_id
+                },
+                success: function(response) {
+                    if (response.status == 'success') {
+                        $("#btn_check").removeClass('disabled');
+                    } else {
+                        $("#btn_check").addClass('disabled');
+                        toastr.error(response.message);
+                    }
+                }
+            });
+        });
+
+        function load_data(page) {
+            $.get("?page=" + page, {
+
+            }, function(data) {
+                $("#list_result").html(data);
+            });
+        }
+        load_data(1);
+
+        function toggleWishlist(id) {
+            // console.log(el);
+            // change icon
+            $.ajax({
+                url: "{{ route('whislist.toggle') }}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    homestay_id: id
+                },
+                success: function(response) {
+                    if (response.status == 'success') {
+                        if (response.action == 'add') {
+                            toastr.success(response.message);
+                        } else {
+                            toastr.warning(response.message);
+                        }
+                    } else {
+                        toastr.error(response.message);
+                    }
+                }
+            });
+        }
+    </script>
+@endpush

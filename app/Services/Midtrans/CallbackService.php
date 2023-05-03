@@ -9,7 +9,7 @@ use Midtrans\Notification;
 class CallbackService extends Midtrans
 {
     protected $notification;
-    protected $order;
+    protected $booking;
     protected $serverKey;
 
     public function __construct()
@@ -49,16 +49,16 @@ class CallbackService extends Midtrans
         return $this->notification;
     }
 
-    public function getOrder()
+    public function getBooking()
     {
-        return $this->order;
+        return $this->booking;
     }
 
     protected function _createLocalSignatureKey()
     {
-        $orderId = $this->order->number;
+        $orderId = $this->booking->code;
         $statusCode = $this->notification->status_code;
-        $grossAmount = $this->order->total_price;
+        $grossAmount = $this->booking->total_price;
         $serverKey = $this->serverKey;
         $input = $orderId . $statusCode . $grossAmount . $serverKey;
         $signature = openssl_digest($input, 'sha512');
@@ -70,10 +70,10 @@ class CallbackService extends Midtrans
     {
         $notification = new Notification();
 
-        $orderNumber = $notification->order_id;
-        $order = Booking::where('number', $orderNumber)->first();
+        $bookingCode = $notification->order_id;
+        $booking = Booking::where('code', $bookingCode)->first();
 
         $this->notification = $notification;
-        $this->order = $order;
+        $this->booking = $booking;
     }
 }

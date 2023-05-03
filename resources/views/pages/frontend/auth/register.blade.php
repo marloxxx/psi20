@@ -9,7 +9,7 @@
                             <div class="text-center"><img src="img/logo_sticky.png" alt="Image" width="160"
                                     height="34"></div>
                             <hr>
-                            <form>
+                            <form method="POST" action="{{ route('register') }}" id="register-form">
                                 <div class="form-group">
                                     <label>First Name</label>
                                     <input type="text" class="form-control" placeholder="First name" name="first_name" />
@@ -42,3 +42,14 @@
         </section>
     </main><!-- End main -->
 @endsection
+@push('custom-scripts')
+    <script src="{{ asset('js/FormControls.js') }}"></script>
+    <script>
+        "use strict";
+        const formEl = $('#register-form');
+        formEl.on('submit', function(e) {
+            e.preventDefault();
+            KTFormControls.onSubmitForm(formEl);
+        });
+    </script>
+@endpush

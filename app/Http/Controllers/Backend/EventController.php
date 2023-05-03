@@ -162,6 +162,16 @@ class EventController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
+            // unlink old image
+            $oldImage = public_path($event->images()->where('is_primary', true)->first()->image_path);
+            if (file_exists($oldImage)) {
+                unlink($oldImage);
+            }
+
+            // delete old image
+            $event->images()->where('is_primary', true)->delete();
+
+            // upload new image
             $imageName = (time() + rand(1, 100)) . '.' . $request->image->extension();
             $size = $request->file('image')->getSize();
             $request->image->move(public_path('images/events'), $imageName);

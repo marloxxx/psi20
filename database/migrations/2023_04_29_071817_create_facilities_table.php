@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('facilities', function (Blueprint $table) {
             $table->id();
             $table->string('name', 50)->nullable(false);
+            $table->string('icon', 50)->nullable(false);
             $table->timestamps();
             $table->softDeletes();
         });

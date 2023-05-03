@@ -66,27 +66,15 @@ class AuthController extends Controller
         }
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
-            // check user is has verified email
-            if (Auth::user()->email_verified_at) {
-                // cek user is active
-                if (Auth::user()->status == 'active') {
-                    return response()->json([
-                        'status' => 'success',
-                        'message' => 'Login successful',
-                        'redirect' => 'reload',
-                    ]);
-                } else {
-                    return response()->json([
-                        'status' => 'error',
-                        'message' => 'Your account is not active.',
-                    ]);
-                }
-            }
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Login successful',
+                'redirect' => 'reload',
+            ]);
         } else {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Password anda salah',
-                'redirect' => 'reload',
             ]);
         }
     }
@@ -95,12 +83,10 @@ class AuthController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|alpha|max:255',
-            'username' => 'required|unique:users',
+            'first_name' => 'required|min:3',
+            'last_name' => 'required|min:1',
             'email' => 'required|email|regex:/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/|unique:users',
             'password' => 'required|min:8',
-            'captcha' => 'required|captcha',
-            'toc' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -110,21 +96,24 @@ class AuthController extends Controller
             ]);
         }
 
-        $user = new User;
-        $user->name = $request->name;
-        $user->username = $request->username;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
+        $user = User::create([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name ?? '',
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'email_verified_at' => now(),
+            'remember_token' => Str::random(10),
+        ]);
         $user->save();
         $user->assignRole('customer');
 
-        event(new Registered($user));
+        // event(new Registered($user));
         // $user->notify(new RegistrationNotification());
         auth()->login($user);
         return response()->json([
             'status' => 'success',
-            'message' => 'Berhasil mendaftar, silahkan cek email anda untuk verifikasi',
-            'redirect' => route('verification.notice'),
+            'message' => 'Berhasil mendaftar',
+            'redirect' => route('home'),
         ]);
     }
 
@@ -161,7 +150,7 @@ class AuthController extends Controller
     public function reset($token, Request $request)
     {
         $email = $request->email;
-        return view('pages.auth.reset', compact('token', 'email'));
+        return view('pages.frontend.auth.reset', compact('token', 'email'));
     }
 
     public function do_reset(Request $request)

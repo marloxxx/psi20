@@ -12,15 +12,6 @@ class Booking extends Model
 
     protected $guarded = [];
 
-    protected $fillable = [
-        'homestay_id',
-        'user_id',
-        'check_in',
-        'check_out',
-        'total_price',
-        'status',
-    ];
-
     public function homestay()
     {
         return $this->belongsTo(Homestay::class);
@@ -29,5 +20,10 @@ class Booking extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function review()
+    {
+        return $this->hasOne(Review::class);
     }
 }

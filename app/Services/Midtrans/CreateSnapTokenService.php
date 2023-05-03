@@ -6,41 +6,27 @@ use Midtrans\Snap;
 
 class CreateSnapTokenService extends Midtrans
 {
-    protected $order;
+    protected $booking;
 
-    public function __construct($order)
+    public function __construct($booking)
     {
         parent::__construct();
 
-        $this->order = $order;
+        $this->booking = $booking;
     }
 
     public function getSnapToken()
     {
         $params = [
             'transaction_details' => [
-                'order_id' => $this->order->number,
-                'gross_amount' => $this->order->total_price,
-            ],
-            'item_details' => [
-                [
-                    'id' => 1,
-                    'price' => '150000',
-                    'quantity' => 1,
-                    'name' => 'Flashdisk Toshiba 32GB',
-                ],
-                [
-                    'id' => 2,
-                    'price' => '60000',
-                    'quantity' => 2,
-                    'name' => 'Memory Card VGEN 4GB',
-                ],
+                'order_id' => $this->booking->code,
+                'gross_amount' => $this->booking->total_price,
             ],
             'customer_details' => [
-                'first_name' => 'Martin Mulyo Syahidin',
-                'email' => 'mulyosyahidin95@gmail.com',
-                'phone' => '081234567890',
-            ]
+                'first_name' => $this->booking->user->name,
+                'email' => $this->booking->user->email,
+                'phone' => $this->booking->user->phone,
+            ],
         ];
 
         $snapToken = Snap::getSnapToken($params);

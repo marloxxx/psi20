@@ -4,7 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Backend\EventController;
+use App\Http\Controllers\Frontend\EventController;
+use App\Http\Controllers\Frontend\BookingController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\HomestayController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -20,11 +21,12 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('index');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('homestays', [HomestayController::class, 'index'])->name('homestays');
 Route::get('homestays/{homestay}', [HomestayController::class, 'show'])->name('homestays.show');
-Route::get('events', [EventController::class, 'events'])->name('events');
-Route::get('events/{event}', [EventController::class, 'event'])->name('events.show');
+Route::post('whislist/toggle', [HomestayController::class, 'toggle_wishlist'])->name('whislist.toggle');
+Route::get('events', [EventController::class, 'index'])->name('events');
+Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
 
 // Route::get('/email/verify', function () {
 //     if (Auth::user()->email_verified_at == null) {
@@ -58,7 +60,13 @@ Route::post('forgot', [AuthController::class, 'do_forgot'])->name('do_forgot');
 Route::get('password/reset/{token}', [AuthController::class, 'reset'])->name('password.reset');
 Route::post('password/reset', [AuthController::class, 'do_reset'])->name('password.update');
 Route::get('password/change', [AuthController::class, 'change'])->name('password.change');
+Route::post('payments/midtrans-notification', [BookingController::class, 'callback']);
 
-Route::middleware(['auth', 'role:customer|owner'])->group(function () {
+Route::middleware(['auth'])->group(function () {
+    Route::post('booking', [BookingController::class, 'check'])->name('booking.check');
+    Route::post('booking/{id}', [BookingController::class, 'create'])->name('booking.create');
+    Route::post('booking', [BookingController::class, 'store'])->name('booking.store');
+    Route::get('booking/{id}', [BookingController::class, 'show'])->name('booking.show');
+    Route::get('booking/{id}/invoice', [BookingController::class, 'invoice'])->name('booking.invoice');
     Route::get('logout', [AuthController::class, 'do_logout'])->name('logout');
 });

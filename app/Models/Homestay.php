@@ -37,4 +37,40 @@ class Homestay extends Model
     {
         return $this->hasMany(Booking::class);
     }
+
+    public function getReviewsAttribute()
+    {
+        return $this->bookings()->with('review')->get()->pluck('review');
+    }
+
+    public function getRatingAttribute()
+    {
+        return $this->reviews->avg('rating');
+    }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function isAvailable($checkin, $checkout)
+    {
+        $bookings = $this->bookings()->where('status', '!=', 'cancelled')->get();
+        foreach ($bookings as $booking) {
+            if ($checkin >= $booking->checkin && $checkin <= $booking->checkout) {
+                return false;
+            }
+            if ($checkout >= $booking->checkin && $checkout <= $booking->checkout) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public function getDays($checkin, $checkout)
+    {
+        $checkin = \Carbon\Carbon::parse($checkin);
+        $checkout = \Carbon\Carbon::parse($checkout);
+        return $checkin->diffInDays($checkout);
+    }
 }

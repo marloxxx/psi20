@@ -188,11 +188,16 @@ class HomestayController extends Controller
             if (file_exists($oldImage)) {
                 unlink($oldImage);
             }
+            // delete old image
+            $homestay->images()->where('is_primary', true)->delete();
             $imageName = time() . '.' . $request->image->extension();
+            $size = $request->file('image')->getSize();
             $request->image->move(public_path('images/homestay'), $imageName);
 
             $homestay->images()->create([
-                'image_path' => $imageName,
+                'name' => $imageName,
+                'size' => $size,
+                'image_path' => "images/homestay/" . $imageName,
                 'is_primary' => true
             ]);
         }

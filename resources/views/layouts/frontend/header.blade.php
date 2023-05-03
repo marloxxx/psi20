@@ -10,20 +10,25 @@
                 <div class="col-6">
                     <ul id="top_links">
                         @guest
-                            <li><a href="">
+                            <li><a href="{{ route('index') }}">
                                     <i class="icon-login"></i>
                                     Sign in
                                 </a>
                             </li>
                         @endguest
                         @auth
-                            <li><a href="">
+                            <li>
+                                <a href="{{ route('logout') }}">
                                     <i class="icon-logout"></i>
-                                    {{ auth()->user()->name }}
-                                    Sign out</a></li>
-                            <li><a href="wishlist.html">
+                                    {{ auth()->user()->first_name }}
+                                    Sign out
+                                </a>
+                            </li>
+                            <li>
+                                <a href="wishlist.html">
                                     <i class="icon-heart"></i>
-                                    Wishlist</a>
+                                    Wishlist
+                                </a>
                             </li>
                             @role('owner')
                                 <li>

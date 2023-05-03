@@ -12,13 +12,13 @@ class Reviews extends Model
 
     protected $guarded = [];
 
-    public function homestay()
-    {
-        return $this->belongsTo(Homestay::class);
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function booking()
+    {
+        return $this->belongsTo(Booking::class);
     }
 }

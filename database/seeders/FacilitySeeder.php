@@ -15,18 +15,27 @@ class FacilitySeeder extends Seeder
     {
         Facility::create([
             'name' => 'Swimming Pool',
+            'icon' => 'fas fa-swimming-pool'
         ]);
         Facility::create([
             'name' => 'Free Wifi',
+            'icon' => 'fas fa-wifi'
         ]);
         Facility::create([
             'name' => 'Free Parking',
+            'icon' => 'fas fa-parking'
         ]);
         Facility::create([
             'name' => 'Free Breakfast',
+            'icon' => 'fas fa-utensils'
         ]);
         Facility::create([
-            'name' => 'Spa',
+            'name' => 'Pet Allowed',
+            'icon' => 'fas fa-dog'
+        ]);
+        Facility::create([
+            'name' => 'TV',
+            'icon' => 'fas fa-tv'
         ]);
     }
 }
