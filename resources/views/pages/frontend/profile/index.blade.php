@@ -69,6 +69,8 @@
                                     </div>
                                     <div class="col-lg-2 col-md-2">
                                         <div class="booking_buttons">
+                                            <a href="{{ route('booking.show', $booking->id) }}" class="btn_2">View
+                                                details</a>
                                             @if ($booking->status == 'pending')
                                                 <a href="javascript:;" onclick="cancel({{ $booking->id }})"
                                                     class="btn_3">Cancel</a>

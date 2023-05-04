@@ -10,7 +10,6 @@ use App\Http\Controllers\Backend\FacilityController;
 use App\Http\Controllers\Backend\HomestayController;
 use App\Http\Controllers\Backend\DashboardController;
 
-
 Route::name('backend.')->middleware(['auth', 'role:admin|owner'])->group(function () {
     // Dashboard
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');

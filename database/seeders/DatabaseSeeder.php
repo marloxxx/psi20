@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
             'site_logo' => 'logo.png',
             'site_favicon' => 'favicon.png',
             'site_email' => 'help@gmail.com',
-            'site_phone' => '0123456789',
+            'site_phone' => '6282386143124',
         ]);
     }
 }

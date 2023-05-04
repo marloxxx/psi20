@@ -81,16 +81,16 @@ class BookingController extends Controller
     {
         $booking = Booking::findOrFail($id);
         $this->setMeta('Booking #' . $booking->code);
-        $snapToken = $booking->snap_token;
-        if (empty($snapToken)) {
-            // Jika snap token masih NULL, buat token snap dan simpan ke database
+        // $snapToken = $booking->snap_token;
+        // if (empty($snapToken)) {
+        // Jika snap token masih NULL, buat token snap dan simpan ke database
 
-            $midtrans = new CreateSnapTokenService($booking);
-            $snapToken = $midtrans->getSnapToken();
+        //     $midtrans = new CreateSnapTokenService($booking);
+        //     $snapToken = $midtrans->getSnapToken();
 
-            $booking->snap_token = $snapToken;
-            $booking->save();
-        }
+        //     $booking->snap_token = $snapToken;
+        //     $booking->save();
+        // }
         // dd($snapToken);
         return view('pages.frontend.booking.show', compact('booking', 'snapToken'));
     }

@@ -20,8 +20,8 @@ return new class extends Migration
             $table->foreignId('homestay_id')->constrained('homestays');
             $table->decimal('total_price', 8, 2)->nullable(false);
             $table->string('status')->nullable(false)->default('pending');
-            $table->string('snap_token', 36)->nullable();
-            $table->enum('payment_status', ['1', '2', '3', '4'])->comment('1: pending, 2: success, 3: failed, 4: expired')->default('1');
+            // $table->string('snap_token', 36)->nullable();
+            // $table->enum('payment_status', ['1', '2', '3', '4'])->comment('1: pending, 2: success, 3: failed, 4: expired')->default('1');
             $table->timestamps();
             $table->softDeletes();
         });

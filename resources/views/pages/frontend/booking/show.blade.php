@@ -119,10 +119,12 @@
                             instructions. If you don't receive anything, please be sure to check your spam folder.
                         </p>
                         <hr>
-                        @if ($booking->payment_status == '1')
-                            <button type="button" class="btn_full" id="pay-button">Pay now</button>
-                        @endif
-
+                        {{-- contact to wa --}}
+                        <a class="btn_full_outline" target="_blank"
+                            href="https://api.whatsapp.com/send?phone={{ $booking->homestay->owner->phone_number }}&text=Halo%20Admin%20Saya%20Mau%20Konfirmasi%20Pembayaran%20Booking%20Saya%20Dengan%20ID%20{{ $booking->id }}">
+                            <i class="icon-whatsapp"></i>
+                            Contact to Admin
+                        </a>
                         <a class="btn_full_outline" href="{{ route('booking.invoice', $booking->id) }}" target="_blank">View
                             your invoice</a>
                     </div>
@@ -134,34 +136,3 @@
         <!--End container -->
     </main>
 @endsection
-@push('custom-scripts')
-    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}">
-    </script>
-    <script>
-        const payButton = document.querySelector('#pay-button');
-        payButton.addEventListener('click', function(e) {
-            e.preventDefault();
-
-            snap.pay('{{ $snapToken }}', {
-                // Optional
-                onSuccess: function(result) {
-                    /* You may add your own js here, this is just example */
-                    // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-                    console.log(result)
-                },
-                // Optional
-                onPending: function(result) {
-                    /* You may add your own js here, this is just example */
-                    // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-                    console.log(result)
-                },
-                // Optional
-                onError: function(result) {
-                    /* You may add your own js here, this is just example */
-                    // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-                    console.log(result)
-                }
-            });
-        });
-    </script>
-@endpush

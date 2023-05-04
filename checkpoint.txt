@@ -7,7 +7,7 @@ Melakukan pembayaran homestay - selesai
 Membatalkan pemesanan homestay
 Melihat event yang tersedia - selesai
 Mencari event dengan filter
-Menulis review untuk homestay
+Menulis review untuk homestay - selesai
 Melihat review homestay yang ada - selesai
 
 
