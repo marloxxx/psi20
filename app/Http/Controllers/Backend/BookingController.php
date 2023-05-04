@@ -52,13 +52,10 @@ class BookingController extends Controller
                 ->editColumn('status', function ($booking) {
                     return $booking->status();
                 })
-                ->editColumn('payment_status', function ($booking) {
-                    return $booking->payment_status();
-                })
                 ->editColumn('total', function ($booking) {
                     return 'Rp ' . number_format($booking->total_price, 0, ',', '.');
                 })
-                ->rawColumns(['checkbox', 'action', 'homestay', 'user', 'check_in', 'check_out', 'status', 'payment_status', 'total'])
+                ->rawColumns(['checkbox', 'action', 'homestay', 'user', 'check_in', 'check_out', 'status', 'total'])
                 ->make(true);
         }
         return view('pages.backend.bookings.index');

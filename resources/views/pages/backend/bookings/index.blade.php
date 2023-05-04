@@ -95,7 +95,6 @@
                             <th class="min-w-250px">Check Out</th>
                             <th class="min-w-250px">Total Price</th>
                             <th class="min-w-250px">Status</th>
-                            <th class="min-w-250px">Payment Status</th>
                             <th class="min-w-70px">Actions</th>
                         </tr>
                         <!--end::Table row-->
@@ -149,10 +148,6 @@
                     {
                         data: 'status',
                         name: 'status',
-                    },
-                    {
-                        data: 'payment_status',
-                        name: 'payment_status',
                     },
                     {
                         data: 'action',

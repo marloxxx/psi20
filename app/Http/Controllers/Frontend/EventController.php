@@ -22,6 +22,7 @@ class EventController extends Controller
         OpenGraph::setTitle(SEOMeta::getTitle());
         JsonLd::setTitle(SEOMeta::getTitle());
     }
+
     /**
      * Display a listing of the resource.
      */
