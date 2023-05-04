@@ -1,27 +1,26 @@
 1. Customer
-Registrasi dan login ke aplikasi -selesai
-Melihat homestay yang tersedia -selesai
+Registrasi dan login ke aplikasi - selesai
+Melihat homestay yang tersedia - selesai
 Mencari homestay dengan filter
-Melakukan pemesanan homestay -selesai
-Melakukan pembayaran homestay -selesai
+Melakukan pemesanan homestay - selesai
+Melakukan pembayaran homestay - selesai
 Membatalkan pemesanan homestay
-Melihat event yang tersedia -selesai
+Melihat event yang tersedia - selesai
 Mencari event dengan filter
-Menulis review untuk homestay yang pernah dipesan
-Melihat review homestay yang ada di aplikasi -selesai
+Menulis review untuk homestay
+Melihat review homestay yang ada - selesai
 
 
 2. Owner
-Registrasi dan login ke aplikasi -selesai
-Menambahkan, mengedit, dan menghapus homestay miliknya -selesai
-Melihat laporan tentang homestay yang dimilikinya
-Melihat data pelanggan yang pernah menginap di homestay miliknya
-Melihat data pembayaran dari pelanggan yang pernah menginap di homestay miliknya
-Melihat event yang ada dan memutuskan untuk mengadakan event di homestay
+Registrasi dan login ke aplikasi - selesai
+Menambahkan, mengedit, dan menghapus homestay miliknya - selesai
+Melihat laporan tentang homestay yang dimilikinya - selesai
+Melihat data pelanggan yang pernah menginap di homestay miliknya - selesai
+Melihat data pembayaran dari pelanggan yang pernah menginap di homestay miliknya - selesai
+Melihat event yang ada - selesai
 
 3. Admin
-Memanage homestay seperti menambahkan, mengedit, dan menghapus homestay -selesai
-Memanage user seperti menambahkan, mengedit, dan menghapus akun pengguna -selesai
-Manage event seperti menambahkan, mengedit, dan menghapus event -selesai
-Memantau aktivitas pengguna di aplikasi, seperti log in dan log out
-Mengelola masalah-masalah terkait dengan pembayaran seperti pengembalian dana atau masalah dengan kartu kredit
+login ke aplikasi
+Memanage homestay seperti menambahkan, mengedit, dan menghapus homestay - selesai
+Memanage user seperti menambahkan, mengedit, dan menghapus akun pengguna - selesai
+Manage event seperti menambahkan, mengedit, dan menghapus event - selesai

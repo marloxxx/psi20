@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\User;
 use App\Models\Homestay;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Artesaos\SEOTools\Facades\JsonLd;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\OpenGraph;
+use Illuminate\Support\Facades\Validator;
 
 class HomestayController extends Controller
 {
@@ -40,9 +41,12 @@ class HomestayController extends Controller
     {
         // get homestay with images, facilities
         $homestay = Homestay::findOrFail($id)->load('images', 'facilities');
+        // update views
+        $homestay->increment('views');
+        // set meta title
         $this->setMeta($homestay->name);
         // get reviews from booking and homestay table
-        $reviews = $homestay->bookings()->with('review')->get()->pluck('review')->merge($homestay->reviews);
+        $reviews = $homestay->reviews()->with('booking.user')->get();
         return view('pages.frontend.homestay.show', compact('homestay', 'reviews'));
     }
 
@@ -63,6 +67,41 @@ class HomestayController extends Controller
                 'status' => 'success',
                 'action' => 'add',
                 'message' => 'Homestay added to wishlist.'
+            ]);
+        }
+    }
+
+    public function review(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'rating' => 'required|numeric|min:1|max:5',
+            'review' => 'required|string|min:10|max:255',
+            'homestay_id' => 'required|exists:homestays,id',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $validator->errors()->first(),
+            ]);
+        }
+
+        $homestay = Homestay::findOrFail($request->homestay_id);
+        $user = User::findOrFail(auth()->user()->id);
+        // check if user has booked this homestay
+        if ($user->bookings()->where('homestay_id', $homestay->id)->exists()) {
+            $user->reviews()->create([
+                'rating' => $request->rating,
+                'review' => $request->review,
+                'booking_id' => $user->bookings()->where('homestay_id', $homestay->id)->first()->id,
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Review added.',
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'You have not booked this homestay.',
             ]);
         }
     }

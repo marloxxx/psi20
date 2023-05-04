@@ -119,7 +119,7 @@
                             instructions. If you don't receive anything, please be sure to check your spam folder.
                         </p>
                         <hr>
-                        @if ($booking->status == 'pending')
+                        @if ($booking->payment_status == '1')
                             <button type="button" class="btn_full" id="pay-button">Pay now</button>
                         @endif
 

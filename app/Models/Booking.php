@@ -12,6 +12,11 @@ class Booking extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'check_in' => 'date',
+        'check_out' => 'date',
+    ];
+
     public function homestay()
     {
         return $this->belongsTo(Homestay::class);
@@ -25,5 +30,47 @@ class Booking extends Model
     public function review()
     {
         return $this->hasOne(Review::class);
+    }
+
+    public function status()
+    {
+        switch ($this->status) {
+            case 'pending':
+                return '<span class="badge badge-secondary">Pending</span>';
+                break;
+            case 'confirmed':
+                return '<span class="badge badge-primary">Confirmed</span>';
+                break;
+            case 'completed':
+                return '<span class="badge badge-success">Completed</span>';
+                break;
+            case 'canceled':
+                return '<span class="badge badge-danger">Canceled</span>';
+                break;
+            default:
+                return '<span class="badge badge-secondary">Pending</span>';
+                break;
+        }
+    }
+
+    public function payment_status()
+    {
+        switch ($this->payment_status) {
+            case 1:
+                return '<span class="badge badge-secondary">Pending</span>';
+                break;
+            case 2:
+                return '<span class="badge badge-success">Success</span>';
+                break;
+            case 3:
+                return '<span class="badge badge-danger">Failed</span>';
+                break;
+            case 4:
+                return '<span class="badge badge-danger">Expired</span>';
+                break;
+            default:
+                return '<span class="badge badge-secondary">Pending</span>';
+                break;
+        }
     }
 }

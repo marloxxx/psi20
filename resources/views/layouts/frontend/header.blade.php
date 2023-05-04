@@ -25,14 +25,14 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="wishlist.html">
-                                    <i class="icon-heart"></i>
-                                    Wishlist
+                                <a href="{{ route('profile.index') }}">
+                                    <i class="icon-user"></i>
+                                    My Profile
                                 </a>
                             </li>
                             @role('owner')
                                 <li>
-                                    <a href="">
+                                    <a href="{{ route('backend.dashboard') }}">
                                         <i class="icon-home"></i>
                                         Dashboard Owner</a>
                                 </li>
@@ -49,7 +49,7 @@
             <div class="col-3">
                 <div id="logo_home"
                     style="background-image: url({{ asset('images/' . getSettings('site_logo')) }}); background-repeat: no-repeat; background-position: center; background-size: contain;">
-                    <h1><a href="index-2.html" title="City tours travel template">City Tours travel template</a>
+                    <h1><a href="{{ route('home') }}" title="City tours travel template">City Tours travel template</a>
                     </h1>
                 </div>
             </div>
@@ -64,7 +64,7 @@
                     <a href="#" class="open_close" id="close_in"><i class="icon_set_1_icon-77"></i></a>
                     <ul>
                         <li class="submenu">
-                            <a href="{{ route('index') }}">Home
+                            <a href="{{ route('home') }}">Home
                             </a>
                         </li>
                         <li class="submenu">

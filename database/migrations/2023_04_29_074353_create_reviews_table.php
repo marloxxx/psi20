@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('homestay_id')->constrained('homestays');
+            $table->foreignId('booking_id')->constrained('bookings');
             $table->text('review', 255)->nullable(false);
             $table->integer('rating')->nullable(false);
             $table->boolean('is_approved')->nullable(false)->default(false);

@@ -8,6 +8,7 @@ use App\Http\Controllers\Frontend\EventController;
 use App\Http\Controllers\Frontend\BookingController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\HomestayController;
+use App\Http\Controllers\Frontend\ProfileController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
@@ -63,10 +64,19 @@ Route::get('password/change', [AuthController::class, 'change'])->name('password
 Route::post('payments/midtrans-notification', [BookingController::class, 'callback']);
 
 Route::middleware(['auth'])->group(function () {
-    Route::post('booking', [BookingController::class, 'check'])->name('booking.check');
+    Route::post('review', [HomestayController::class, 'review'])->name('review');
+
+    // Booking
+    Route::post('booking/check', [BookingController::class, 'check'])->name('booking.check');
     Route::post('booking/{id}', [BookingController::class, 'create'])->name('booking.create');
     Route::post('booking', [BookingController::class, 'store'])->name('booking.store');
     Route::get('booking/{id}', [BookingController::class, 'show'])->name('booking.show');
     Route::get('booking/{id}/invoice', [BookingController::class, 'invoice'])->name('booking.invoice');
+    Route::put('booking/{id}/cancel', [BookingController::class, 'cancel'])->name('booking.cancel');
+
+    // Profile
+    Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::put('profile/update-password', [ProfileController::class, 'update_password'])->name('profile.update-password');
+    Route::put('profile/update-profile', [ProfileController::class, 'update_profile'])->name('profile.update-profile');
     Route::get('logout', [AuthController::class, 'do_logout'])->name('logout');
 });

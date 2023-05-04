@@ -38,14 +38,14 @@ class Homestay extends Model
         return $this->hasMany(Booking::class);
     }
 
-    public function getReviewsAttribute()
+    public function reviews()
     {
-        return $this->bookings()->with('review')->get()->pluck('review');
+        return $this->hasManyThrough(Review::class, Booking::class);
     }
 
     public function getRatingAttribute()
     {
-        return $this->reviews->avg('rating');
+        return $this->reviews()->avg('rating');
     }
 
     public function owner()

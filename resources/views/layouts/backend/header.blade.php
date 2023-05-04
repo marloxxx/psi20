@@ -88,6 +88,16 @@
                     <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
+                        <a class="menu-link {{ request()->is('backend/bookings') ? 'active' : '' }}"
+                            href="{{ route('backend.bookings.index') }}">
+                            <span class="menu-title">Bookings</span>
+                        </a>
+                        <!--end:Menu link-->
+                    </div>
+                    <!--end:Menu item-->
+                    <!--begin:Menu item-->
+                    <div class="menu-item">
+                        <!--begin:Menu link-->
                         <a class="menu-link {{ request()->is('backend/settings') ? 'active' : '' }}"
                             href="{{ route('backend.settings.index') }}">
                             <span class="menu-title">Settings</span>

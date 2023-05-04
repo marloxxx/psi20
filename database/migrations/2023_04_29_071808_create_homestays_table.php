@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('address', 100)->nullable(false);
             $table->string('latitude', 50)->nullable(false);
             $table->string('longitude', 50)->nullable(false);
+            $table->integer('views')->nullable(false)->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

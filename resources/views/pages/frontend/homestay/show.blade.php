@@ -127,9 +127,9 @@
                         <div class="col-lg-9">
                             @foreach ($reviews as $review)
                                 <div class="review_strip_single">
-                                    <img src="img/avatar1.jpg" alt="Image" class="rounded-circle">
+                                    <img src="{{ asset('guests/img/avatar1.jpg') }}" alt="Image" class="rounded-circle">
                                     <small> - {{ \Carbon\Carbon::parse($review->created_at)->format('d M Y') }} -</small>
-                                    <h4>{{ $review->user->name }}</h4>
+                                    <h4>{{ $review->user->first_name }}</h4>
                                     <p>
                                         {{ $review->review }}
                                     </p>
@@ -209,6 +209,48 @@
 
     </main>
     <!-- End main -->
+    <!-- Modal Review -->
+    <div class="modal fade" id="myReview" tabindex="-1" role="dialog" aria-labelledby="myReviewLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myReviewLabel">Write your review</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="message-review">
+                    </div>
+                    <form method="post" action="" id="review">
+                        <input name="homestay_id" id="homestay_id" type="hidden" value="{{ $homestay->id }}">
+                        <!-- End row -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Rating</label>
+                                    <select class="form-select" name="rating" id="rating">
+                                        <option value="">Please review</option>
+                                        <option value="1">Very bad</option>
+                                        <option value="2">Not that bad</option>
+                                        <option value="3">Fair</option>
+                                        <option value="4">Good</option>
+                                        <option value="5">Perfect</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End row -->
+                        <div class="form-group">
+                            <textarea name="review_text" id="review_text" class="form-control" style="height:100px"
+                                placeholder="Write your review"></textarea>
+                        </div>
+                        <button type="submit" id="submit-review" class="btn_1">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End modal review -->
 @endsection
 @push('custom-scripts')
     <script src="{{ asset('guests/js/jquery.sliderPro.min.js') }}"></script>
@@ -231,10 +273,11 @@
         });
     </script>
     <script>
+        let available = {{ $homestay->is_available }};
         $(function() {
             'use strict';
             // disable button
-            $('#btn_check').addClass('disabled');
+            $('#btn_check').prop('disabled', true);
             $('input.date-pick').daterangepicker({
                 autoUpdateInput: false,
                 opens: 'left',
@@ -244,16 +287,25 @@
                 }
             });
             $('input.date-pick').on('apply.daterangepicker', function(ev, picker) {
-                $(this).val(picker.startDate.format('MM-DD-YY') + ' > ' + picker.endDate.format(
-                    'MM-DD-YY'));
+                $(this).val(picker.startDate.format('MM-DD-YY') + ' > ' + picker.endDate
+                    .format('MM-DD-YY'));
+                // check homestay status is available or not
+                if (available == 0) {
+                    return;
+                }
+                if (picker.startDate.format('MM-DD-YY') == picker.endDate.format(
+                        'MM-DD-YY')) {
+                    toastr.error('Check in and check out date cannot be the same');
+                    return;
+                }
+                checkAvailability();
             });
             $('input.date-pick').on('cancel.daterangepicker', function(ev, picker) {
                 $(this).val('');
             });
         });
 
-        $('input.date-pick').on('apply.daterangepicker', function(ev, picker) {
-            console.log('change');
+        function checkAvailability() {
             var dates = $('input.date-pick').val().split(' > ');
             var check_in = dates[0];
             var check_out = dates[1];
@@ -269,14 +321,15 @@
                 },
                 success: function(response) {
                     if (response.status == 'success') {
-                        $("#btn_check").removeClass('disabled');
+                        toastr.success(response.message);
+                        $("#btn_check").prop('disabled', false);
                     } else {
-                        $("#btn_check").addClass('disabled');
+                        $("#btn_check").prop('disabled', true);
                         toastr.error(response.message);
                     }
                 }
             });
-        });
+        }
 
         function load_data(page) {
             $.get("?page=" + page, {
@@ -301,8 +354,16 @@
                     if (response.status == 'success') {
                         if (response.action == 'add') {
                             toastr.success(response.message);
+                            // set timeout to wait for toastr to finish
+                            setTimeout(function() {
+                                window.location.reload();
+                            }, 1000);
                         } else {
                             toastr.warning(response.message);
+                            // set timeout to wait for toastr to finish
+                            setTimeout(function() {
+                                window.location.reload();
+                            }, 1000);
                         }
                     } else {
                         toastr.error(response.message);
@@ -310,5 +371,33 @@
                 }
             });
         }
+
+        $('#review').submit(function(e) {
+            e.preventDefault();
+            var homestay_id = $('#homestay_id').val();
+            var rating = $('#rating').val();
+            var review_text = $('#review_text').val();
+            $.ajax({
+                url: "{{ route('review') }}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    homestay_id: homestay_id,
+                    rating: rating,
+                    review: review_text
+                },
+                success: function(response) {
+                    if (response.status == 'success') {
+                        toastr.success(response.message);
+                        // set timeout to wait for toastr to finish
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 1000);
+                    } else {
+                        toastr.error(response.message);
+                    }
+                }
+            });
+        });
     </script>
 @endpush

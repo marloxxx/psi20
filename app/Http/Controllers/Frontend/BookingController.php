@@ -11,6 +11,7 @@ use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\OpenGraph;
 use App\Services\Midtrans\CallbackService;
 use App\Services\Midtrans\CreateSnapTokenService;
+use Carbon\Carbon;
 
 class BookingController extends Controller
 {
@@ -29,8 +30,8 @@ class BookingController extends Controller
     public function check(Request $request)
     {
         $homestay = Homestay::findOrFail($request->homestay_id);
-        $checkin = $request->checkin;
-        $checkout = $request->checkout;
+        $checkin = Carbon::parse($request->checkin);
+        $checkout = Carbon::parse($request->checkout);
         // check if homestay is available
         if ($homestay->isAvailable($checkin, $checkout)) {
             return response()->json([
@@ -49,10 +50,11 @@ class BookingController extends Controller
         $this->setMeta('Booking');
         $dates = explode(' > ', $request->dates);
 
-        $checkin = $dates[0];
-        $checkout = $dates[1];
+        // parse from string to Carbon
+        // create from this format 05-04-23 to 05-04-2023
+        $checkin = Carbon::createFromFormat('m-d-y', $dates[0])->format('D, d M Y');
+        $checkout = Carbon::createFromFormat('m-d-y', $dates[1])->format('D, d M Y');
         $homestay = Homestay::findOrFail($id);
-
         // total price = price * days
         $total = $homestay->price * $homestay->getDays($checkin, $checkout);
 
@@ -61,12 +63,14 @@ class BookingController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
+        // dd(Carbon::parse($request->checkin)->format('Y-m-d'));
         $homestay = Homestay::findOrFail($request->homestay_id);
         $number = $homestay->bookings()->count() + 1;
         $booking = $homestay->bookings()->create([
             'code' => 'BOOK-' . $number,
-            'check_in' => $request->checkin,
-            'check_out' => $request->checkout,
+            'check_in' => Carbon::parse($request->checkin)->format('Y-m-d'),
+            'check_out' => Carbon::parse($request->checkout)->format('Y-m-d'),
             'total_price' => $request->total,
             'user_id' => auth()->user()->id,
         ]);
@@ -91,6 +95,17 @@ class BookingController extends Controller
         return view('pages.frontend.booking.show', compact('booking', 'snapToken'));
     }
 
+    public function cancel($id)
+    {
+        $booking = Booking::findOrFail($id);
+        $booking->update([
+            'status' => 'canceled',
+        ]);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Booking cancelled.'
+        ]);
+    }
     public function callback()
     {
         $callback = new CallbackService;
@@ -101,19 +116,19 @@ class BookingController extends Controller
 
             if ($callback->isSuccess()) {
                 Booking::where('id', $booking->id)->update([
-                    'status' => 'booked',
+                    'payment_status' => '2',
                 ]);
             }
 
             if ($callback->isExpire()) {
                 Booking::where('id', $booking->id)->update([
-                    'status' => 'expired',
+                    'payment_status' => '3',
                 ]);
             }
 
             if ($callback->isCancelled()) {
                 Booking::where('id', $booking->id)->update([
-                    'status' => 'cancelled',
+                    'payment_status' => '4',
                 ]);
             }
 

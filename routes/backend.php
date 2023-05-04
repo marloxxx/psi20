@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\EventController;
+use App\Http\Controllers\Backend\BookingController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\FacilityController;
 use App\Http\Controllers\Backend\HomestayController;
@@ -32,6 +33,15 @@ Route::name('backend.')->middleware(['auth', 'role:admin|owner'])->group(functio
     Route::delete('events/deleteImage', [EventController::class, 'deleteImage'])->name('events.deleteImage');
     Route::resource('events', EventController::class);
 
+    // Bookings
+    Route::prefix('bookings')->name('bookings.')->group(function () {
+        Route::get('', [BookingController::class, 'index'])->name('index');
+        Route::get('{booking}', [BookingController::class, 'show'])->name('show');
+        Route::put('{booking}/approve', [BookingController::class, 'approve'])->name('approve');
+        Route::put('{booking}/reject', [BookingController::class, 'reject'])->name('reject');
+        Route::put('{booking}/cancel', [BookingController::class, 'cancel'])->name('cancel');
+        Route::put('{booking}/complete', [BookingController::class, 'complete'])->name('complete');
+    });
     // Settings
     Route::prefix('settings')->name('')->group(function () {
         Route::get('', [SettingController::class, 'index'])->name('settings.index');

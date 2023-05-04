@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\Event;
+use App\Models\Homestay;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Artesaos\SEOTools\Facades\JsonLd;
@@ -29,6 +31,10 @@ class HomeController extends Controller
     public function index()
     {
         $this->setMeta('Home');
-        return view('pages.frontend.home.index');
+        // get popular homestays
+        $popular_homestays = Homestay::with('images')->orderBy('views', 'desc')->get();
+        // get latest events
+        $events = Event::with('images')->orderBy('created_at', 'desc')->get();
+        return view('pages.frontend.home.index', compact('popular_homestays', 'events'));
     }
 }

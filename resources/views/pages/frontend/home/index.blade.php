@@ -1,4 +1,9 @@
 @extends('layouts.frontend.master')
+@push('custom-styles')
+    <!-- REVOLUTION SLIDER CSS -->
+    <link href="{{ asset('guests/rs-plugin/css/settings.css') }}" rel="stylesheet">
+    <link href="{{ asset('guests/css/extralayers.css') }}" rel="stylesheet">
+@endpush
 @section('content')
     <main>
         <div id="carousel-home">
@@ -73,405 +78,106 @@
         <div class="container margin_60">
 
             <div class="main_title">
-                <h2>Paris <span>Top</span> Tours</h2>
-                <p>Quisque at tortor a libero posuere laoreet vitae sed arcu. Curabitur consequat.</p>
+                <h2>Balige <span>Top</span> Homestays</h2>
+                <p>Find your homestay in Balige</p>
             </div>
 
             <div class="owl-carousel owl-theme list_carousel add_bottom_30">
-                <div class="item">
-                    <div class="tour_container">
-                        <div class="ribbon_3 popular"><span>Popular</span></div>
-                        <div class="img_container">
-                            <a href="single_tour.html">
-                                <img src="img/tour_box_1.jpg" width="800" height="533" class="img-fluid"
-                                    alt="image">
-                                <div class="short_info">
-                                    <i class="icon_set_1_icon-44"></i>Historic Buildings<span
-                                        class="price"><sup>$</sup>39</span>
+                @foreach ($popular_homestays as $popular)
+                    <div class="item">
+                        <div class="tour_container">
+                            <div class="ribbon_3 popular"><span>Popular</span>
+                            </div>
+                            <div class="img_container">
+                                <a href="{{ route('homestays.show', $popular->id) }}">
+                                    <img src="{{ asset($popular->images->first()->image_path) }}" width="800"
+                                        height="533" class="img-fluid" alt="image">
+                                    <div class="short_info">
+                                        <span class="price"><sup>Rp. </sup>{{ number_format($popular->price) }}</span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="tour_title">
+                                <h3><strong>{{ $popular->name }}</strong> </h3>
+                                <div class="rating">
+                                    @for ($i = 0; $i < $popular->rating; $i++)
+                                        <i class="icon-star voted"></i>
+                                    @endfor
+                                    @for ($i = 0; $i < 5 - $popular->rating; $i++)
+                                        <i class="icon-star-empty"></i>
+                                    @endfor
                                 </div>
-                            </a>
-                        </div>
-                        <div class="tour_title">
-                            <h3><strong>Arc Triomphe</strong> tour</h3>
-                            <div class="rating">
-                                <i class="icon-smile voted"></i><i class="icon-smile voted"></i><i
-                                    class="icon-smile voted"></i><i class="icon-smile voted"></i><i
-                                    class="icon-smile"></i><small>(75)</small>
-                            </div>
-                            <!-- end rating -->
-                            <div class="wishlist">
-                                <a class="tooltip_flip tooltip-effect-1" href="javascript:void(0);">+<span
-                                        class="tooltip-content-flip"><span class="tooltip-back">Add to
-                                            wishlist</span></span></a>
-                            </div>
-                            <!-- End wish list-->
-                        </div>
-                    </div>
-                    <!-- End box tour -->
-                </div>
-                <!-- /item -->
-                <div class="item">
-                    <div class="tour_container">
-                        <div class="ribbon_3 popular"><span>Popular</span></div>
-                        <div class="img_container">
-                            <a href="single_tour.html">
-                                <img src="img/tour_box_2.jpg" width="800" height="533" class="img-fluid"
-                                    alt="image">
-                                <div class="short_info">
-                                    <i class="icon_set_1_icon-43"></i>Churches<span class="price"><sup>$</sup>45</span>
+                                <!-- end rating -->
+                                <div
+                                    class="{{ auth()->user()->wishlists->contains($popular->id)? 'wishlist': 'wishlist_close' }} position-absolute">
+                                    <a class="tooltip_flip tooltip-effect-1" href="javascript:void(0);"
+                                        onclick="toggleWishlist({{ $popular->id }})">
+                                        {{ auth()->user()->wishlists->contains($popular->id)? '-': '+' }}
+                                        <span class="tooltip-content-flip">
+                                            <span class="tooltip-back">
+                                                {{ auth()->user()->wishlists->contains($popular->id)? 'Remove from wishlist': 'Add to wishlist' }}
+                                            </span>
+                                        </span>
+                                    </a>
                                 </div>
-                            </a>
-                        </div>
-                        <div class="tour_title">
-                            <h3><strong>Notredame</strong> tour</h3>
-                            <div class="rating">
-                                <i class="icon-smile voted"></i><i class="icon-smile voted"></i><i
-                                    class="icon-smile voted"></i><i class="icon-smile voted"></i><i
-                                    class="icon-smile"></i><small>(75)</small>
+                                <!-- End wish list-->
                             </div>
-                            <!-- end rating -->
-                            <div class="wishlist">
-                                <a class="tooltip_flip tooltip-effect-1" href="javascript:void(0);">+<span
-                                        class="tooltip-content-flip"><span class="tooltip-back">Add to
-                                            wishlist</span></span></a>
-                            </div>
-                            <!-- End wish list-->
                         </div>
+                        <!-- End box tour -->
                     </div>
-                    <!-- End box tour -->
-                </div>
-                <!-- /item -->
-                <div class="item">
-                    <div class="tour_container">
-                        <div class="ribbon_3 popular"><span>Popular</span></div>
-                        <div class="img_container">
-                            <a href="single_tour.html">
-                                <img src="img/tour_box_3.jpg" width="800" height="533" class="img-fluid"
-                                    alt="image">
-                                <div class="badge_save">Save<strong>30%</strong></div>
-                                <div class="short_info">
-                                    <i class="icon_set_1_icon-44"></i>Historic Buildings<span
-                                        class="price"><sup>$</sup>48</span>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="tour_title">
-                            <h3><strong>Versailles</strong> tour</h3>
-                            <div class="rating">
-                                <i class="icon-smile voted"></i><i class="icon-smile voted"></i><i
-                                    class="icon-smile voted"></i><i class="icon-smile voted"></i><i
-                                    class="icon-smile"></i><small>(75)</small>
-                            </div>
-                            <!-- end rating -->
-                            <div class="wishlist">
-                                <a class="tooltip_flip tooltip-effect-1" href="javascript:void(0);">+<span
-                                        class="tooltip-content-flip"><span class="tooltip-back">Add to
-                                            wishlist</span></span></a>
-                            </div>
-                            <!-- End wish list-->
-                        </div>
-                    </div>
-                    <!-- End box tour -->
-                </div>
-                <!-- /item -->
-                <div class="item">
-                    <div class="tour_container">
-                        <div class="ribbon_3"><span>Top rated</span></div>
-                        <div class="img_container">
-                            <a href="single_tour.html">
-                                <img src="img/tour_box_4.jpg" width="800" height="533" class="img-fluid"
-                                    alt="image">
-                                <div class="badge_save">Save<strong>20%</strong></div>
-                                <div class="short_info">
-                                    <i class="icon_set_1_icon-30"></i>Walking tour<span
-                                        class="price"><sup>$</sup>36</span>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="tour_title">
-                            <h3><strong>Pompidue</strong> tour</h3>
-                            <div class="rating">
-                                <i class="icon-smile voted"></i><i class="icon-smile voted"></i><i
-                                    class="icon-smile voted"></i><i class="icon-smile voted"></i><i
-                                    class="icon-smile"></i><small>(75)</small>
-                            </div>
-                            <!-- end rating -->
-                            <div class="wishlist">
-                                <a class="tooltip_flip tooltip-effect-1" href="javascript:void(0);">+<span
-                                        class="tooltip-content-flip"><span class="tooltip-back">Add to
-                                            wishlist</span></span></a>
-                            </div>
-                            <!-- End wish list-->
-                        </div>
-                    </div>
-                    <!-- End box tour -->
-                </div>
-                <!-- /item -->
-                <div class="item">
-                    <div class="tour_container">
-                        <div class="ribbon_3"><span>Top rated</span></div>
-                        <div class="img_container">
-                            <a href="single_tour.html">
-                                <img src="img/tour_box_14.jpg" width="800" height="533" class="img-fluid"
-                                    alt="image">
-                                <div class="short_info">
-                                    <i class="icon_set_1_icon-28"></i>Skyline tours<span
-                                        class="price"><sup>$</sup>42</span>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="tour_title">
-                            <h3><strong>Tour Eiffel</strong> tour</h3>
-                            <div class="rating">
-                                <i class="icon-smile voted"></i><i class="icon-smile voted"></i><i
-                                    class="icon-smile voted"></i><i class="icon-smile voted"></i><i
-                                    class="icon-smile"></i><small>(75)</small>
-                            </div>
-                            <!-- end rating -->
-                            <div class="wishlist">
-                                <a class="tooltip_flip tooltip-effect-1" href="javascript:void(0);">+<span
-                                        class="tooltip-content-flip"><span class="tooltip-back">Add to
-                                            wishlist</span></span></a>
-                            </div>
-                            <!-- End wish list-->
-                        </div>
-                    </div>
-                    <!-- End box tour -->
-                </div>
-                <!-- /item -->
+                @endforeach
             </div>
             <!-- /carousel -->
 
             <p class="text-center add_bottom_30">
-                <a href="all_tours_list.html" class="btn_1">View all Tours</a>
+                <a href="{{ route('homestays') }}" class="btn_1">View all Homestays</a>
             </p>
 
             <hr class="mt-5 mb-5">
 
             <div class="main_title">
-                <h2>Paris <span>Top</span> Hotels</h2>
+                <h2>Balige <span>Top</span> Events</h2>
                 <p>Quisque at tortor a libero posuere laoreet vitae sed arcu. Curabitur consequat.</p>
             </div>
 
             <div class="owl-carousel owl-theme list_carousel add_bottom_30">
-                <div class="item">
-                    <div class="hotel_container">
-                        <div class="ribbon_3 popular"><span>Popular</span></div>
-                        <div class="img_container">
-                            <a href="single_hotel.html">
-                                <img src="img/hotel_1.jpg" width="800" height="533" class="img-fluid"
-                                    alt="image">
-                                <div class="score"><span>7.5</span>Good</div>
-                                <div class="short_info hotel">
-                                    <span class="price"><sup>$</sup>59</span>
+                @foreach ($events as $event)
+                    <div class="item">
+                        <div class="hotel_container">
+                            {{-- <div class="ribbon_3 popular"><span>Popular</span></div> --}}
+                            <div class="img_container">
+                                <a href="{{ route('events.show', $event->id) }}">
+                                    <img src="{{ asset($event->images->first()->image_path) }}" width="800"
+                                        height="533" class="img-fluid" alt="image">
+                                </a>
+                                <div class="short_info">
+                                    <i class="fa fa-calendar"></i> {{ $event->start_date->format('d M Y') }} -
+                                    {{ $event->end_date->format('d M Y') }}
                                 </div>
-                            </a>
-                        </div>
-                        <div class="hotel_title">
-                            <h3><strong>Park Hyatt</strong> Hotel</h3>
-                            <div class="rating">
-                                <i class="icon-star voted"></i><i class="icon-star voted"></i><i
-                                    class="icon-star voted"></i><i class="icon-star voted"></i><i
-                                    class="icon-star-empty"></i>
                             </div>
-                            <!-- end rating -->
-                            <div class="wishlist">
-                                <a class="tooltip_flip tooltip-effect-1" href="#">+<span
-                                        class="tooltip-content-flip"><span class="tooltip-back">Add to
-                                            wishlist</span></span></a>
+                            <div class="tour_title">
+                                <h3><strong>{{ $event->title }}</strong></h3>
+                                <small>{{ $event->address }}</small>
                             </div>
-                            <!-- End wish list-->
                         </div>
+                        <!-- End box -->
                     </div>
-                    <!-- End box -->
-                </div>
-                <!-- /item -->
-                <div class="item">
-                    <div class="hotel_container">
-                        <div class="ribbon_3 popular"><span>Popular</span></div>
-                        <div class="img_container">
-                            <a href="single_hotel.html">
-                                <img src="img/hotel_2.jpg" width="800" height="533" class="img-fluid"
-                                    alt="image">
-                                <div class="score"><span>9.0</span>Superb</div>
-                                <div class="short_info hotel">
-                                    <span class="price"><sup>$</sup>45</span>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="hotel_title">
-                            <h3><strong>Mariott</strong> Hotel</h3>
-                            <div class="rating">
-                                <i class="icon-star voted"></i><i class="icon-star voted"></i><i
-                                    class="icon-star voted"></i><i class="icon-star voted"></i><i
-                                    class="icon-star-empty"></i>
-                            </div>
-                            <!-- end rating -->
-                            <div class="wishlist">
-                                <a class="tooltip_flip tooltip-effect-1" href="#">+<span
-                                        class="tooltip-content-flip"><span class="tooltip-back">Add to
-                                            wishlist</span></span></a>
-                            </div>
-                            <!-- End wish list-->
-                        </div>
-                    </div>
-                    <!-- End box -->
-                </div>
-                <!-- /item -->
-                <div class="item">
-                    <div class="hotel_container">
-                        <div class="ribbon_3"><span>Top rated</span></div>
-                        <div class="img_container">
-                            <a href="single_hotel.html">
-                                <img src="img/hotel_3.jpg" width="800" height="533" class="img-fluid"
-                                    alt="image">
-                                <div class="score"><span>9.5</span>Superb</div>
-                                <div class="short_info hotel">
-                                    <span class="price"><sup>$</sup>39</span>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="hotel_title">
-                            <h3><strong>Lumiere</strong> Hotel</h3>
-                            <div class="rating">
-                                <i class="icon-star voted"></i><i class="icon-star voted"></i><i
-                                    class="icon-star voted"></i><i class="icon-star voted"></i><i
-                                    class="icon-star-empty"></i>
-                            </div>
-                            <!-- end rating -->
-                            <div class="wishlist">
-                                <a class="tooltip_flip tooltip-effect-1" href="#">+<span
-                                        class="tooltip-content-flip"><span class="tooltip-back">Add to
-                                            wishlist</span></span></a>
-                            </div>
-                            <!-- End wish list-->
-                        </div>
-                    </div>
-                    <!-- End box -->
-                </div>
-                <!-- /item -->
-                <div class="item">
-                    <div class="hotel_container">
-                        <div class="ribbon_3"><span>Top rated</span></div>
-                        <div class="img_container">
-                            <a href="single_hotel.html">
-                                <img src="img/hotel_4.jpg" width="800" height="533" class="img-fluid"
-                                    alt="image">
-                                <div class="score"><span>7.5</span>Good</div>
-                                <div class="short_info hotel">
-                                    <span class="price"><sup>$</sup>45</span>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="hotel_title">
-                            <h3><strong>Novelle</strong> Hotel</h3>
-                            <div class="rating">
-                                <i class="icon-star voted"></i><i class="icon-star voted"></i><i
-                                    class="icon-star voted"></i><i class="icon-star voted"></i><i
-                                    class="icon-star-empty"></i>
-                            </div>
-                            <!-- end rating -->
-                            <div class="wishlist">
-                                <a class="tooltip_flip tooltip-effect-1" href="javascript:void(0);">+<span
-                                        class="tooltip-content-flip"><span class="tooltip-back">Add to
-                                            wishlist</span></span></a>
-                            </div>
-                            <!-- End wish list-->
-                        </div>
-                    </div>
-                    <!-- End box -->
-                </div>
-                <!-- /item -->
-                <div class="item">
-                    <div class="hotel_container">
-                        <div class="ribbon_3"><span>Top rated</span></div>
-                        <div class="img_container">
-                            <a href="single_hotel.html">
-                                <img src="img/hotel_5.jpg" width="800" height="533" class="img-fluid"
-                                    alt="image">
-                                <div class="score"><span>8.0</span>Good</div>
-                                <div class="short_info hotel">
-                                    <span class="price"><sup>$</sup>39</span>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="hotel_title">
-                            <h3><strong>Louvre</strong> Hotel</h3>
-                            <div class="rating">
-                                <i class="icon-star voted"></i><i class="icon-star voted"></i><i
-                                    class="icon-star voted"></i><i class="icon-star voted"></i><i
-                                    class="icon-star-empty"></i>
-                            </div>
-                            <!-- end rating -->
-                            <div class="wishlist">
-                                <a class="tooltip_flip tooltip-effect-1" href="#">+<span
-                                        class="tooltip-content-flip"><span class="tooltip-back">Add to
-                                            wishlist</span></span></a>
-                            </div>
-                            <!-- End wish list-->
-                        </div>
-                    </div>
-                    <!-- End box -->
-                </div>
-                <!-- /item -->
+                @endforeach
+
             </div>
             <!-- /carousel -->
 
             <p class="text-center nopadding">
-                <a href="all_hotels_list.html" class="btn_1">View all Hotels</a>
+                <a href="{{ route('events') }}" class="btn_1">View all Events</a>
             </p>
 
         </div>
         <!-- End container -->
-
-        <div class="white_bg">
-            <div class="container margin_60">
-                <div class="main_title">
-                    <h2>Plan <span>Your Tour</span> Easly</h2>
-                    <p>
-                        Quisque at tortor a libero posuere laoreet vitae sed arcu. Curabitur consequat.
-                    </p>
-                </div>
-                <div class="row feature_home_2">
-                    <div class="col-md-4 text-center">
-                        <img src="{{ asset('guests/img/adventure_icon_1.svg') }}" alt="" width="75"
-                            height="75">
-                        <h3>Itineraries studied in detail</h3>
-                        <p>Suscipit invenire petentium per in. Ne magna assueverit vel. Vix movet perfecto facilisis in, ius
-                            ad maiorum corrumpit, his esse docendi in.</p>
-                    </div>
-                    <div class="col-md-4 text-center">
-                        <img src="{{ asset('guests/img/adventure_icon_2.svg') }}" alt="" width="75"
-                            height="75">
-                        <h3>Room and food included</h3>
-                        <p> Cum accusam voluptatibus at, et eum fuisset sententiae. Postulant tractatos ius an, in vis
-                            fabulas percipitur, est audiam phaedrum electram ex.</p>
-                    </div>
-                    <div class="col-md-4 text-center">
-                        <img src="{{ asset('guests/img/adventure_icon_3.svg') }}" alt="" width="75"
-                            height="75">
-                        <h3>Everything organized</h3>
-                        <p>Integre vivendo percipitur eam in, graece suavitate cu vel. Per inani persius accumsan no. An
-                            case duis option est, pro ad fastidii contentiones.</p>
-                    </div>
-                </div>
-
-                <div class="banner_2">
-                    <div class="wrapper d-flex align-items-center opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.3)"
-                        style="background-color: rgba(0, 0, 0, 0.3);">
-                        <div>
-                            <h3>Your Perfect<br>Tour Experience</h3>
-                            <p>Activities and accommodations</p>
-                            <a href="all_tours_list.html" class="btn_1">Read more</a>
-                        </div>
-                    </div>
-                    <!-- /wrapper -->
-                </div>
-                <!-- /banner_2 -->
-
-            </div>
-            <!-- End container -->
-        </div>
-        <!-- End white_bg -->
     </main>
 @endsection
+@push('custom-scripts')
+    <!-- SLIDER REVOLUTION 4.x SCRIPTS  -->
+    <script src="{{ asset('guests/rs-plugin/js/jquery.themepunch.tools.min.js') }}"></script>
+    <script src="{{ asset('guests/rs-plugin/js/jquery.themepunch.revolution.min.js') }}"></script>
+    <script src="{{ asset('guests/js/revolution_func.js') }}"></script>
+@endpush
