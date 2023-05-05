@@ -1,15 +1,14 @@
 1. Customer
 Registrasi dan login ke aplikasi - selesai
 Melihat homestay yang tersedia - selesai
-Mencari homestay dengan filter
+Mencari homestay dengan filter - selesai
 Melakukan pemesanan homestay - selesai
 Melakukan pembayaran homestay - selesai
-Membatalkan pemesanan homestay
+Membatalkan pemesanan homestay - selesai
 Melihat event yang tersedia - selesai
-Mencari event dengan filter
+Mencari event dengan filter - selesai
 Menulis review untuk homestay - selesai
 Melihat review homestay yang ada - selesai
-
 
 2. Owner
 Registrasi dan login ke aplikasi - selesai

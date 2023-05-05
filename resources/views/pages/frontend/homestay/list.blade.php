@@ -4,7 +4,7 @@
             <div class="col-lg-4 col-md-4 position-relative">
                 @auth
                     <div
-                        class="{{ auth()->user()->wishlists->contains($homestay->id)? 'wishlist': 'wishlist_close' }} position-absolute">
+                        class="{{ auth()->user()->wishlists->contains($homestay->id)? 'wishlist-active': 'wishlist-inactive' }}">
                         <a class="tooltip_flip tooltip-effect-1" href="javascript:void(0);"
                             onclick="toggleWishlist({{ $homestay->id }})">
                             {{ auth()->user()->wishlists->contains($homestay->id)? '-': '+' }}

@@ -120,12 +120,15 @@
                         </p>
                         <hr>
                         {{-- contact to wa --}}
-                        <a class="btn_full_outline" target="_blank"
-                            href="https://api.whatsapp.com/send?phone={{ $booking->homestay->owner->phone_number }}&text=Halo%20Admin%20Saya%20Mau%20Konfirmasi%20Pembayaran%20Booking%20Saya%20Dengan%20ID%20{{ $booking->id }}">
-                            <i class="icon-whatsapp"></i>
-                            Contact to Admin
-                        </a>
-                        <a class="btn_full_outline" href="{{ route('booking.invoice', $booking->id) }}" target="_blank">View
+                        @if ($booking->status == 'pending')
+                            <a class="btn_full_outline" target="_blank"
+                                href="https://api.whatsapp.com/send?phone={{ $booking->homestay->owner->phone_number }}&text=Halo%20Admin%20Saya%20Mau%20Konfirmasi%20Pembayaran%20Booking%20Saya%20Dengan%20ID%20{{ $booking->code }}%20dan%20nama%20{{ Auth::user()->first_name }}%20{{ Auth::user()->last_name }}%20">
+                                <i class="icon-whatsapp"></i>
+                                Konfirmasi Pembayaran
+                            </a>
+                        @endif
+                        <a class="btn_full_outline" href="{{ route('booking.invoice', $booking->id) }}"
+                            target="_blank">View
                             your invoice</a>
                     </div>
                 </aside>

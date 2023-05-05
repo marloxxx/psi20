@@ -37,6 +37,12 @@ class EventController extends Controller
                 ->addColumn('checkbox', function ($data) {
                     return '<input type="checkbox" name="id[]" value="' . $data->id . '">';
                 })
+                ->editColumn('start_date', function ($data) {
+                    return $data->start_date->format('d M Y');
+                })
+                ->editColumn('end_date', function ($data) {
+                    return $data->end_date->format('d M Y');
+                })
                 ->addColumn('action', function ($data) {
                     return '<div class="btn-group" role="group">
                             <a href="' . route('backend.events.edit', $data->id) . '" class="btn btn-warning">
@@ -47,7 +53,7 @@ class EventController extends Controller
                             </a>
                         </div>';
                 })
-                ->rawColumns(['action', 'checkbox', 'facilities'])
+                ->rawColumns(['action', 'checkbox'])
                 ->make(true);
         }
         return view('pages.backend.events.index');

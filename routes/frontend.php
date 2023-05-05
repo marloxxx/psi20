@@ -9,9 +9,13 @@ use App\Http\Controllers\Frontend\HomestayController;
 use App\Http\Controllers\Frontend\ProfileController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Homestay
 Route::get('homestays', [HomestayController::class, 'index'])->name('homestays');
 Route::get('homestays/{homestay}', [HomestayController::class, 'show'])->name('homestays.show');
 Route::post('whislist/toggle', [HomestayController::class, 'toggle_wishlist'])->name('whislist.toggle');
+
+// Event
 Route::get('events', [EventController::class, 'index'])->name('events');
 Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
 
@@ -41,5 +45,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::put('profile/update-password', [ProfileController::class, 'update_password'])->name('profile.update-password');
     Route::put('profile/update-profile', [ProfileController::class, 'update_profile'])->name('profile.update-profile');
+    Route::post('profile/upload-profile', [ProfileController::class, 'upload_profile'])->name('profile.upload-profile');
     Route::get('logout', [AuthController::class, 'do_logout'])->name('logout');
 });

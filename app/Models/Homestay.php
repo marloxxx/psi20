@@ -13,11 +13,6 @@ class Homestay extends Model
     protected $table = 'homestays';
     protected $guarded = [];
 
-    public function homestayHasFacilities()
-    {
-        return $this->hasMany(HomestayHasFacility::class);
-    }
-
     public function facilities()
     {
         return $this->belongsToMany(Facility::class, 'homestay_has_facilities');

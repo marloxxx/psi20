@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\Event;
+use App\Models\Facility;
 use App\Models\Homestay;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -35,6 +36,8 @@ class HomeController extends Controller
         $popular_homestays = Homestay::with('images')->orderBy('views', 'desc')->get();
         // get latest events
         $events = Event::with('images')->orderBy('created_at', 'desc')->get();
-        return view('pages.frontend.home.index', compact('popular_homestays', 'events'));
+        // get facilities
+        $facilities = Facility::limit(6)->get();
+        return view('pages.frontend.home.index', compact('popular_homestays', 'events', 'facilities'));
     }
 }

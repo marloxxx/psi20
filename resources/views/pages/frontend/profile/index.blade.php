@@ -1,6 +1,7 @@
 @extends('layouts.frontend.master')
 @push('custom-styles')
     <link href="{{ asset('guests/css/admin.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
 @endpush
 @section('content')
     <section class="parallax-window" data-parallax="scroll" data-image-src="{{ asset('guests/img/admin_top.jpg') }}"
@@ -93,23 +94,23 @@
                                     <div class="hotel_container">
                                         <div class="img_container">
                                             <a href="single_hotel.html">
-                                                <img src="{{ asset($wishlist->homestay->images->first()->image_path) }}"
+                                                <img src="{{ asset($wishlist->images->first()->image_path) }}"
                                                     width="800" height="533" class="img-fluid" alt="Image">
                                                 <div class="ribbon top_rated">
                                                 </div>
                                                 <div class="short_info hotel">
                                                     <span
-                                                        class="price"><sup>Rp</sup>{{ number_format($wishlist->homestay->price) }}</span>
+                                                        class="price"><sup>Rp</sup>{{ number_format($wishlist->price) }}</span>
                                                 </div>
                                             </a>
                                         </div>
                                         <div class="hotel_title">
-                                            <h3><strong>{{ $wishlist->homestay->name }}</strong> </h3>
+                                            <h3><strong>{{ $wishlist->name }}</strong> </h3>
                                             <div class="rating">
-                                                @for ($i = 0; $i < $wishlist->homestay->rating; $i++)
+                                                @for ($i = 0; $i < $wishlist->rating; $i++)
                                                     <i class="icon-star voted"></i>
                                                 @endfor
-                                                @for ($i = 0; $i < 5 - $wishlist->homestay->rating; $i++)
+                                                @for ($i = 0; $i < 5 - $wishlist->rating; $i++)
                                                     <i class="icon-star-empty"></i>
                                                 @endfor
                                             </div>
@@ -167,8 +168,12 @@
                             </div>
                             <div class="col-md-6">
                                 <p>
-                                    <img src="{{ asset('guests/img/avatar1.jpg') }}" alt="Image"
-                                        class="img-fluid styled profile_pic">
+                                    @if ($user->profile_picture)
+                                        <img src="{{ asset('images/profile/' . $user->profile_picture) }}" alt="Image"
+                                            class="img-fluid styled profile_pic">
+                                    @else<img src="{{ asset('guests/img/avatar1.jpg') }}" alt="Image"
+                                            class="img-fluid styled profile_pic">
+                                    @endif
                                 </p>
                             </div>
                         </div>
@@ -218,31 +223,9 @@
 
                             <hr>
                             <h4>Upload profile photo</h4>
-                            <div class="form-inline upload_1">
-                                <div class="form-group">
-                                    <input type="file" name="files[]" id="js-upload-files" multiple>
-                                </div>
-                                <button type="submit" class="btn_1 green" id="js-upload-submit">Upload file</button>
-                            </div>
                             <!-- Drop Zone -->
-                            <h5>Or drag and drop files below</h5>
-                            <div class="upload-drop-zone" id="drop-zone">
-                                Just drag and drop files here
-                            </div>
-                            <!-- Progress Bar -->
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0"
-                                    aria-valuemax="100" style="width: 60%;">
-                                    <span class="sr-only">60% Complete</span>
-                                </div>
-                            </div>
-                            <!-- Upload Finished -->
-                            <div class="js-upload-finished">
-                                <h5>Processed files</h5>
-                                <div class="list-group">
-                                    <a href="#" class="list-group-item list-group-item-success"><span
-                                            class="badge alert-success pull-right">Success</span>image-01.jpg</a>
-                                </div>
+
+                            <div class="dropzone" id="drop-zone">
                             </div>
                             <!-- End Hidden on mobiles -->
 
@@ -262,6 +245,37 @@
     <!-- End main -->
 @endsection
 @push('custom-scripts')
+    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+    <script>
+        var myDropzone = new Dropzone("#drop-zone", {
+            url: "{{ route('profile.upload-profile') }}",
+            maxFiles: 1,
+            maxFilesize: 2,
+            acceptedFiles: 'image/*',
+            addRemoveLinks: true,
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            success: function(file, response) {
+                if (response.status == 'success') {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: response.message,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    $('#update-profile')[0].reset();
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: response.message,
+                    });
+                }
+            }
+        });
+    </script>
     <!-- Specific scripts -->
     <script src="{{ asset('guests/js/tabs.js') }}"></script>
     <script>
@@ -336,7 +350,7 @@
                             showConfirmButton: false,
                             timer: 1500
                         });
-                        $('#update-password')[0].reset();
+                        location.reload();
                     } else {
                         Swal.fire({
                             icon: 'error',

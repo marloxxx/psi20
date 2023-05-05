@@ -127,7 +127,14 @@
                         <div class="col-lg-9">
                             @foreach ($reviews as $review)
                                 <div class="review_strip_single">
-                                    <img src="{{ asset('guests/img/avatar1.jpg') }}" alt="Image" class="rounded-circle">
+                                    @if ($review->user->profile_picture)
+                                        <img src="{{ asset('images/profile/' . $review->user->profile_picture) }}"
+                                            alt="{{ $review->user->first_name }}" class="img-circle" width="80"
+                                            height="80" />
+                                    @else
+                                        <img src="{{ asset('guests/img/avatar1.jpg') }}" alt="Image"
+                                            class="rounded-circle">
+                                    @endif
                                     <small> - {{ \Carbon\Carbon::parse($review->created_at)->format('d M Y') }} -</small>
                                     <h4>{{ $review->user->first_name }}</h4>
                                     <p>
@@ -162,7 +169,6 @@
                             <h3 class="inner">Check Availability</h3>
                             <div class="row">
                                 <div class="col-md-12">
-
                                     <div class="form-group">
                                         <label><i class="icon-calendar-7"></i> Check in / Check out</label>
                                         <input class="date-pick form-control" type="text" placeholder="Select dates"

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\User;
+use App\Models\Facility;
 use App\Models\Homestay;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -28,13 +29,41 @@ class HomestayController extends Controller
     public function index(Request $request)
     {
         $this->setMeta('Homestay');
+
         if ($request->ajax()) {
-            // $homestays = Homestay::with('images')->paginate(6);
-            return view('pages.frontend.homestay.list', [
-                'homestays' => Homestay::with('images', 'facilities')->paginate(6)
-            ])->render();
+            // dd($request->all());
+            $range = explode(';', $request->range);
+            // dd($range);
+            $sort_price = $request->sort_price;
+            $request_facilities = $request->facilities;
+            $rating = $request->rating; // [3, 5]
+            // get homestays with images and facilities based on price range, sort price, facilities, rating
+            $homestays = Homestay::with('images', 'facilities')
+                ->whereBetween('price', [$range[0], $range[1]])
+                ->when($sort_price, function ($query, $sort_price) {
+                    return $query->orderBy('price', $sort_price);
+                })
+                ->when($request_facilities, function ($query, $request_facilities) {
+                    return $query->whereHas('facilities', function ($query) use ($request_facilities) {
+                        return $query->whereIn('facility_id', $request_facilities);
+                    });
+                })
+                ->when($rating, function ($query, $rating) {
+                    return $query->whereHas('reviews', function ($query) use ($rating) {
+                        return $query->whereIn('rating', $rating);
+                    });
+                })
+                ->paginate(6);
+            return view('pages.frontend.homestay.list', compact('homestays'))->render();
         }
-        return view('pages.frontend.homestay.index');
+
+        // get the lowest price and maximum price
+        $min_price = Homestay::min('price');
+        $max_price = Homestay::max('price');
+
+        // get facilities
+        $facilities = Facility::limit(6)->get();
+        return view('pages.frontend.homestay.index', compact('min_price', 'max_price', 'facilities'));
     }
 
     public function show($id)

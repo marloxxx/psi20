@@ -36,32 +36,32 @@
                 <aside class="col-lg-3">
                     <p>
                         <a class="btn_map" data-bs-toggle="collapse" href="#collapseMap" aria-expanded="false"
-                            aria-controls="collapseMap" data-text-swap="Hide map" data-text-original="View on map">View on
-                            map</a>
+                            aria-controls="collapseMap" data-text-swap="Hide map" data-text-original="View on map">Lihat
+                            Peta</a>
                     </p>
 
                     <div id="filters_col">
                         <a data-bs-toggle="collapse" href="#collapseFilters" aria-expanded="false"
-                            aria-controls="collapseFilters" id="filters_col_bt"><i
-                                class="icon_set_1_icon-65"></i>Filters</a>
+                            aria-controls="collapseFilters" id="filters_col_bt">
+                            <i class="icon_set_1_icon-65"></i>Filters</a>
                         <div class="collapse show" id="collapseFilters">
                             <div class="filter_type">
-                                <h6>Price</h6>
+                                <h6>Harga</h6>
                                 <input type="text" id="range" name="range" value="">
                             </div>
                             <div class="filter_type">
-                                <h6>Star Category</h6>
+                                <h6>Penilaian</h6>
                                 <ul>
                                     <li>
                                         <label class="container_check">
                                             <span class="rating">
-                                                <i class="icon_set_1_icon-81 voted"></i><i
-                                                    class="icon_set_1_icon-81 voted"></i><i
-                                                    class="icon_set_1_icon-81 voted"></i><i
-                                                    class="icon_set_1_icon-81 voted"></i><i
-                                                    class="icon_set_1_icon-81 voted"></i>
+                                                <i class="icon_set_1_icon-81 voted"></i>
+                                                <i class="icon_set_1_icon-81 voted"></i>
+                                                <i class="icon_set_1_icon-81 voted"></i>
+                                                <i class="icon_set_1_icon-81 voted"></i>
+                                                <i class="icon_set_1_icon-81 voted"></i>
                                             </span>(15)
-                                            <input type="checkbox">
+                                            <input type="checkbox" name="rating[]" value="5">
                                             <span class="checkmark"></span>
                                         </label>
                                     </li>
@@ -73,7 +73,7 @@
                                                     class="icon_set_1_icon-81 voted"></i><i
                                                     class="icon_set_1_icon-81 voted"></i><i class="icon_set_1_icon-81"></i>
                                             </span>(10)
-                                            <input type="checkbox">
+                                            <input type="checkbox" name="rating[]" value="4">
                                             <span class="checkmark"></span>
                                         </label>
                                     </li>
@@ -85,7 +85,7 @@
                                                     class="icon_set_1_icon-81 voted"></i><i
                                                     class="icon_set_1_icon-81"></i><i class="icon_set_1_icon-81"></i>
                                             </span>(22)
-                                            <input type="checkbox">
+                                            <input type="checkbox" name="rating[]" value="3">
                                             <span class="checkmark"></span>
                                         </label>
                                     </li>
@@ -97,7 +97,7 @@
                                                     class="icon_set_1_icon-81"></i><i class="icon_set_1_icon-81"></i><i
                                                     class="icon_set_1_icon-81"></i>
                                             </span>(08)
-                                            <input type="checkbox">
+                                            <input type="checkbox" name="rating[]" value="2">
                                             <span class="checkmark"></span>
                                         </label>
                                     </li>
@@ -108,64 +108,24 @@
                                                     class="icon_set_1_icon-81"></i><i class="icon_set_1_icon-81"></i><i
                                                     class="icon_set_1_icon-81"></i>
                                             </span>(08)
-                                            <input type="checkbox">
+                                            <input type="checkbox" name="rating[]" value="1">
                                             <span class="checkmark"></span>
                                         </label>
                                     </li>
                                 </ul>
                             </div>
                             <div class="filter_type">
-                                <h6>Facility</h6>
+                                <h6>Fasiitas</h6>
                                 <ul>
-                                    <li>
-                                        <label class="container_check">
-                                            Pet allowed
-                                            <input type="checkbox">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="container_check">
-                                            Wifi
-                                            <input type="checkbox">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="container_check">
-                                            Spa
-                                            <input type="checkbox">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="container_check">
-                                            Restaurant
-                                            <input type="checkbox">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="container_check">
-                                            Pool
-                                            <input type="checkbox">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="container_check">
-                                            Parking
-                                            <input type="checkbox">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="container_check">
-                                            Fitness center
-                                            <input type="checkbox">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </li>
+                                    @foreach ($facilities as $facility)
+                                        <li>
+                                            <label class="container_check">
+                                                {{ $facility->name }}
+                                                <input type="checkbox" name="facilities[]" value="{{ $facility->id }}">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -174,9 +134,10 @@
                     <!--End filters col-->
                     <div class="box_style_2 d-none d-sm-block">
                         <i class="icon_set_1_icon-57"></i>
-                        <h4>Need <span>Help?</span></h4>
-                        <a href="tel://004542344599" class="phone">+45 423 445 99</a>
-                        <small>Monday to Friday 9.00am - 7.30pm</small>
+                        <h4>Butuh <span>Bantuan?</span></h4>
+                        <a href="tel://{{ getSettings('site_phone') }}"
+                            class="phone">+{{ getSettings('site_phone') }}</a>
+                        <small>Silahkan hubungi kami jika anda memiliki pertanyaan seputar homestay</small>
                     </div>
                 </aside>
                 <!--End aside -->
@@ -188,16 +149,17 @@
                             <div class="col-md-3 col-sm-4">
                                 <div class="styled-select-filters">
                                     <select name="sort_price" id="sort_price">
-                                        <option value="" selected>Sort by price</option>
-                                        <option value="lower">Lowest price</option>
-                                        <option value="higher">Highest price</option>
+                                        <option value="" selected>Urutkan berdasarkan</option>
+                                        <option value="min">Harga terendah</option>
+                                        <option value="max">Harga tertinggi</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-sm-4 d-none d-sm-block text-end">
-                                <a href="#" class="bt_filters"><i class="icon-th"></i></a> <a
-                                    href="all_hotels_list.html" class="bt_filters"><i class=" icon-list"></i></a>
-                            </div>
+                            {{-- <div class="col-md-6 col-sm-4 d-none d-sm-block text-end">
+                                <a href="#" class="bt_filters"><i class="icon-th"></i></a>
+                                <a href="all_hotels_list.html" class="bt_filters"><i class=" icon-list"></i>
+                                </a>
+                            </div> --}}
                         </div>
                     </div>
                     <!--End tools -->
@@ -215,9 +177,48 @@
 @endsection
 @push('custom-scripts')
     <script>
+        $("#range").ionRangeSlider({
+            hide_min_max: !0,
+            keyboard: !0,
+            min: {{ $min_price }},
+            max: {{ $max_price }},
+            from: 0,
+            to: 1e4,
+            type: "double",
+            step: 1,
+            prefix: "Rp",
+            grid: !0,
+            onStart: function(data) {
+                $("#range").val(data.from + ";" + data.to);
+            },
+            onChange: function(data) {
+                $("#range").val(data.from + ";" + data.to);
+                load_data(1);
+            },
+        });
+
+        $("#sort_price").change(function() {
+            load_data(1);
+        });
+
+        $("input[name='rating[]']").change(function() {
+            load_data(1);
+        });
+
+        $("input[name='facilities[]']").change(function() {
+            load_data(1);
+        });
+
         function load_data(page) {
             $.get("?page=" + page, {
-
+                facilities: $("input[name='facilities[]']:checked").map(function() {
+                    return $(this).val();
+                }).get(),
+                sort_price: $("#sort_price").val(),
+                range: $("#range").val(),
+                rating: $("input[name='rating[]']:checked").map(function() {
+                    return $(this).val();
+                }).get(),
             }, function(data) {
                 $("#list_result").html(data);
             });

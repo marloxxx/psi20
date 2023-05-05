@@ -30,7 +30,19 @@ class EventController extends Controller
     {
         $this->setMeta('Events');
         if ($request->ajax()) {
-            $events = Event::latest()->with('images')->paginate(9);
+            $date = $request->date;
+            // get events where date is between start_date and end_date
+            if ($date) {
+                $events = Event::whereDate('start_date', '<=', $date)
+                    ->whereDate('end_date', '>=', $date)
+                    ->latest()
+                    ->with('images')
+                    ->paginate(9);
+            } else {
+                $events = Event::latest()
+                    ->with('images')
+                    ->paginate(9);
+            }
             return view('pages.frontend.event.list', compact('events'))->render();
         }
         return view('pages.frontend.event.index');
