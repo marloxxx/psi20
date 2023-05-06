@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Booking extends Model
 {
+    const STATUS_PENDING = 'pending';
+    const STATUS_CONFIRMED = 'confirmed';
+    const STATUS_APPROVED = 'approved';
+    const STATUS_REJECTED = 'rejected';
+    const STATUS_COMPLETED = 'completed';
+    const STATUS_CANCELED = 'canceled';
+
     use HasFactory, SoftDeletes;
 
     protected $guarded = [];
@@ -36,16 +43,22 @@ class Booking extends Model
     {
         switch ($this->status) {
             case 'pending':
-                return '<span class="badge badge-secondary">Pending</span>';
+                return '<span class="badge badge-secondary">Menunggu</span>';
                 break;
             case 'confirmed':
-                return '<span class="badge badge-primary">Confirmed</span>';
+                return '<span class="badge badge-primary">Dikonfirmasi</span>';
+                break;
+            case 'approved':
+                return '<span class="badge badge-success">Disetujui</span>';
+                break;
+            case 'rejected':
+                return '<span class="badge badge-danger">Ditolak</span>';
                 break;
             case 'completed':
-                return '<span class="badge badge-success">Completed</span>';
+                return '<span class="badge badge-success">Selesai</span>';
                 break;
             case 'canceled':
-                return '<span class="badge badge-danger">Canceled</span>';
+                return '<span class="badge badge-danger">Dibatalkan</span>';
                 break;
             default:
                 return '<span class="badge badge-secondary">Pending</span>';

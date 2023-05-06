@@ -14,10 +14,24 @@ use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
+    private $message;
     public function __construct()
     {
         SEOMeta::setTitleDefault(getSettings('site_name'));
         parent::__construct();
+        $this->message = [
+            'first_name.required' => 'Nama depan tidak boleh kosong',
+            'last_name.required' => 'Nama belakang tidak boleh kosong',
+            'email.required' => 'Email tidak boleh kosong',
+            'email.email' => 'Email harus berupa email',
+            'email.unique' => 'Email sudah digunakan',
+            'phone_number.required' => 'Nomor telepon tidak boleh kosong',
+            'phone_number.numeric' => 'Nomor telepon harus berupa angka',
+            'phone_number.digits_between' => 'Nomor telepon harus berupa angka dan minimal 10 digit',
+            'password.required' => 'Password tidak boleh kosong',
+            'password.min' => 'Password minimal 8 karakter',
+            'roles.required' => 'Role tidak boleh kosong',
+        ];
     }
     private function setMeta(string $title)
     {
@@ -79,7 +93,7 @@ class UserController extends Controller
             'phone_number' => 'required|numeric|digits_between:10,15',
             'password' => 'required|min:8',
             'roles' => 'required'
-        ]);
+        ], $this->message);
 
         if ($validator->fails()) {
             return response()->json([
@@ -130,7 +144,7 @@ class UserController extends Controller
             'phone_number' => 'required|numeric|digits_between:10,15',
             'password' => 'nullable|min:8',
             'roles' => 'required'
-        ]);
+        ], $this->message);
 
         if ($validator->fails()) {
             return response()->json([

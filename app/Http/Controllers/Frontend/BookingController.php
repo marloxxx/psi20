@@ -36,12 +36,12 @@ class BookingController extends Controller
         if ($homestay->isAvailable($checkin, $checkout)) {
             return response()->json([
                 'status' => 'success',
-                'message' => 'Homestay is available.'
+                'message' => 'Penginapan tersedia.'
             ]);
         } else {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Homestay is not available.'
+                'message' => 'Penginapan tidak tersedia.'
             ]);
         }
     }
@@ -92,7 +92,7 @@ class BookingController extends Controller
         //     $booking->save();
         // }
         // dd($snapToken);
-        return view('pages.frontend.booking.show', compact('booking', 'snapToken'));
+        return view('pages.frontend.booking.show', compact('booking'));
     }
 
     public function cancel($id)
@@ -103,48 +103,49 @@ class BookingController extends Controller
         ]);
         return response()->json([
             'status' => 'success',
-            'message' => 'Booking cancelled.'
+            'message' => 'Pemesanan berhasil dibatalkan.'
         ]);
     }
-    public function callback()
-    {
-        $callback = new CallbackService;
 
-        if ($callback->isSignatureKeyVerified()) {
-            $notification = $callback->getNotification();
-            $booking = $callback->getBooking();
+    // public function callback()
+    // {
+    //     $callback = new CallbackService;
 
-            if ($callback->isSuccess()) {
-                Booking::where('id', $booking->id)->update([
-                    'payment_status' => '2',
-                ]);
-            }
+    //     if ($callback->isSignatureKeyVerified()) {
+    //         $notification = $callback->getNotification();
+    //         $booking = $callback->getBooking();
 
-            if ($callback->isExpire()) {
-                Booking::where('id', $booking->id)->update([
-                    'payment_status' => '3',
-                ]);
-            }
+    //         if ($callback->isSuccess()) {
+    //             Booking::where('id', $booking->id)->update([
+    //                 'payment_status' => '2',
+    //             ]);
+    //         }
 
-            if ($callback->isCancelled()) {
-                Booking::where('id', $booking->id)->update([
-                    'payment_status' => '4',
-                ]);
-            }
+    //         if ($callback->isExpire()) {
+    //             Booking::where('id', $booking->id)->update([
+    //                 'payment_status' => '3',
+    //             ]);
+    //         }
 
-            return response()
-                ->json([
-                    'success' => true,
-                    'message' => 'Notifikasi berhasil diproses',
-                ]);
-        } else {
-            return response()
-                ->json([
-                    'error' => true,
-                    'message' => 'Signature key tidak terverifikasi',
-                ], 403);
-        }
-    }
+    //         if ($callback->isCancelled()) {
+    //             Booking::where('id', $booking->id)->update([
+    //                 'payment_status' => '4',
+    //             ]);
+    //         }
+
+    //         return response()
+    //             ->json([
+    //                 'success' => true,
+    //                 'message' => 'Notifikasi berhasil diproses',
+    //             ]);
+    //     } else {
+    //         return response()
+    //             ->json([
+    //                 'error' => true,
+    //                 'message' => 'Signature key tidak terverifikasi',
+    //             ], 403);
+    //     }
+    // }
 
     public function invoice($id)
     {

@@ -88,11 +88,12 @@
                                     <label class="custom-control-label" for="check-all"></label>
                                 </div>
                             </th>
-                            <th class="min-w-250px">Name</th>
-                            <th class="min-w-250px">Facilities</th>
-                            <th class="min-w-250px">Price</th>
-                            <th class="min-w-250px">Capacity</th>
-                            <th class="min-w-70px">Actions</th>
+                            <th class="min-w-250px">Nama</th>
+                            <th class="min-w-250px">Fasilitas</th>
+                            <th class="min-w-250px">Harga</th>
+                            <th class="min-w-250px">Kapasitas</th>
+                            <th class="min-w-250px">Status</th>
+                            <th class="min-w-70px">Aksi</th>
                         </tr>
                         <!--end::Table row-->
                     </thead>
@@ -137,6 +138,10 @@
                     {
                         data: 'capacity',
                         name: 'capacity',
+                    },
+                    {
+                        data: 'is_available',
+                        name: 'is_available',
                     },
                     {
                         data: 'action',

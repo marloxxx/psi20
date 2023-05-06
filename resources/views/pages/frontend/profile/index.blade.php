@@ -33,13 +33,13 @@
             <div id="tabs" class="tabs">
                 <nav>
                     <ul>
-                        <li><a href="#section-1" class="icon-booking"><span>Bookings</span></a>
+                        <li><a href="#section-1" class="icon-booking"><span>Pesananku</span></a>
                         </li>
-                        <li><a href="#section-2" class="icon-wishlist"><span>Wishlist</span></a>
+                        <li><a href="#section-2" class="icon-wishlist"><span>Favoritku</span></a>
                         </li>
-                        <li><a href="#section-3" class="icon-settings"><span>Settings</span></a>
+                        <li><a href="#section-3" class="icon-settings"><span>Pengaturan</span></a>
                         </li>
-                        <li><a href="#section-4" class="icon-profile"><span>Profile</span></a>
+                        <li><a href="#section-4" class="icon-profile"><span>Profil</span></a>
                         </li>
                     </ul>
                 </nav>
@@ -59,22 +59,23 @@
                                     <div class="col-lg-6 col-md-5">
                                         <h3 class="hotel_booking">{{ $booking->homestay->name }}
                                             <span>{{ $booking->homestay->getDays($booking->check_in, $booking->check_out) }}
-                                                nights</span>
+                                                malam</span>
                                         </h3>
                                     </div>
                                     <div class="col-lg-2 col-md-3">
                                         <ul class="info_booking">
-                                            <li><strong>Booking code</strong> {{ $booking->code }}</li>
-                                            <li><strong>Booked on</strong> {{ $booking->created_at->format('d/m/Y') }}
+                                            <li><strong>Kode Pesanan</strong> {{ $booking->code }}</li>
+                                            <li><strong>Dipesan pada</strong> {{ $booking->created_at->format('d/m/Y') }}
                                         </ul>
                                     </div>
                                     <div class="col-lg-2 col-md-2">
                                         <div class="booking_buttons">
-                                            <a href="{{ route('booking.show', $booking->id) }}" class="btn_2">View
-                                                details</a>
+                                            <a href="{{ route('booking.show', $booking->id) }}" class="btn_2">
+                                                Lihat Detail
+                                            </a>
                                             @if ($booking->status == 'pending')
                                                 <a href="javascript:;" onclick="cancel({{ $booking->id }})"
-                                                    class="btn_3">Cancel</a>
+                                                    class="btn_3">Batalkan</a>
                                             @endif
                                         </div>
                                     </div>
@@ -132,21 +133,21 @@
                         <div class="row">
                             <form id="update-password">
                                 <div class="col-md-12 add_bottom_30">
-                                    <h4>Change your password</h4>
+                                    <h4>Ganti password</h4>
                                     <div class="form-group">
-                                        <label>Old password</label>
+                                        <label>Password lama</label>
                                         <input class="form-control" name="old_password" id="old_password" type="password">
                                     </div>
                                     <div class="form-group">
-                                        <label>New password</label>
+                                        <label>Password baru</label>
                                         <input class="form-control" name="new_password" id="new_password" type="password">
                                     </div>
                                     <div class="form-group">
-                                        <label>Confirm new password</label>
+                                        <label>Konfirmasi password baru</label>
                                         <input class="form-control" name="confirm_new_password" id="confirm_new_password"
                                             type="password">
                                     </div>
-                                    <button type="submit" class="btn_1 green">Update Password</button>
+                                    <button type="submit" class="btn_1 green">Ganti Password</button>
                                 </div>
                             </form>
                         </div>
@@ -155,15 +156,15 @@
                     <section id="section-4">
                         <div class="row">
                             <div class="col-md-6">
-                                <h4>Your profile</h4>
+                                <h4>Profile Anda</h4>
                                 <ul id="profile_summary">
-                                    <li>First name <span>{{ $user->first_name }}</span>
+                                    <li>Nama Depan <span>{{ $user->first_name }}</span>
                                     </li>
-                                    <li>Last name <span>{{ $user->last_name }}</span>
+                                    <li>Nama Belakang <span>{{ $user->last_name }}</span>
                                     </li>
-                                    <li>Phone number <span>{{ $user->phone_number }}</span>
+                                    <li>No Telepon <span>{{ $user->phone_number }}</span>
                                     </li>
-                                    <li>Date of birth <span>{{ $user->date_of_birth }}</span>
+                                    <li>Tanggal Lahir <span>{{ $user->date_of_birth }}</span>
                                 </ul>
                             </div>
                             <div class="col-md-6">
@@ -183,18 +184,18 @@
                         <form id="update-profile">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h4>Edit profile</h4>
+                                    <h4>Edit profil</h4>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>First name</label>
+                                        <label>Nama Awal</label>
                                         <input class="form-control" name="first_name" id="first_name" type="text"
                                             value="{{ $user->first_name }}" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Last name</label>
+                                        <label>Nama Belakang</label>
                                         <input class="form-control" name="last_name" id="last_name" type="text"
                                             value="{{ $user->last_name }}" />
                                     </div>
@@ -205,14 +206,14 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Phone number</label>
+                                        <label>No Telepon</label>
                                         <input class="form-control" name="phone_number" id="phone_number" type="text"
                                             value="{{ $user->phone_number }}" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Date of birth <small>(dd/mm/yyyy)</small>
+                                        <label>Tanggal Lahir <small>(dd/mm/yyyy)</small>
                                         </label>
                                         <input class="form-control" name="date_of_birth" id="date_of_birth"
                                             type="text" value="{{ $user->date_of_birth }}" />
@@ -222,7 +223,7 @@
                             <!-- End row -->
 
                             <hr>
-                            <h4>Upload profile photo</h4>
+                            <h4>Unggah Foto Profil</h4>
                             <!-- Drop Zone -->
 
                             <div class="dropzone" id="drop-zone">
@@ -230,7 +231,7 @@
                             <!-- End Hidden on mobiles -->
 
                             <hr>
-                            <button type="submit" class="btn_1 green">Update Profile</button>
+                            <button type="submit" class="btn_1 green">Simpan</button>
                         </form>
                     </section>
                     <!-- End section 4 -->
@@ -289,13 +290,14 @@
     <script>
         function cancel(id) {
             Swal.fire({
-                title: 'Are you sure?',
-                text: "You want to cancel this booking?",
+                title: 'Apakah anda yakin?',
+                text: "Anda tidak dapat mengembalikan pesanan yang sudah dibatalkan!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#aaa',
-                confirmButtonText: 'Yes, cancel it!'
+                confirmButtonText: 'Ya, batalkan!',
+                cancelButtonText: 'Tidak, batal!',
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({

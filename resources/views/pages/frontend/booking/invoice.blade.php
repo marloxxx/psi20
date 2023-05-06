@@ -45,21 +45,21 @@
         <div class="row">
             <div class="col-12">
                 <div class="invoice-title">
-                    <h2>Invoice</h2>
-                    <h3 class="float-end">Order # 12345</h3>
+                    <h2>Tagihan</h2>
+                    <h3 class="float-end">Pesanan #{{ $booking->Code }}</h3>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-6">
                         <address>
-                            <strong>Billed To:</strong><br>
+                            <strong>Tagihan Kepada:</strong><br>
                             {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}<br>
                             {{ Auth::user()->phone_number }}<br>
                         </address>
                     </div>
                     <div class="col-6 text-end">
                         <address>
-                            <strong>Booking Date:</strong><br>
+                            <strong>Tanggal Pemesanan:</strong><br>
                             {{ \Carbon\Carbon::parse($booking->created_at)->format('d M Y') }}<br><br>
                             <br><br>
                         </address>
@@ -72,17 +72,17 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><strong>Booking summary</strong></h3>
+                        <h3 class="panel-title"><strong>Rincian Pesanan</strong></h3>
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
                             <table class="table table-condensed">
                                 <thead>
                                     <tr>
-                                        <td><strong>Homestay</strong></td>
-                                        <td class="text-center"><strong>Price</strong></td>
-                                        <td class="text-center"><strong>Nights</strong></td>
-                                        <td class="text-end"><strong>Totals</strong></td>
+                                        <td><strong>Penginapan</strong></td>
+                                        <td class="text-center"><strong>Harga</strong></td>
+                                        <td class="text-center"><strong>Malam</strong></td>
+                                        <td class="text-end"><strong>Total</strong></td>
                                     </tr>
                                 </thead>
                                 <tbody>

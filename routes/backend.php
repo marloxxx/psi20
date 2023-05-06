@@ -35,6 +35,7 @@ Route::name('backend.')->middleware(['auth', 'role:admin|owner'])->group(functio
     // Bookings
     Route::prefix('bookings')->name('bookings.')->group(function () {
         Route::get('', [BookingController::class, 'index'])->name('index');
+        Route::get('pdf', [BookingController::class, 'pdf'])->name('pdf');
         Route::get('{booking}', [BookingController::class, 'show'])->name('show');
         Route::put('{booking}/approve', [BookingController::class, 'approve'])->name('approve');
         Route::put('{booking}/reject', [BookingController::class, 'reject'])->name('reject');

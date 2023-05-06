@@ -33,13 +33,11 @@ class EventController extends Controller
         if ($request->ajax()) {
             $title = $request->title;
             if ($request->date != null) {
-                // dd($request->all());
                 $dates = explode(' > ', $request->date);
                 // parse from string to Carbon
                 // create from this format 05-04-23 to 05-04-2023
                 $start_date = Carbon::createFromFormat('m-d-y', $dates[0]);
                 $end_date = Carbon::createFromFormat('m-d-y', $dates[1]);
-                // dd($start_date, $end_date);
                 // get events where start_date like $start_date and end_date like $end_date and title like $title
                 $events = Event::whereBetween('start_date', [$start_date, $end_date])
                     ->whereBetween('end_date', [$start_date, $end_date])

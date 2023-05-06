@@ -52,7 +52,7 @@
                 <div class="price_list">
                     <div>
                         <sup>Rp</sup>{{ number_format($homestay->price) }}
-                        <small>*From/Per night</small>
+                        <small>*per malam</small>
                         <p><a href="{{ route('homestays.show', $homestay->id) }}" class="btn_1">Details</a>
                         </p>
                     </div>

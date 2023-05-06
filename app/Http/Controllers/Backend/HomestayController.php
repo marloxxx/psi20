@@ -15,10 +15,28 @@ use Illuminate\Support\Facades\Validator;
 
 class HomestayController extends Controller
 {
+    private $message;
     public function __construct()
     {
         SEOMeta::setTitleDefault(getSettings('site_name'));
         parent::__construct();
+        $this->message = [
+            'name.required' => 'Nama tidak boleh kosong',
+            'is_available.required' => 'Status tidak boleh kosong',
+            'facilities.required' => 'Fasilitas tidak boleh kosong',
+            'description.required' => 'Deskripsi tidak boleh kosong',
+            'price.required' => 'Harga tidak boleh kosong',
+            'price.numeric' => 'Harga harus berupa angka',
+            'capacity.required' => 'Kapasitas tidak boleh kosong',
+            'capacity.numeric' => 'Kapasitas harus berupa angka',
+            'address.required' => 'Alamat tidak boleh kosong',
+            'latitude.required' => 'Latitude tidak boleh kosong',
+            'longitude.required' => 'Longitude tidak boleh kosong',
+            'image.required' => 'Gambar tidak boleh kosong',
+            'image.image' => 'Gambar harus berupa file gambar',
+            'image.mimes' => 'Gambar harus berupa file gambar',
+            'image.max' => 'Gambar maksimal 2MB',
+        ];
     }
 
     private function setMeta(string $title)
@@ -56,7 +74,10 @@ class HomestayController extends Controller
                     }
                     return $facilities;
                 })
-                ->rawColumns(['action', 'checkbox', 'facilities'])
+                ->editColumn('is_available', function ($data) {
+                    return $data->is_available ? '<span class="badge badge-success">Tersedia</span>' : '<span class="badge badge-danger">Tidak Tersedia</span>';
+                })
+                ->rawColumns(['action', 'checkbox', 'facilities', 'is_available'])
                 ->make(true);
         }
         return view('pages.backend.homestays.index');
@@ -87,7 +108,7 @@ class HomestayController extends Controller
             'latitude' => 'required',
             'longitude' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+        ], $this->message);
 
         if ($validator->fails()) {
             return response()->json([
@@ -106,7 +127,7 @@ class HomestayController extends Controller
             'address' => $request->address,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
-        ]);
+        ], $this->message);
 
         $homestay->facilities()->attach($request->facilities);
 
@@ -160,7 +181,7 @@ class HomestayController extends Controller
             'latitude' => 'required',
             'longitude' => 'required',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+        ], $this->message);
 
         if ($validator->fails()) {
             return response()->json([
@@ -251,7 +272,7 @@ class HomestayController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Gambar berhasil ditambahkan',
+            'message' => 'Data berhasil ditambahkan',
         ]);
     }
 
@@ -269,7 +290,7 @@ class HomestayController extends Controller
         $image->delete();
         return response()->json([
             'status' => 'success',
-            'message' => 'Gambar berhasil dihapus',
+            'message' => 'Data berhasil dihapus',
         ]);
     }
 }

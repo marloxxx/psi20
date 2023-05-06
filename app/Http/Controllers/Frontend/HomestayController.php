@@ -88,14 +88,14 @@ class HomestayController extends Controller
             return response()->json([
                 'status' => 'success',
                 'action' => 'remove',
-                'message' => 'Homestay removed from wishlist.'
+                'message' => 'Penginapan dihapus dari favorit.'
             ]);
         } else {
             $user->wishlists()->attach($homestay->id);
             return response()->json([
                 'status' => 'success',
                 'action' => 'add',
-                'message' => 'Homestay added to wishlist.'
+                'message' => 'Penginapan ditambahkan ke favorit.'
             ]);
         }
     }
@@ -106,6 +106,17 @@ class HomestayController extends Controller
             'rating' => 'required|numeric|min:1|max:5',
             'review' => 'required|string|min:10|max:255',
             'homestay_id' => 'required|exists:homestays,id',
+        ], [
+            'rating.required' => 'Rating tidak boleh kosong',
+            'rating.numeric' => 'Rating harus berupa angka',
+            'rating.min' => 'Rating minimal 1',
+            'rating.max' => 'Rating maksimal 5',
+            'review.required' => 'Review tidak boleh kosong',
+            'review.string' => 'Review harus berupa string',
+            'review.min' => 'Review minimal 10 karakter',
+            'review.max' => 'Review maksimal 255 karakter',
+            'homestay_id.required' => 'Homestay tidak boleh kosong',
+            'homestay_id.exists' => 'Homestay tidak ditemukan',
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -130,7 +141,7 @@ class HomestayController extends Controller
         } else {
             return response()->json([
                 'status' => 'error',
-                'message' => 'You have not booked this homestay.',
+                'message' => 'Anda belum pernah memesan penginapan ini.',
             ]);
         }
     }

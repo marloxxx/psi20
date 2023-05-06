@@ -13,10 +13,14 @@ use Illuminate\Support\Facades\Validator;
 
 class FacilityController extends Controller
 {
+    private $message;
     public function __construct()
     {
         SEOMeta::setTitleDefault(getSettings('site_name'));
         parent::__construct();
+        $this->message = [
+            'name.required' => 'Nama tidak boleh kosong',
+        ];
     }
     private function setMeta(string $title)
     {
@@ -66,7 +70,7 @@ class FacilityController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name'  => 'required',
-        ]);
+        ], $this->message);
 
         if ($validator->fails()) {
             return response()->json([
@@ -109,7 +113,7 @@ class FacilityController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name'  => 'required',
-        ]);
+        ], $this->message);
 
         if ($validator->fails()) {
             return response()->json([

@@ -14,10 +14,28 @@ use Yajra\DataTables\Facades\DataTables;
 
 class EventController extends Controller
 {
+    private $message;
     public function __construct()
     {
         SEOMeta::setTitleDefault(getSettings('site_name'));
         parent::__construct();
+        $this->message = [
+            'title.required' => 'Judul tidak boleh kosong',
+            'address.required' => 'Alamat tidak boleh kosong',
+            'description.required' => 'Deskripsi tidak boleh kosong',
+            'start_date.required' => 'Tanggal mulai tidak boleh kosong',
+            'start_date.date' => 'Tanggal mulai harus berupa tanggal',
+            'start_date.before' => 'Tanggal mulai harus sebelum tanggal berakhir',
+            'end_date.required' => 'Tanggal berakhir tidak boleh kosong',
+            'end_date.date' => 'Tanggal berakhir harus berupa tanggal',
+            'end_date.after' => 'Tanggal berakhir harus setelah tanggal mulai',
+            'latitude.required' => 'Latitude tidak boleh kosong',
+            'longitude.required' => 'Longitude tidak boleh kosong',
+            'image.required' => 'Gambar tidak boleh kosong',
+            'image.image' => 'Gambar harus berupa file gambar',
+            'image.mimes' => 'Gambar harus berupa file gambar',
+            'image.max' => 'Gambar maksimal 2MB',
+        ];
     }
 
     private function setMeta(string $title)
@@ -26,6 +44,7 @@ class EventController extends Controller
         OpenGraph::setTitle(SEOMeta::getTitle());
         JsonLd::setTitle(SEOMeta::getTitle());
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -81,7 +100,7 @@ class EventController extends Controller
             'latitude'      => 'required',
             'longitude'     => 'required',
             'image'         => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+        ], $this->message);
 
         if ($validator->fails()) {
             return response()->json([
@@ -148,7 +167,7 @@ class EventController extends Controller
             'latitude'      => 'required',
             'longitude'     => 'required',
             'image'         => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+        ], $this->message);
 
         if ($validator->fails()) {
             return response()->json([

@@ -40,6 +40,19 @@ class SettingController extends Controller
             'site_email' => 'required|email:rfc,dns',
             'site_phone' => 'required|numeric',
             'site_url' => 'required',
+        ], [
+            'site_name.required' => 'Nama tidak boleh kosong',
+            'site_email.required' => 'Email tidak boleh kosong',
+            'site_email.email' => 'Email harus berupa email',
+            'site_phone.required' => 'Nomor telepon tidak boleh kosong',
+            'site_phone.numeric' => 'Nomor telepon harus berupa angka',
+            'site_url.required' => 'URL tidak boleh kosong',
+            'site_logo.image' => 'Logo harus berupa file gambar',
+            'site_logo.mimes' => 'Logo harus berupa file gambar',
+            'site_logo.max' => 'Logo maksimal 2MB',
+            'site_favicon.file' => 'Favicon harus berupa file',
+            'site_favicon.mimes' => 'Favicon harus berupa file',
+            'site_favicon.max' => 'Favicon maksimal 2MB',
         ]);
 
         if ($validator->fails()) {
@@ -96,6 +109,15 @@ class SettingController extends Controller
                 'last_name' => 'required',
                 'email' => 'required|email|unique:users,email,' . auth()->user()->id,
                 'password' => 'required|confirmed',
+            ],
+            [
+                'first_name.required' => 'Nama depan tidak boleh kosong',
+                'last_name.required' => 'Nama belakang tidak boleh kosong',
+                'email.required' => 'Email tidak boleh kosong',
+                'email.email' => 'Email harus berupa email',
+                'email.unique' => 'Email sudah digunakan',
+                'password.required' => 'Password tidak boleh kosong',
+                'password.confirmed' => 'Password tidak sama dengan konfirmasi password',
             ]
         );
 
@@ -107,12 +129,17 @@ class SettingController extends Controller
         }
 
         // update user
-        $user = User::first();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->username = $request->username;
+        $user = User::find(auth()->user()->id);
+        $user->update([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+        ]);
+
+        // update password
         if ($request->password) {
-            $user->password = bcrypt($request->password);
+            $user->update([
+                'password' => bcrypt($request->password),
+            ]);
         }
 
         return response()->json([
@@ -131,6 +158,11 @@ class SettingController extends Controller
                 'description' => 'required',
                 'google_analytics' => 'required'
             ],
+            [
+                'keywords.required' => 'Keywords tidak boleh kosong',
+                'description.required' => 'Description tidak boleh kosong',
+                'google_analytics.required' => 'Google Analytics tidak boleh kosong',
+            ]
         );
 
         if ($validator->fails()) {

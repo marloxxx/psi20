@@ -21,7 +21,7 @@
                 <ul>
                     <li><a href="#">Home</a>
                     </li>
-                    <li><a href="#">Homestays</a>
+                    <li><a href="#">Events</a>
                     </li>
                     <li>{{ $event->name }}</li>
                 </ul>

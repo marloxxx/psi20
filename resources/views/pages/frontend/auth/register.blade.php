@@ -11,11 +11,11 @@
                             <hr>
                             <form method="POST" action="{{ route('register') }}" id="register-form">
                                 <div class="form-group">
-                                    <label>First Name</label>
+                                    <label>Nama Depan</label>
                                     <input type="text" class="form-control" placeholder="First name" name="first_name" />
                                 </div>
                                 <div class="form-group">
-                                    <label>Last Name</label>
+                                    <label>Nama Belakang</label>
                                     <input type="text" class="form-control" placeholder="Last name" name="last_name" />
                                 </div>
                                 <div class="form-group">
@@ -32,8 +32,8 @@
                                         name="password_confirmation" />
                                 </div>
                                 <div id="pass-info" class="clearfix"></div>
-                                <button class="btn_full">Create an account</button>
-                                <a href="{{ route('login') }}" class="btn_full_outline">Login</a>
+                                <button class="btn_full">Buat Akun</button>
+                                <a href="{{ route('login') }}" class="btn_full_outline">Masuk</a>
                             </form>
                         </div>
                     </div>

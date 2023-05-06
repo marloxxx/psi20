@@ -113,15 +113,14 @@
 
                 <aside class="col-lg-4">
                     <div class="box_style_1">
-                        <h3 class="inner">Thank you!</h3>
+                        <h3 class="inner">Terima kasih!</h3>
                         <p>
-                            You will receive a confirmation email shortly. Please check your email and follow the
-                            instructions. If you don't receive anything, please be sure to check your spam folder.
+                            Anda telah berhasil melakukan booking homestay. Silahkan lakukan pembayaran dan konfirmasi
                         </p>
                         <hr>
                         {{-- contact to wa --}}
                         @if ($booking->status == 'pending')
-                            <a class="btn_full_outline" target="_blank"
+                            <a class="btn_full_outline mb-3" target="_blank"
                                 href="https://api.whatsapp.com/send?phone={{ $booking->homestay->owner->phone_number }}&text=Halo%20Admin%20Saya%20Mau%20Konfirmasi%20Pembayaran%20Booking%20Saya%20Dengan%20ID%20{{ $booking->code }}%20dan%20nama%20{{ Auth::user()->first_name }}%20{{ Auth::user()->last_name }}%20">
                                 <i class="icon-whatsapp"></i>
                                 Konfirmasi Pembayaran

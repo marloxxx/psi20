@@ -20,7 +20,7 @@
                     </div>
                     <div class="col-md-4">
                         <div id="price_single_main" class="hotel">
-                            from/per night
+                            permalam
                             <span><sup>Rp</sup>{{ number_format($homestay->price) }}</span>
                         </div>
                     </div>
@@ -61,8 +61,9 @@
                     </div>
                     <p class="d-block d-lg-none">
                         <a class="btn_map" data-bs-toggle="collapse" href="#collapseMap" aria-expanded="false"
-                            aria-controls="collapseMap" data-text-swap="Hide map" data-text-original="View on map">View on
-                            map</a>
+                            aria-controls="collapseMap" data-text-swap="Hide map" data-text-original="View on map">
+                            Lihat Peta
+                        </a>
                     </p>
                     <!-- Map button for tablets/mobiles -->
                     <div id="Img_carousel" class="slider-pro">
@@ -85,13 +86,13 @@
 
                     <div class="row">
                         <div class="col-lg-3">
-                            <h3>Description</h3>
+                            <h3>Deskripsi</h3>
                         </div>
                         <div class="col-lg-9">
                             {!! $homestay->description !!}
-                            <h4>Homestay facilities</h4>
+                            <h4>Fasilitas</h4>
                             <p>
-                                Below are the facilities provided by the homestay owner.
+                                Berikut adalah fasilitas yang tersedia di homestay ini
                             </p>
                             <div class="row">
                                 <div class="col-md-6">
@@ -119,9 +120,9 @@
                     <hr>
                     <div class="row">
                         <div class="col-lg-3">
-                            <h3>Reviews</h3>
+                            <h3>Ulasan</h3>
                             <a href="#" class="btn_1 add_bottom_30" data-bs-toggle="modal"
-                                data-bs-target="#myReview">Leave a review
+                                data-bs-target="#myReview">Tinggalkan Ulasan
                             </a>
                         </div>
                         <div class="col-lg-9">
@@ -160,13 +161,14 @@
                 <aside class="col-lg-4">
                     <p class="d-none d-xl-block d-lg-block">
                         <a class="btn_map" data-bs-toggle="collapse" href="#collapseMap" aria-expanded="false"
-                            aria-controls="collapseMap" data-text-swap="Hide map" data-text-original="View on map">View
-                            on map</a>
+                            aria-controls="collapseMap" data-text-swap="Hide map" data-text-original="View on map">
+                            Lihat Peta
+                        </a>
                     </p>
                     <div class="box_style_1 expose">
                         <form method="POST" action="{{ route('booking.create', $homestay->id) }}">
                             @csrf
-                            <h3 class="inner">Check Availability</h3>
+                            <h3 class="inner">Cek Ketersediaan</h3>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -179,7 +181,7 @@
                             <br>
 
                             <button type="submit" class="btn_full" id="btn_check">
-                                Book Now
+                                Pesan Sekarang
                             </button>
                         </form>
                         @auth
@@ -187,12 +189,14 @@
                                 <a class="btn_full_outline" href="javascript:void(0)"
                                     onclick="toggleWishlist({{ $homestay->id }})">
                                     <i class="fa fa-heart"></i>
-                                    Remove from wishlist</a>
+                                    Hapus dari Favorit
+                                </a>
                             @else
                                 <a class="btn_full_outline" href="javascript:void(0)"
                                     onclick="toggleWishlist({{ $homestay->id }})">
                                     <i class="fa fa-heart-o"></i>
-                                    Add to wishlist</a>
+                                    Tambah ke Favorit
+                                </a>
                             @endif
                         @endauth
 
@@ -201,10 +205,10 @@
 
                     <div class="box_style_4">
                         <i class="icon_set_1_icon-90"></i>
-                        <h4><span>Book</span> by phone</h4>
+                        <h4><span>Pesan</span> lewat telepon</h4>
                         <a href="tel://{{ $homestay->owner->phone_number }}"
                             class="phone">{{ $homestay->owner->phone_number }}</a>
-                        <small>Monday to Friday 9.00am - 7.30pm</small>
+                        <small>Senin - Jumat 9.00 - 18.00 WIB</small>
                     </div>
 
                 </aside>
@@ -224,7 +228,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myReviewLabel">Write your review</h4>
+                    <h4 class="modal-title" id="myReviewLabel">Tuangkan Ulasanmu</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -236,14 +240,14 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Rating</label>
+                                    <label>Penilaian</label>
                                     <select class="form-select" name="rating" id="rating">
-                                        <option value="">Please review</option>
-                                        <option value="1">Very bad</option>
-                                        <option value="2">Not that bad</option>
-                                        <option value="3">Fair</option>
-                                        <option value="4">Good</option>
-                                        <option value="5">Perfect</option>
+                                        <option value="">Pilih Penilaian</option>
+                                        <option value="1">Sangat Buruk</option>
+                                        <option value="2">Buruk</option>
+                                        <option value="3">Cukup</option>
+                                        <option value="4">Baik</option>
+                                        <option value="5">Sangat Baik</option>
                                     </select>
                                 </div>
                             </div>
@@ -253,7 +257,7 @@
                             <textarea name="review_text" id="review_text" class="form-control" style="height:100px"
                                 placeholder="Write your review"></textarea>
                         </div>
-                        <button type="submit" id="submit-review" class="btn_1">Submit</button>
+                        <button type="submit" id="submit-review" class="btn_1">Kirim</button>
                     </form>
                 </div>
             </div>

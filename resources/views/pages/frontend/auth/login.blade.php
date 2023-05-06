@@ -21,10 +21,10 @@
                                     <input type="password" class="form-control" placeholder="Password" name="password" />
                                 </div>
                                 <p class="small">
-                                    <a href="#">Forgot Password?</a>
+                                    <a href="#">Lupa password?</a>
                                 </p>
-                                <button type="submit" class="btn_full">Login</button>
-                                <a href="{{ route('register') }}" class="btn_full_outline">Register</a>
+                                <button type="submit" class="btn_full">Masuk</button>
+                                <a href="{{ route('register') }}" class="btn_full_outline">Daftar</a>
                             </form>
                         </div>
                     </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\Booking;
+use PDF;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Artesaos\SEOTools\Facades\JsonLd;
@@ -35,7 +36,17 @@ class BookingController extends Controller
                     return '<input type="checkbox" name="id[]" value="' . $booking->id . '">';
                 })
                 ->addColumn('action', function ($booking) {
-                    return '<a href="' . route('backend.bookings.show', $booking->id) . '" class="btn btn-sm btn-primary">Detail</a>';
+
+
+                    return '<div class="btn-group" role="group">
+                                <a href="' . route('backend.bookings.show', $booking->id) . '" class="btn btn-primary">Detail</a>
+                                <a href="javascript:;" onclick="handle_confirm(\'Apakah Anda Yakin?\',\'Yakin\',\'Tidak\',\'PATCH\',\'' . route('backend.bookings.approve', $booking->id) . '\');" class="btn btn-success">
+                                    Setujui
+                                </a>
+                                <a href="javascript:;" onclick="handle_confirm(\'Apakah Anda Yakin?\',\'Yakin\',\'Tidak\',\'PATCH\',\'' . route('backend.bookings.reject', $booking->id) . '\');" class="btn btn-danger">
+                                    Tolak
+                                </a>
+                            </div>';
                 })
                 ->addColumn('homestay', function ($booking) {
                     return $booking->homestay->name;
@@ -65,5 +76,30 @@ class BookingController extends Controller
     {
         $this->setMeta('Booking Detail');
         return view('pages.backend.bookings.show', compact('booking'));
+    }
+
+    public function approve(Booking $booking)
+    {
+        $booking->update([
+            'status' => Booking::STATUS_APPROVED
+        ]);
+        return redirect()->back()->with('success', 'Berhasil mengubah status booking');
+    }
+
+    public function reject(Booking $booking)
+    {
+        $booking->update([
+            'status' => Booking::STATUS_REJECTED
+        ]);
+        return redirect()->back()->with('success', 'Berhasil mengubah status booking');
+    }
+
+    public function pdf()
+    {
+        // dd('test');
+        $bookings = Booking::with('homestay', 'user')->get();
+        $this->setMeta('Booking Detail');
+        $pdf = PDF::loadView('pages.backend.bookings.pdf', compact('bookings'));
+        return $pdf->download('booking.pdf');
     }
 }

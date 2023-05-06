@@ -61,10 +61,9 @@
             <!--begin::Card toolbar-->
             <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
                 <!--begin::Export-->
-                <button type="button" class="btn btn-light-primary" data-kt-menu-trigger="click"
-                    data-kt-menu-placement="bottom-end">
-                    <i class="ki-outline ki-exit-up fs-2"></i> Export Report
-                </button>
+                <a href="{{ route('backend.bookings.pdf') }}" target="_blank" class="btn btn-light-primary">
+                <i class="ki-outline ki-exit-up fs-2"></i> Export PDF
+                </a>
                 <!--end::Export-->
                 <button type="button" onclick="delete_all();" class="btn btn-danger me-3" id="kt_toolbar_delete_button">
                     Delete All
