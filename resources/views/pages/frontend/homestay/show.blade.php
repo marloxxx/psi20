@@ -182,17 +182,20 @@
                                 Book Now
                             </button>
                         </form>
-                        @if (auth()->user()->wishlists->contains($homestay->id))
-                            <a class="btn_full_outline" href="javascript:void(0)"
-                                onclick="toggleWishlist({{ $homestay->id }})">
-                                <i class="fa fa-heart"></i>
-                                Remove from wishlist</a>
-                        @else
-                            <a class="btn_full_outline" href="javascript:void(0)"
-                                onclick="toggleWishlist({{ $homestay->id }})">
-                                <i class="fa fa-heart-o"></i>
-                                Add to wishlist</a>
-                        @endif
+                        @auth
+                            @if (auth()->user()->wishlists->contains($homestay->id))
+                                <a class="btn_full_outline" href="javascript:void(0)"
+                                    onclick="toggleWishlist({{ $homestay->id }})">
+                                    <i class="fa fa-heart"></i>
+                                    Remove from wishlist</a>
+                            @else
+                                <a class="btn_full_outline" href="javascript:void(0)"
+                                    onclick="toggleWishlist({{ $homestay->id }})">
+                                    <i class="fa fa-heart-o"></i>
+                                    Add to wishlist</a>
+                            @endif
+                        @endauth
+
                     </div>
                     <!--/box_style_1 -->
 

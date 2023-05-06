@@ -32,20 +32,17 @@
                     <div id="filters_col">
                         <a data-bs-toggle="collapse" href="#collapseFilters" aria-expanded="false"
                             aria-controls="collapseFilters" id="filters_col_bt">
-                            <i class="icon_set_1_icon-65"></i>Filters</a>
+                            <i class="icon_set_1_icon-65"></i>Filters
+                        </a>
                         <div class="collapse show" id="collapseFilters">
                             <div class="filter_type">
-                                <h2>Waktu</h2>
-                                <div class="input-group">
-                                    <input type="text" id="date_filter" class="form-control" placeholder="Pilih Tanggal"
-                                        name="date_filter">
-                                    <span class="input-group-text">
-                                        <i class="fa fa-calendar"></i>
-                                    </span>
+                                <h6>Start > End Date</h6>
+                                <div class="form-group">
+                                    <input class="date-pick form-control" type="text" placeholder="Select dates"
+                                        name="dates">
                                 </div>
 
                             </div>
-
                         </div>
                         <!--End collapse -->
                     </div>
@@ -59,6 +56,14 @@
                 </aside>
                 <!--End aside -->
                 <div class="col-lg-9">
+                    <div class="row mt-0 custom-search-input-2 mb-3">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <input class="form-control pac-target-input" type="text" placeholder="Judul Event"
+                                    autocomplete="off" name="search">
+                            </div>
+                        </div>
+                    </div>
                     <div id="list_result"></div>
                 </div>
             </div><!-- End row -->
@@ -74,18 +79,33 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
         $(document).ready(function() {
-            $("#date_filter").flatpickr({
-                dateFormat: "Y-m-d",
-                minDate: "today",
-                onChange: function(selectedDates, dateStr, instance) {
-                    load_data(1);
+            $('input.date-pick').daterangepicker({
+                autoUpdateInput: false,
+                opens: 'left',
+                minDate: new Date(),
+                locale: {
+                    cancelLabel: 'Clear'
                 }
+            });
+            $('input.date-pick').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('MM-DD-YY') + ' > ' + picker.endDate
+                    .format('MM-DD-YY'));
+                load_data(1);
+            });
+            $('input.date-pick').on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+                load_data(1);
+            });
+
+            $('input[name="search"]').keyup(function() {
+                load_data(1);
             });
         });
 
         function load_data(page) {
             $.get("?page=" + page, {
-                date: $("#date_filter").val()
+                date: $('input[name="dates"]').val(),
+                title: $('input[name="search"]').val()
             }, function(data) {
                 $("#list_result").html(data);
             });

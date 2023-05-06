@@ -1,5 +1,5 @@
 @foreach ($events as $event)
-    <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.1s">
+    <div class="col-lg-4 col-md-6">
         <div class="tour_container">
             <div class="img_container">
                 <a href="{{ route('events.show', $event->id) }}">
