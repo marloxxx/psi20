@@ -88,6 +88,7 @@ class HomestayController extends Controller
      */
     public function create()
     {
+        $this->setMeta('Tambah Homestay');
         $facilities = Facility::all();
         return view('pages.backend.homestays.create', compact('facilities'));
     }
@@ -161,6 +162,7 @@ class HomestayController extends Controller
      */
     public function edit(Homestay $homestay)
     {
+        $this->setMeta('Edit Homestay');
         $facilities = Facility::all();
         return view('pages.backend.homestays.edit', compact('homestay', 'facilities'));
     }

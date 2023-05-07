@@ -25,7 +25,7 @@ class BookingController extends Controller
     }
     public function index(Request $request)
     {
-        $this->setMeta('Booking');
+        $this->setMeta('Pemesanan');
         if ($request->ajax()) {
             // get bookings where homestay owner is me
             $bookings = Booking::whereHas('homestay', function ($query) {
@@ -74,7 +74,7 @@ class BookingController extends Controller
 
     public function show(Booking $booking)
     {
-        $this->setMeta('Booking Detail');
+        $this->setMeta('Detail Pemesanan');
         return view('pages.backend.bookings.show', compact('booking'));
     }
 

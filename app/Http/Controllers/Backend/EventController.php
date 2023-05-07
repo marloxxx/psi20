@@ -83,6 +83,7 @@ class EventController extends Controller
      */
     public function create()
     {
+        $this->setMeta('Tambah Event');
         return view('pages.backend.events.create');
     }
 
@@ -150,6 +151,7 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
+        $this->setMeta('Edit Event');
         return view('pages.backend.events.edit', compact('event'));
     }
 

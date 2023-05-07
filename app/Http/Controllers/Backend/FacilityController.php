@@ -60,6 +60,7 @@ class FacilityController extends Controller
      */
     public function create()
     {
+        $this->setMeta('Tambah Fasilitas');
         return view('pages.backend.facilities.create');
     }
 
@@ -103,6 +104,7 @@ class FacilityController extends Controller
      */
     public function edit(Facility $facility)
     {
+        $this->setMeta('Edit Fasilitas');
         return view('pages.backend.facilities.edit', compact('facility'));
     }
 
