@@ -16,9 +16,9 @@
         rel="stylesheet">
 
     <!-- COMMON CSS -->
-    <link href="{{ asset('guests/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('guests/css/style.css') }}" rel="stylesheet">
-    <link href="{{ asset('guests/css/vendors.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/css/vendors.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/toastr.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ asset('css/sweetalert.css') }}" type="text/css" />
     @stack('custom-styles')

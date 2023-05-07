@@ -114,7 +114,7 @@
                                             <div class="symbol symbol-circle symbol-25px overflow-hidden me-3">
                                                 <a href="../../demo30/dist/apps/ecommerce/customers/details.html">
                                                     <div class="symbol-label">
-                                                        <img src="{{ asset('admins/media/avatars/300-23.jpg') }}"
+                                                        <img src="{{ asset('backend/media/avatars/300-23.jpg') }}"
                                                             alt="{{ $booking->user->first_name }} {{ $booking->user->last_name }}"
                                                             class="w-100" />
                                                     </div>

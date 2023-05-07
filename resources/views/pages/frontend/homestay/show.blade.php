@@ -70,7 +70,7 @@
                         <div class="sp-slides">
                             @foreach ($homestay->images->where('is_primary', 0) as $image)
                                 <div class="sp-slide">
-                                    <img alt="Image" class="sp-image" src="{{ asset('guests/css/images/blank.gif') }}"
+                                    <img alt="Image" class="sp-image" src="{{ asset('frontend/css/images/blank.gif') }}"
                                         data-src="{{ asset($image->image_path) }}" style="width: 50%;" />
                                 </div>
                             @endforeach
@@ -133,7 +133,7 @@
                                             alt="{{ $review->user->first_name }}" class="img-circle" width="80"
                                             height="80" />
                                     @else
-                                        <img src="{{ asset('guests/img/avatar1.jpg') }}" alt="Image"
+                                        <img src="{{ asset('frontend/img/avatar1.jpg') }}" alt="Image"
                                             class="rounded-circle">
                                     @endif
                                     <small> - {{ \Carbon\Carbon::parse($review->created_at)->format('d M Y') }} -</small>
@@ -266,7 +266,7 @@
     <!-- End modal review -->
 @endsection
 @push('custom-scripts')
-    <script src="{{ asset('guests/js/jquery.sliderPro.min.js') }}"></script>
+    <script src="{{ asset('frontend/js/jquery.sliderPro.min.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function($) {
             $('#Img_carousel').sliderPro({

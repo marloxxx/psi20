@@ -16,9 +16,9 @@
         rel="stylesheet">
 
     <!-- COMMON CSS -->
-    <link href="{{ asset('guests/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('guests/css/style.css') }}" rel="stylesheet">
-    <link href="{{ asset('guests/css/vendors.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/css/vendors.css') }}" rel="stylesheet">
     <style>
         .invoice-title h2,
         .invoice-title h3 {

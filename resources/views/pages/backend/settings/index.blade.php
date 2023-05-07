@@ -76,11 +76,11 @@
                                 <!--begin::Image input placeholder-->
                                 <style>
                                     .image-input-placeholder {
-                                        background-image: url({{ asset('admins/media/svg/files/blank-image.svg') }})
+                                        background-image: url({{ asset('backend/media/svg/files/blank-image.svg') }})
                                     }
 
                                     [data-theme="dark"] .image-input-placeholder {
-                                        background-image: url({{ asset('admins/media/svg/files/blank-image-dark.svg') }})
+                                        background-image: url({{ asset('backend/media/svg/files/blank-image-dark.svg') }})
                                     }
                                 </style>
                                 <!--end::Image input placeholder-->
@@ -146,11 +146,11 @@
                                 <!--begin::Image input placeholder-->
                                 <style>
                                     .image-input-placeholder {
-                                        background-image: url({{ asset('admins/media/svg/files/blank-image.svg') }})
+                                        background-image: url({{ asset('backend/media/svg/files/blank-image.svg') }})
                                     }
 
                                     [data-theme="dark"] .image-input-placeholder {
-                                        background-image: url({{ asset('admins/media/svg/files/blank-image-dark.svg') }})
+                                        background-image: url({{ asset('backend/media/svg/files/blank-image-dark.svg') }})
                                     }
                                 </style>
                                 <!--end::Image input placeholder-->

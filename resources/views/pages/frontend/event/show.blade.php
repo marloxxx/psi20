@@ -47,7 +47,7 @@
                         <div class="sp-slides">
                             @foreach ($event->images->where('is_primary', 0) as $image)
                                 <div class="sp-slide">
-                                    <img alt="Image" class="sp-image" src="{{ asset('guests/css/images/blank.gif') }}"
+                                    <img alt="Image" class="sp-image" src="{{ asset('frontend/css/images/blank.gif') }}"
                                         data-src="{{ asset($image->image_path) }}" style="width: 50%;" />
                                 </div>
                             @endforeach
@@ -83,7 +83,7 @@
     <!-- End main -->
 @endsection
 @push('custom-scripts')
-    <script src="{{ asset('guests/js/jquery.sliderPro.min.js') }}"></script>
+    <script src="{{ asset('frontend/js/jquery.sliderPro.min.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function($) {
             $('#Img_carousel').sliderPro({

@@ -1,10 +1,10 @@
 @extends('layouts.frontend.master')
 @push('custom-styles')
-    <link href="{{ asset('guests/css/admin.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/css/admin.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
 @endpush
 @section('content')
-    <section class="parallax-window" data-parallax="scroll" data-image-src="{{ asset('guests/img/admin_top.jpg') }}"
+    <section class="parallax-window" data-parallax="scroll" data-image-src="{{ asset('frontend/img/admin_top.jpg') }}"
         data-natural-width="1400" data-natural-height="470">
         <div class="parallax-content-1 opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.4)">
             <div class="animated fadeInDown">
@@ -172,7 +172,7 @@
                                     @if ($user->profile_picture)
                                         <img src="{{ asset('images/profile/' . $user->profile_picture) }}" alt="Image"
                                             class="img-fluid styled profile_pic">
-                                    @else<img src="{{ asset('guests/img/avatar1.jpg') }}" alt="Image"
+                                    @else<img src="{{ asset('frontend/img/avatar1.jpg') }}" alt="Image"
                                             class="img-fluid styled profile_pic">
                                     @endif
                                 </p>
@@ -278,7 +278,7 @@
         });
     </script>
     <!-- Specific scripts -->
-    <script src="{{ asset('guests/js/tabs.js') }}"></script>
+    <script src="{{ asset('frontend/js/tabs.js') }}"></script>
     <script>
         new CBPFWTabs(document.getElementById('tabs'));
     </script>

@@ -1,15 +1,15 @@
 @extends('layouts.frontend.master')
 @push('custom-styles')
     <!-- REVOLUTION SLIDER CSS -->
-    <link href="{{ asset('guests/rs-plugin/css/settings.css') }}" rel="stylesheet">
-    <link href="{{ asset('guests/css/extralayers.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/rs-plugin/css/settings.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/css/extralayers.css') }}" rel="stylesheet">
 @endpush
 @section('content')
     <main>
         <div id="carousel-home">
             <div class="owl-carousel owl-theme">
                 <div class="owl-slide cover"
-                    style="background-image: url({{ asset('guests/img/slides/slide_home_3.jpg') }});">
+                    style="background-image: url({{ asset('frontend/img/slides/slide_home_3.jpg') }});">
                     <div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(0, 0, 0, 0.5)">
                         <div class="container">
                             <div class="row justify-content-center justify-content-md-start">
@@ -31,7 +31,7 @@
                 </div>
                 <!--/owl-slide-->
                 <div class="owl-slide cover"
-                    style="background-image: url({{ asset('guests/img/slides/slide_home_2.jpg') }});">
+                    style="background-image: url({{ asset('frontend/img/slides/slide_home_2.jpg') }});">
                     <div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(0, 0, 0, 0.6)">
                         <div class="container">
                             <div class="row justify-content-center justify-content-md-end">
@@ -51,7 +51,7 @@
                 </div>
                 <!--/owl-slide-->
                 <div class="owl-slide cover"
-                    style="background-image: url({{ asset('guests/img/slides/slide_home_1.jpg') }});">
+                    style="background-image: url({{ asset('frontend/img/slides/slide_home_1.jpg') }});">
                     <div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(0, 0, 0, 0.5)">
                         <div class="container">
                             <div class="row justify-content-center justify-content-md-start">
@@ -203,7 +203,7 @@
 @endsection
 @push('custom-scripts')
     <!-- SLIDER REVOLUTION 4.x SCRIPTS  -->
-    <script src="{{ asset('guests/rs-plugin/js/jquery.themepunch.tools.min.js') }}"></script>
-    <script src="{{ asset('guests/rs-plugin/js/jquery.themepunch.revolution.min.js') }}"></script>
-    <script src="{{ asset('guests/js/revolution_func.js') }}"></script>
+    <script src="{{ asset('frontend/rs-plugin/js/jquery.themepunch.tools.min.js') }}"></script>
+    <script src="{{ asset('frontend/rs-plugin/js/jquery.themepunch.revolution.min.js') }}"></script>
+    <script src="{{ asset('frontend/js/revolution_func.js') }}"></script>
 @endpush

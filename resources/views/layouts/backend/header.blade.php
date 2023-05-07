@@ -15,10 +15,11 @@
         <!--begin::Logo-->
         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-lg-15">
             <a href="{{ route('backend.dashboard') }}">
-                <img alt="Logo" src="{{ asset('admins/media/logos/demo30-small.svg') }}" class="h-25px d-lg-none" />
-                <img alt="Logo" src="{{ asset('admins/media/logos/demo30.svg') }}"
+                <img alt="Logo" src="{{ asset('backend/media/logos/demo30-small.svg') }}"
+                    class="h-25px d-lg-none" />
+                <img alt="Logo" src="{{ asset('backend/media/logos/demo30.svg') }}"
                     class="h-25px d-none d-lg-inline app-sidebar-logo-default theme-light-show" />
-                <img alt="Logo" src="{{ asset('admins/media/logos/demo30-dark.png') }}"
+                <img alt="Logo" src="{{ asset('backend/media/logos/demo30-dark.png') }}"
                     class="h-25px d-none d-lg-inline app-sidebar-logo-default theme-dark-show" />
             </a>
         </div>
@@ -125,7 +126,7 @@
                     <!--begin::Menu-->
                     <div class="menu menu-sub menu-sub-dropdown menu-column w-350px w-lg-375px" data-kt-menu="true">
                         <div class="d-flex flex-column bgi-no-repeat rounded-top"
-                            style="background-image:url('{{ asset('admins/media/misc/menu-header-bg.jpg') }}')">
+                            style="background-image:url('{{ asset('backend/media/misc/menu-header-bg.jpg') }}')">
                             <h3 class="text-white fw-bold px-9 mt-10 mb-6">Notifications
                                 <span id="top-notification-number" class="top-notification-number"></span>
                                 <span>Reports</span>
@@ -146,7 +147,7 @@
                         data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
                         data-kt-menu-placement="bottom-end">
                         <img class="symbol symbol-circle symbol-35px symbol-md-45px"
-                            src="{{ asset('admins/media/avatars/300-13.jpg') }}" alt="user" />
+                            src="{{ asset('backend/media/avatars/300-13.jpg') }}" alt="user" />
                     </div>
                     <!--begin::User account menu-->
                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
@@ -156,7 +157,7 @@
                             <div class="menu-content d-flex align-items-center px-3">
                                 <!--begin::Avatar-->
                                 <div class="symbol symbol-50px me-5">
-                                    <img alt="Logo" src="{{ asset('admins/media/avatars/300-13.jpg') }}" />
+                                    <img alt="Logo" src="{{ asset('backend/media/avatars/300-13.jpg') }}" />
                                 </div>
                                 <!--end::Avatar-->
                                 <!--begin::Username-->

@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @endpush
 @section('content')
-    <section id="hero" class="background-image" data-background="url({{ asset('guests/img/header_bg.jpg') }})">
+    <section id="hero" class="background-image" data-background="url({{ asset('frontend/img/header_bg.jpg') }})">
         <div class="opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.6)">
             <div class="intro_title">
                 <h3 class="animated fadeInDown">Event<strong id="js-rotating">Balige, Toba Samosir</strong></h3>
