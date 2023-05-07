@@ -68,7 +68,7 @@ class AuthController extends Controller
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
             return response()->json([
                 'status' => 'success',
-                'message' => 'Login successful',
+                'message' => 'Berhasil Masuk',
                 'redirect' => 'reload',
             ]);
         } else {
