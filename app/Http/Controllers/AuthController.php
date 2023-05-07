@@ -56,6 +56,12 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'email' => 'required|email:rfc,dns|exists:users,email',
             'password' => 'required|min:8',
+        ], [
+            'email.exists' => 'Email tidak terdaftar',
+            'email.email' => 'Email tidak valid',
+            'email.required' => 'Email tidak boleh kosong',
+            'password.required' => 'Password tidak boleh kosong',
+            'password.min' => 'Password minimal 8 karakter',
         ]);
 
         if ($validator->fails()) {
@@ -87,6 +93,17 @@ class AuthController extends Controller
             'last_name' => 'required|min:1',
             'email' => 'required|email|regex:/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/|unique:users',
             'password' => 'required|min:8',
+        ], [
+            'first_name.required' => 'Nama depan tidak boleh kosong',
+            'first_name.min' => 'Nama depan minimal 3 karakter',
+            'last_name.required' => 'Nama belakang tidak boleh kosong',
+            'last_name.min' => 'Nama belakang minimal 1 karakter',
+            'email.required' => 'Email tidak boleh kosong',
+            'email.email' => 'Email tidak valid',
+            'email.unique' => 'Email sudah terdaftar',
+            'email.regex' => 'Email tidak valid',
+            'password.required' => 'Password tidak boleh kosong',
+            'password.min' => 'Password minimal 8 karakter',
         ]);
 
         if ($validator->fails()) {
