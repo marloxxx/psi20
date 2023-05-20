@@ -60,10 +60,22 @@ class HomestayController extends Controller
         // get the lowest price and maximum price
         $min_price = Homestay::min('price');
         $max_price = Homestay::max('price');
-
+        // dd($min_price, $max_price);
         // get facilities
         $facilities = Facility::limit(6)->get();
-        return view('pages.frontend.homestay.index', compact('min_price', 'max_price', 'facilities'));
+        $initialMarkers = [];
+        $homestays = Homestay::all();
+        foreach ($homestays as $homestay) {
+            $initialMarkers[] = [
+                'position' => [
+                    'lat' => $homestay->latitude,
+                    'lng' => $homestay->longitude,
+                ],
+                'label' => ['color' => 'white', 'text' => $homestay->name],
+                'draggable' => true
+            ];
+        }
+        return view('pages.frontend.homestay.index', compact('min_price', 'max_price', 'facilities', 'initialMarkers'));
     }
 
     public function show($id)
@@ -76,7 +88,17 @@ class HomestayController extends Controller
         $this->setMeta($homestay->name);
         // get reviews from booking and homestay table
         $reviews = $homestay->reviews()->with('booking.user')->get();
-        return view('pages.frontend.homestay.show', compact('homestay', 'reviews'));
+        $initialMarkers = [
+            [
+                'position' => [
+                    'lat' => $homestay->latitude,
+                    'lng' => $homestay->longitude,
+                ],
+                'label' => ['color' => 'white', 'text' => $homestay->name],
+                'draggable' => false
+            ]
+        ];
+        return view('pages.frontend.homestay.show', compact('homestay', 'reviews', 'initialMarkers'));
     }
 
     public function toggle_wishlist(Request $request)
