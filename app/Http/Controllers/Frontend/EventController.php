@@ -52,7 +52,19 @@ class EventController extends Controller
             }
             return view('pages.frontend.event.list', compact('events'))->render();
         }
-        return view('pages.frontend.event.index');
+        $initialMarkers = [];
+        $events = Event::all();
+        foreach ($events as $event) {
+            $initialMarkers[] = [
+                'position' => [
+                    'lat' => $event->latitude,
+                    'lng' => $event->longitude,
+                ],
+                'label' => ['color' => 'white', 'text' => $event->title],
+                'draggable' => true
+            ];
+        }
+        return view('pages.frontend.event.index', compact('initialMarkers'));
     }
 
     /**
@@ -61,6 +73,16 @@ class EventController extends Controller
     public function show(Event $event)
     {
         $this->setMeta($event->title);
-        return view('pages.frontend.event.show', compact('event'));
+
+        $initialMarkers = [];
+        $initialMarkers[] = [
+            'position' => [
+                'lat' => $event->latitude,
+                'lng' => $event->longitude,
+            ],
+            'label' => ['color' => 'white', 'text' => $event->title],
+            'draggable' => true
+        ];
+        return view('pages.frontend.event.show', compact('event', 'initialMarkers'));
     }
 }
