@@ -81,6 +81,22 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td>
+                                        <strong>Adults</strong>
+                                    </td>
+                                    <td>
+                                        {{ $booking->adults }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Children</strong>
+                                    </td>
+                                    <td>
+                                        {{ $booking->children }}
+                                        <br>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td><strong>Nights</strong>
                                     </td>
                                     <td>
