@@ -1,31 +1,30 @@
-@push('custom-styles')
-    <style>
-        @media (max-width: 767px) {
-            #logo_home {
-                display: none;
-            }
+<style>
+    @media (max-width: 767px) {
+        #logo_home {
+            display: none;
         }
+    }
 
-        @media (min-width: 768px) {
-            .last {
-                float: right !important;
-            }
+    @media (min-width: 768px) {
+        .last {
+            float: right !important;
         }
-    </style>
-@endpush
+    }
+</style>
 <header id="plain">
     <div class="container pb-2">
         <div class="row">
-            <div class="col-3">
+            <div class="col-2">
                 <div id="logo_home"
                     style="background-image: url({{ asset('images/' . getSettings('site_logo')) }}); background-repeat: no-repeat; background-position: center; background-size: contain;">
                     <h1><a href="{{ route('home') }}" title="City tours travel template">City Tours travel template</a>
                     </h1>
                 </div>
             </div>
-            <nav class="col-9">
+            <nav class="col-10">
                 <a class="cmn-toggle-switch cmn-toggle-switch__htx open_close" href="javascript:void(0);">
-                    <span>Menu mobile</span></a>
+                    <span>Menu mobile</span>
+                </a>
                 <div class="main-menu">
                     <div id="header_menu">
                         <img src="{{ asset('images/' . getSettings('site_logo')) }}" width="160" height="34"

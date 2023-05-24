@@ -134,64 +134,63 @@
                 <a href="{{ route('homestays') }}" class="btn_1">Lihat semua homestay</a>
             </p>
 
-            <hr class="mt-5 mb-5">
+        </div>
+        <hr class="mt-5 mb-5">
 
-            <div class="main_title">
-                <h2>Acara <span>terbaru</span> di Balige</h2>
-                <p>Temukan acara terbaru di Balige</p>
-            </div>
-            <div class="container margin_60">
-                <div class="owl-carousel owl-theme list_carousel add_bottom_30">
-                    @foreach ($events as $event)
-                        <div class="item">
-                            <div class="tour_container">
-                                <div class="img_container">
-                                    <a href="{{ route('events.show', $event->id) }}">
-                                        <img src="{{ asset($event->images->first()->image_path) }}" width="800"
-                                            height="533" class="img-fluid" alt="image">
-                                    </a>
-                                </div>
-                                <div class="tour_title">
-                                    <i class="fa fa-calendar"></i> {{ $event->start_date->format('d M Y') }} -
-                                    {{ $event->end_date->format('d M Y') }}
-                                    <h3><strong>{{ $event->title }}</strong></h3>
-                                    <small>{{ $event->address }}</small>
-                                </div>
+        <div class="main_title">
+            <h2>Acara <span>terbaru</span> di Balige</h2>
+            <p>Temukan acara terbaru di Balige</p>
+        </div>
+        <div class="container margin_60">
+            <div class="owl-carousel owl-theme list_carousel add_bottom_30">
+                @foreach ($events as $event)
+                    <div class="item">
+                        <div class="tour_container">
+                            <div class="img_container">
+                                <a href="{{ route('events.show', $event->id) }}">
+                                    <img src="{{ asset($event->images->first()->image_path) }}" width="800"
+                                        height="533" class="img-fluid" alt="image">
+                                </a>
                             </div>
-                            <!-- End box -->
+                            <div class="tour_title">
+                                <i class="fa fa-calendar"></i> {{ $event->start_date->format('d M Y') }} -
+                                {{ $event->end_date->format('d M Y') }}
+                                <h3><strong>{{ $event->title }}</strong></h3>
+                                <small>{{ $event->address }}</small>
+                            </div>
                         </div>
-                    @endforeach
-                </div>
+                        <!-- End box -->
+                    </div>
+                @endforeach
             </div>
             <!-- /carousel -->
 
             <p class="text-center nopadding">
                 <a href="{{ route('events') }}" class="btn_1">Lihat semua acara</a>
             </p>
+        </div>
 
-            <div class="container margin_60">
+        <div class="container margin_60">
 
-                <div class="main_title">
-                    <h2>Fasilitas <span>terbaik</span> di Balige</h2>
-                    <p>Dilengkapi dengan fasilitas terbaik</p>
-                </div>
+            <div class="main_title">
+                <h2>Fasilitas <span>terbaik</span> di Balige</h2>
+                <p>Dilengkapi dengan fasilitas terbaik</p>
+            </div>
 
-                <div class="row">
-                    @foreach ($facilities as $facility)
-                        <div class="col-lg-2 col-md-4 col-sm-6 wow zoomIn" data-wow-delay="0.{{ $loop->index + 1 }}s">
-                            <div class="feature_home">
-                                <i class="{{ $facility->icon }}"></i>
-                                <h3>{{ $facility->name }}</h3>
-                            </div>
+            <div class="row">
+                @foreach ($facilities as $facility)
+                    <div class="col-lg-2 col-md-4 col-sm-6 wow zoomIn" data-wow-delay="0.{{ $loop->index + 1 }}s">
+                        <div class="feature_home">
+                            <i class="{{ $facility->icon }}"></i>
+                            <h3>{{ $facility->name }}</h3>
                         </div>
-                    @endforeach
-
-                </div>
-                <!--End row -->
-                <!-- End row -->
+                    </div>
+                @endforeach
 
             </div>
-            <!-- End container -->
+            <!-- End row -->
+        </div>
+        <!-- End container -->
     </main>
 @endsection
 @push('custom-scripts')
