@@ -202,14 +202,14 @@
                         <!--begin::Input group-->
                         <div class="mb-10 fv-row">
                             <!--begin::Label-->
-                            <label class="required form-label">Price</label>
+                            <label class="required form-label">Total Room</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" name="price" class="form-control mb-2" placeholder="Price"
-                                value="{{ $homestay->price }}" />
+                            <input type="text" name="total_rooms" class="form-control mb-2" placeholder="Total Room"
+                                value="{{ $homestay->total_rooms }}" />
                             <!--end::Input-->
                             <!--begin::Description-->
-                            <div class="text-muted fs-7">A price is required for the homestay.
+                            <div class="text-muted fs-7">A total room is required for the homestay.
                             </div>
                             <!--end::Description-->
                         </div>
@@ -217,14 +217,14 @@
                         <!--begin::Input group-->
                         <div class="mb-10 fv-row">
                             <!--begin::Label-->
-                            <label class="required form-label">Capacity</label>
+                            <label class="required form-label">Price Per Night</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" name="capacity" class="form-control mb-2" placeholder="Capacity"
-                                value="{{ $homestay->capacity }}" />
+                            <input type="text" name="price_per_night" class="form-control mb-2"
+                                placeholder="Price Per Night" value="{{ $homestay->price_per_night }}" />
                             <!--end::Input-->
                             <!--begin::Description-->
-                            <div class="text-muted fs-7">A capacity is required for the homestay.
+                            <div class="text-muted fs-7">A price is required for the homestay.
                             </div>
                             <!--end::Description-->
                         </div>
@@ -274,7 +274,7 @@
                         </div>
                         <!--end::Input group-->
                         <!--begin::Input group-->
-                        <div>
+                        <div class="mb-10 fv-row">
                             <!--begin::Label-->
                             <label class="form-label">Description</label>
                             <!--end::Label-->
@@ -288,6 +288,35 @@
                             <div class="text-muted fs-7">Set a description to the product for better visibility.
                             </div>
                             <!--end::Description-->
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="mb-10 fv-row">
+                            <!--begin::Label-->
+                            <label class="form-label">Owner Phone Number</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" name="owner_phone_number" class="form-control mb-2"
+                                placeholder="Owner Phone Number" value="{{ $homestay->owner_phone_number }}" />
+                            <!--end::Input-->
+                            <!--begin::Description-->
+                            <div class="text-muted fs-7">Owner Phone Number is required for the homestay.
+                            </div>
+                            <!--end::Description-->
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="mb-10 fv-row">
+                            <!--begin::Label-->
+                            <label class="form-label">Owner Name</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" name="owner_name" class="form-control mb-2" placeholder="Owner Name"
+                                value="{{ $homestay->owner_name }}" />
+                            <!--end::Input-->
+                            <!--begin::Description-->
+                            <div class="text-muted fs-7">Owner Name is required for the homestay.
+                            </div>
                         </div>
                         <!--end::Input group-->
                     </div>

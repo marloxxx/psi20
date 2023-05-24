@@ -104,11 +104,13 @@ class HomestayController extends Controller
             'is_available' => 'required',
             'facilities' => 'required',
             'description' => 'required',
-            'price' => 'required|numeric',
-            'capacity' => 'required|numeric',
+            'total_rooms' => 'required|numeric',
+            'price_per_night' => 'required|numeric',
             'address' => 'required',
             'latitude' => 'required',
             'longitude' => 'required',
+            'owner_phone_number' => 'required',
+            'owner_name' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ], $this->message);
 
@@ -124,11 +126,13 @@ class HomestayController extends Controller
             'name' => $request->name,
             'is_available' => $request->is_available,
             'description' => $request->description,
-            'price' => $request->price,
-            'capacity' => $request->capacity,
+            'total_rooms' => $request->total_rooms,
+            'price_per_night' => $request->price_per_night,
             'address' => $request->address,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
+            'owner_phone_number' => $request->owner_phone_number,
+            'owner_email' => $request->owner_email,
         ], $this->message);
 
         $homestay->facilities()->attach($request->facilities);
@@ -183,11 +187,13 @@ class HomestayController extends Controller
             'is_available' => 'required',
             'facilities' => 'required',
             'description' => 'required',
-            'price' => 'required|numeric',
-            'capacity' => 'required|numeric',
+            'total_rooms' => 'required|numeric',
+            'price_per_night' => 'required|numeric',
             'address' => 'required',
             'latitude' => 'required',
             'longitude' => 'required',
+            'owner_phone_number' => 'required',
+            'owner_name' => 'required',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ], $this->message);
 
@@ -202,11 +208,13 @@ class HomestayController extends Controller
             'name' => $request->name,
             'is_available' => $request->is_available,
             'description' => $request->description,
-            'price' => $request->price,
-            'capacity' => $request->capacity,
+            'total_rooms' => $request->total_rooms,
+            'price_per_night' => $request->price_per_night,
             'address' => $request->address,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
+            'owner_phone_number' => $request->owner_phone_number,
+            'owner_email' => $request->owner_email,
         ]);
 
         $homestay->facilities()->sync($request->facilities);
