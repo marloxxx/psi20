@@ -23,7 +23,7 @@ class ImageFactory extends Factory
             'homestay_id' => $this->faker->randomElement($homestay_ids),
             'name' => $this->faker->name,
             'size' => $this->faker->randomNumber(),
-            'image_path' => $this->faker->imageUrl(),
+            'image_path' => $this->faker->imageUrl(1280, 720),
             'is_primary' => $this->faker->boolean,
         ];
     }

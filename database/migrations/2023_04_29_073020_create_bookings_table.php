@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->string('code')->nullable(false);
+            $table->integer('adults')->nullable(false);
+            $table->integer('children')->nullable(false);
             $table->dateTime('check_in')->nullable(false);
             $table->dateTime('check_out')->nullable(false);
             $table->foreignId('homestay_id')->constrained('homestays');

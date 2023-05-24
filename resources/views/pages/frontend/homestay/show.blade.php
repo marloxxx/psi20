@@ -1,4 +1,8 @@
 @extends('layouts.frontend.master')
+@push('custom-styles')
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+@endpush
 @section('content')
     <section class="parallax-window" data-parallax="scroll"
         data-image-src="{{ asset($homestay->images->first()->image_path) }}" data-natural-width="1400"
@@ -20,8 +24,7 @@
                     </div>
                     <div class="col-md-4">
                         <div id="price_single_main" class="hotel">
-                            permalam
-                            <span><sup>Rp</sup>{{ number_format($homestay->price) }}</span>
+                            <span><sup>Rp</sup>{{ number_format($homestay->price) }}</span>/malam
                         </div>
                     </div>
                 </div>
@@ -44,12 +47,7 @@
         </div>
         <!-- End Position -->
 
-        <div class="collapse" id="collapseMap">
-            <div id="map" class="map"></div>
-        </div>
-        <!-- End Map -->
-
-        <div class="container margin_60">
+        <div class="margin_60" style="margin: 0 150px 0 150px;">
             <div class="row">
                 <div class="col-lg-8" id="single_tour_desc">
                     <div id="single_tour_feat">
@@ -59,13 +57,7 @@
                             @endforeach
                         </ul>
                     </div>
-                    <p class="d-block d-lg-none">
-                        <a class="btn_map" data-bs-toggle="collapse" href="#collapseMap" aria-expanded="false"
-                            aria-controls="collapseMap" data-text-swap="Hide map" data-text-original="View on map">
-                            Lihat Peta
-                        </a>
-                    </p>
-                    <!-- Map button for tablets/mobiles -->
+
                     <div id="Img_carousel" class="slider-pro">
                         <div class="sp-slides">
                             @foreach ($homestay->images->where('is_primary', 0) as $image)
@@ -85,11 +77,12 @@
                     <hr>
 
                     <div class="row">
-                        <div class="col-lg-3">
-                            <h3>Deskripsi</h3>
-                        </div>
-                        <div class="col-lg-9">
-                            {!! $homestay->description !!}
+                        <div class="col-lg-12">
+                            <div class="text-justify">
+                                {!! $homestay->description !!}
+                            </div>
+                            <br />
+                            <br />
                             <h4>Fasilitas</h4>
                             <p>
                                 Berikut adalah fasilitas yang tersedia di homestay ini
@@ -119,13 +112,8 @@
                     <hr>
                     <hr>
                     <div class="row">
-                        <div class="col-lg-3">
-                            <h3>Ulasan</h3>
-                            <a href="#" class="btn_1 add_bottom_30" data-bs-toggle="modal"
-                                data-bs-target="#myReview">Tinggalkan Ulasan
-                            </a>
-                        </div>
-                        <div class="col-lg-9">
+
+                        <div class="col-lg-12">
                             @foreach ($reviews as $review)
                                 <div class="review_strip_single">
                                     @if ($review->user->profile_picture)
@@ -155,20 +143,38 @@
                             <!-- End review strip -->
                         </div>
                     </div>
+                    <div class="mt-5 mb-5">
+                        <h3>Location</h3>
+                        <div id="map"></div>
+                    </div>
+
                 </div>
                 <!--End  single_tour_desc-->
 
                 <aside class="col-lg-4">
-                    <p class="d-none d-xl-block d-lg-block">
-                        <a class="btn_map" data-bs-toggle="collapse" href="#collapseMap" aria-expanded="false"
-                            aria-controls="collapseMap" data-text-swap="Hide map" data-text-original="View on map">
-                            Lihat Peta
-                        </a>
-                    </p>
                     <div class="box_style_1 expose">
                         <form method="POST" action="{{ route('booking.create', $homestay->id) }}">
                             @csrf
                             <h3 class="inner">Cek Ketersediaan</h3>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Adults</label>
+                                        <div class="numbers-row">
+                                            <input type="text" value="1" class="qty2 form-control" name="adults">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Children</label>
+                                        <div class="numbers-row">
+                                            <input type="text" value="0" class="qty2 form-control" name="children">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -210,6 +216,27 @@
                             class="phone">{{ $homestay->owner->phone_number }}</a>
                         <small>Senin - Jumat 9.00 - 18.00 WIB</small>
                     </div>
+                    @auth
+                        <!-- check if user already review this homestay -->
+                        @if (auth()->user()->reviews->contains('homestay_id', $homestay->id))
+                            <div class="box_style_4">
+                                <h3>Ulasan</h3>
+                                <p>
+                                    Anda sudah memberikan ulasan untuk homestay ini
+                                </p>
+                            </div>
+                        @else
+                            <!-- check if booking date is passed -->
+                            @if (auth()->user()->bookings->where('homestay_id', $homestay->id)->where('status', 1)->where('check_out', '<', \Carbon\Carbon::now())->count() > 0)
+                                <div class="box_style_4">
+                                    <h3>Ulasan</h3>
+                                    <a href="#" class="btn_1 add_bottom_30" data-bs-toggle="modal"
+                                        data-bs-target="#myReview">Tinggalkan Ulasan
+                                    </a>
+                                </div>
+                            @endif
+                        @endif
+                    @endauth
 
                 </aside>
             </div>
@@ -413,22 +440,27 @@
             });
         });
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script>
-        let map, activeInfoWindow, markers = [];
+        let map, markers = [];
         /* ----------------------------- Initialize Map ----------------------------- */
         function initMap() {
-            map = new google.maps.Map(document.getElementById("map"), {
+            map = L.map('map', {
                 center: {
                     lat: 2.333712,
                     lng: 99.083252
                 },
-                zoom: 15
+                zoom: 13
             });
 
-            map.addListener("click", function(event) {
-                mapClicked(event);
-            });
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
+
+
+            map.on('click', mapClicked);
             initMarkers();
         }
         initMap();
@@ -438,36 +470,23 @@
 
             for (let index = 0; index < initialMarkers.length; index++) {
 
-                const markerData = initialMarkers[index];
-                const marker = new google.maps.Marker({
-                    position: markerData.position,
-                    label: markerData.label,
-                    draggable: markerData.draggable,
-                    map
-                });
-                markers.push(marker);
-
-                const infowindow = new google.maps.InfoWindow({
-                    content: `<b>${markerData.position.lat}, ${markerData.position.lng}</b>`,
-                });
-                marker.addListener("click", (event) => {
-                    if (activeInfoWindow) {
-                        activeInfoWindow.close();
-                    }
-                    infowindow.open({
-                        anchor: marker,
-                        shouldFocus: false,
-                        map
-                    });
-                    activeInfoWindow = infowindow;
-                    markerClicked(marker, index);
-                });
-
-                marker.addListener("dragend", (event) => {
-                    markerDragEnd(event, index);
-                });
+                const data = initialMarkers[index];
+                const marker = generateMarker(data, index);
+                marker.addTo(map).bindPopup(`<b>${data.position.lat},  ${data.position.lng}</b>`);
+                map.panTo(data.position);
+                markers.push(marker)
             }
         }
+
+        function generateMarker(data, index) {
+            return L.marker(data.position, {
+                    draggable: data.draggable
+                })
+                .on('click', (event) => markerClicked(event, index))
+                .on('dragend', (event) => markerDragEnd(event, index));
+        }
+
+
         /* ------------------------- Handle Map Click Event ------------------------- */
         function mapClicked(event) {
             console.log(map);

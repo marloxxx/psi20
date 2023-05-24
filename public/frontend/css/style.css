@@ -613,9 +613,6 @@ ul#top_links li:first-child {
     padding-left: 0
 }
 
-ul#top_links a {
-    color: #fff
-}
 
 header#plain {
     background-color: #fff;
@@ -1004,9 +1001,6 @@ header#plain .main-menu>ul>li:hover>a {
     color: #e04f67
 }
 
-header#colored.sticky .main-menu>ul>li>a {
-    color: #fff
-}
 
 .layer {
     position: fixed;

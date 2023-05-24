@@ -11,6 +11,7 @@ use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\OpenGraph;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
+use Intervention\Image\Facades\Image as ImageIntervention;
 
 class EventController extends Controller
 {
@@ -121,8 +122,15 @@ class EventController extends Controller
         ]);
 
         $imageName = (time() + rand(1, 100)) . '.' . $request->image->extension();
-        $size = $request->file('image')->getSize();
-        $request->image->move(public_path('images/events'), $imageName);
+        // resize image
+        $image = ImageIntervention::make($request->image->path());
+        $image->resize(1920, 1080, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+        $image->save(public_path('images/events/' . $imageName));
+        $size = $image->filesize();
+        // $size = $request->file('image')->getSize();
+        // $request->image->move(public_path('images/events'), $imageName);
 
         $event->images()->create([
             'name' => $imageName,
@@ -200,8 +208,16 @@ class EventController extends Controller
 
             // upload new image
             $imageName = (time() + rand(1, 100)) . '.' . $request->image->extension();
-            $size = $request->file('image')->getSize();
-            $request->image->move(public_path('images/events'), $imageName);
+            // resize image
+            $image = ImageIntervention::make($request->image->path());
+            $image->resize(1920, 1080, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $image->save(public_path('images/events/' . $imageName));
+            $size = $image->filesize();
+
+            // $size = $request->file('image')->getSize();
+            // $request->image->move(public_path('images/events'), $imageName);
 
             $event->images()->create([
                 'name' => $imageName,
@@ -245,9 +261,16 @@ class EventController extends Controller
     {
         $event = Event::findOrFail($request->event_id);
         foreach ($request->file('file') as $image) {
-            $size = $image->getSize();
+            // $size = $image->getSize();
             $imageName = (time() + rand(1, 100)) . '.' . $image->extension();
-            $image->move(public_path('images/events'), $imageName);
+            // resize image
+            $imageIntervention = ImageIntervention::make($image->path());
+            $imageIntervention->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $imageIntervention->save(public_path('images/events/' . $imageName));
+            $size = $imageIntervention->filesize();
+            // $image->move(public_path('images/events'), $imageName);
             $event->images()->create([
                 'name' => $imageName,
                 'size' => $size,

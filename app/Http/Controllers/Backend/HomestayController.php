@@ -12,6 +12,7 @@ use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\OpenGraph;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
+use Intervention\Image\Facades\Image as ImageIntervention;
 
 class HomestayController extends Controller
 {
@@ -133,8 +134,13 @@ class HomestayController extends Controller
         $homestay->facilities()->attach($request->facilities);
 
         $imageName = (time() + rand(1, 100)) . '.' . $request->image->extension();
-        $size = $request->file('image')->getSize();
-        $request->image->move(public_path('images/homestays'), $imageName);
+        // resize image
+        $img = ImageIntervention::make($request->image->path());
+        $img->resize(1920, 1080, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+        $img->save(public_path('images/homestays/' . $imageName));
+        $size = $img->filesize();
 
         $homestay->images()->create([
             'name' => $imageName,
@@ -214,8 +220,15 @@ class HomestayController extends Controller
             // delete old image
             $homestay->images()->where('is_primary', true)->delete();
             $imageName = time() . '.' . $request->image->extension();
-            $size = $request->file('image')->getSize();
-            $request->image->move(public_path('images/homestay'), $imageName);
+            // resize image
+            $img = ImageIntervention::make($request->image->path());
+            $img->resize(1920, 1080, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $img->save(public_path('images/homestays/' . $imageName));
+            $size = $img->filesize();
+            // $size = $request->file('image')->getSize();
+            // $request->image->move(public_path('images/homestay'), $imageName);
 
             $homestay->images()->create([
                 'name' => $imageName,
@@ -261,9 +274,16 @@ class HomestayController extends Controller
     {
         $homestay = Homestay::findOrFail($request->homestay_id);
         foreach ($request->file('file') as $image) {
-            $size = $image->getSize();
+            // $size = $image->getSize();
             $imageName = (time() + rand(1, 100)) . '.' . $image->extension();
-            $image->move(public_path('images/homestays'), $imageName);
+            // resize image
+            $img = ImageIntervention::make($image->path());
+            $img->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $img->save(public_path('images/homestays/' . $imageName));
+            $size = $img->filesize();
+            // $image->move(public_path('images/homestays'), $imageName);
             $homestay->images()->create([
                 'name' => $imageName,
                 'size' => $size,

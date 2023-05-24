@@ -26,14 +26,7 @@
             </div>
             <div class="col-lg-5 col-md-5">
                 <div class="tour_list_desc">
-                    <div class="rating">
-                        @for ($i = 0; $i < $homestay->rating; $i++)
-                            <i class="icon-star voted"></i>
-                        @endfor
-                        @for ($i = 0; $i < 5 - $homestay->rating; $i++)
-                            <i class="icon-star-empty"></i>
-                        @endfor
-                    </div>
+
                     <h3><strong>{{ $homestay->name }}</strong> </h3>
                     <p>{{ $homestay->address }}</p>
                     <ul class="add_info">
@@ -46,6 +39,9 @@
                             </li>
                         @endforeach
                     </ul>
+                    <div class="mt-2">
+                        <p>{!! Str::limit($homestay->description, 100) !!}</p>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-3">
@@ -53,6 +49,16 @@
                     <div>
                         <sup>Rp</sup>{{ number_format($homestay->price) }}
                         <small>*per malam</small>
+                        <center class="mb-3">
+                            <div class="rating">
+                                @for ($i = 0; $i < $homestay->rating; $i++)
+                                    <i class="icon-star voted"></i>
+                                @endfor
+                                @for ($i = 0; $i < 5 - $homestay->rating; $i++)
+                                    <i class="icon-star-empty"></i>
+                                @endfor
+                            </div>
+                        </center>
                         <p><a href="{{ route('homestays.show', $homestay->id) }}" class="btn_1">Details</a>
                         </p>
                     </div>

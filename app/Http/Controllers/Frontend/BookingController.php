@@ -30,6 +30,8 @@ class BookingController extends Controller
     public function check(Request $request)
     {
         $homestay = Homestay::findOrFail($request->homestay_id);
+        $adults = $request->adults;
+        $children = $request->children;
         $checkin = Carbon::parse($request->checkin);
         $checkout = Carbon::parse($request->checkout);
         // check if homestay is available
@@ -52,13 +54,15 @@ class BookingController extends Controller
 
         // parse from string to Carbon
         // create from this format 05-04-23 to 05-04-2023
+        $adults = $request->adults;
+        $children = $request->children;
         $checkin = Carbon::createFromFormat('m-d-y', $dates[0])->format('D, d M Y');
         $checkout = Carbon::createFromFormat('m-d-y', $dates[1])->format('D, d M Y');
         $homestay = Homestay::findOrFail($id);
         // total price = price * days
         $total = $homestay->price * $homestay->getDays($checkin, $checkout);
 
-        return view('pages.frontend.booking.create', compact('homestay', 'checkin', 'checkout', 'total'));
+        return view('pages.frontend.booking.create', compact('homestay', 'adults', 'children', 'checkin', 'checkout', 'total'));
     }
 
     public function store(Request $request)
@@ -69,6 +73,8 @@ class BookingController extends Controller
         $number = $homestay->bookings()->count() + 1;
         $booking = $homestay->bookings()->create([
             'code' => 'BOOK-' . $number,
+            'adults' => $request->adults,
+            'children' => $request->children,
             'check_in' => Carbon::parse($request->checkin)->format('Y-m-d'),
             'check_out' => Carbon::parse($request->checkout)->format('Y-m-d'),
             'total_price' => $request->total,
