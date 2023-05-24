@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Event;
 use App\Models\Homestay;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,11 +20,14 @@ class ImageFactory extends Factory
     {
         // get all homestay id
         $homestay_ids = Homestay::pluck('id')->toArray();
+        // get all event id
+        $event_ids = Event::pluck('id')->toArray();
         return [
             'homestay_id' => $this->faker->randomElement($homestay_ids),
+            'event_id' => $this->faker->randomElement($event_ids),
             'name' => $this->faker->name,
             'size' => $this->faker->randomNumber(),
-            'image_path' => $this->faker->imageUrl(1280, 720),
+            'image_path' => $this->faker->imageUrl(640, 480),
             'is_primary' => $this->faker->boolean,
         ];
     }

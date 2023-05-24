@@ -6,13 +6,12 @@
                     {{-- <div class="ribbon popular"></div> --}}
                     <img src="{{ asset($event->images->first()->image_path) }}" width="800" height="533"
                         class="img-fluid" alt="Image">
-                    <div class="short_info">
-                        <i class="fa fa-calendar"></i> {{ $event->start_date->format('d M Y') }} -
-                        {{ $event->end_date->format('d M Y') }}
-                    </div>
+
                 </a>
             </div>
             <div class="tour_title">
+                <i class="fa fa-calendar"></i> {{ $event->start_date->format('d M Y') }} -
+                {{ $event->end_date->format('d M Y') }}
                 <h3><strong>{{ $event->title }}</strong></h3>
                 <small>{{ $event->address }}</small>
             </div>

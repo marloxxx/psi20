@@ -44,14 +44,13 @@
                             @foreach ($event->images->where('is_primary', 0) as $image)
                                 <div class="tile">
                                     <a class="tile-inner" data-lightbox="gallery" href="{{ asset($image->image_path) }}">
-                                        <img class="item w-100"
+                                        <img class="item"
                                             src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
                                             data-src="{{ asset($image->image_path) }}" alt="Gallery image" />
                                     </a>
                                 </div>
                                 <!-- End image -->
                             @endforeach
-
                         </div>
                     </div>
 

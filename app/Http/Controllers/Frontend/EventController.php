@@ -74,8 +74,6 @@ class EventController extends Controller
     {
         $this->setMeta($event->title);
 
-        $event->increment('views');
-
         $initialMarkers = [];
         $initialMarkers[] = [
             'position' => [
