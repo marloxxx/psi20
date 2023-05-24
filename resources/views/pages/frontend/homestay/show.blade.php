@@ -24,7 +24,7 @@
                     </div>
                     <div class="col-md-4">
                         <div id="price_single_main" class="hotel">
-                            <span><sup>Rp</sup>{{ number_format($homestay->price) }}</span>/malam
+                            <span><sup>Rp</sup>{{ number_format($homestay->price_per_night) }}</span>/malam
                         </div>
                     </div>
                 </div>
@@ -212,8 +212,8 @@
                     <div class="box_style_4">
                         <i class="icon_set_1_icon-90"></i>
                         <h4><span>Pesan</span> lewat telepon</h4>
-                        <a href="tel://{{ $homestay->owner->phone_number }}"
-                            class="phone">{{ $homestay->owner->phone_number }}</a>
+                        <a href="tel://{{ $homestay->owner_phone_number }}"
+                            class="phone">{{ $homestay->owner_phone_number }}</a>
                         <small>Senin - Jumat 9.00 - 18.00 WIB</small>
                     </div>
                     @auth

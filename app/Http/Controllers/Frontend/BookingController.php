@@ -60,7 +60,7 @@ class BookingController extends Controller
         $checkout = Carbon::createFromFormat('m-d-y', $dates[1])->format('D, d M Y');
         $homestay = Homestay::findOrFail($id);
         // total price = price * days
-        $total = $homestay->price * $homestay->getDays($checkin, $checkout);
+        $total = $homestay->price_per_night * $homestay->getDays($checkin, $checkout);
 
         return view('pages.frontend.booking.create', compact('homestay', 'adults', 'children', 'checkin', 'checkout', 'total'));
     }

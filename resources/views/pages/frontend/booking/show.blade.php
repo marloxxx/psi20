@@ -11,7 +11,7 @@
                         <div class="progress">
                             <div class="progress-bar"></div>
                         </div>
-                        <a href="payment_hotel.html" class="bs-wizard-dot"></a>
+                        <a href="javascript:;" class="bs-wizard-dot"></a>
                     </div>
 
                     <div class="col-6 bs-wizard-step complete">
@@ -147,7 +147,6 @@
                             your invoice</a>
                     </div>
                 </aside>
-
             </div>
             <!--End row -->
         </div>

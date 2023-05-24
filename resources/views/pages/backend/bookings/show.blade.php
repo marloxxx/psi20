@@ -1,5 +1,5 @@
 @extends('layouts.backend.master')
-@section('title', 'All Homestays')
+@section('title', 'Detail Bookings')
 @section('breadcrumb')
     <!--begin::Breadcrumb-->
     <ul class="breadcrumb breadcrumb-separatorless fw-semibold">

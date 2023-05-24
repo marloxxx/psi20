@@ -132,12 +132,12 @@
                         name: 'facilities',
                     },
                     {
-                        data: 'price',
-                        name: 'price',
+                        data: 'price_per_night',
+                        name: 'price_per_night',
                     },
                     {
-                        data: 'capacity',
-                        name: 'capacity',
+                        data: 'total_rooms',
+                        name: 'total_rooms',
                     },
                     {
                         data: 'is_available',

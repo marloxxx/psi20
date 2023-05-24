@@ -1,4 +1,5 @@
 @extends('layouts.backend.master')
+@section('title', 'Edit User')
 @section('breadcrumb')
     <!--begin::Breadcrumb-->
     <ul class="breadcrumb breadcrumb-separatorless fw-semibold">

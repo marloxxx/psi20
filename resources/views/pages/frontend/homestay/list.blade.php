@@ -47,7 +47,7 @@
             <div class="col-lg-3 col-md-3">
                 <div class="price_list">
                     <div>
-                        <sup>Rp</sup>{{ number_format($homestay->price) }}
+                        <sup>Rp</sup>{{ number_format($homestay->price_per_night) }}
                         <small>*per malam</small>
                         <center class="mb-3">
                             <div class="rating">
