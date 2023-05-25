@@ -1,3 +1,7 @@
+counter_notif(localStorage.getItem("route_counter_notif"));
+setInterval(function () {
+    counter_notif(localStorage.getItem("route_counter_notif"));
+}, 5000);
 function counter_notif(url) {
     $.ajax({
         type: "GET",
@@ -24,3 +28,4 @@ function load_notif(url) {
         },
     });
 }
+

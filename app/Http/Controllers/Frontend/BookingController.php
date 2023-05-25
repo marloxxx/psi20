@@ -12,8 +12,6 @@ use Artesaos\SEOTools\Facades\JsonLd;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\OpenGraph;
 use Illuminate\Support\Facades\Validator;
-use App\Services\Midtrans\CallbackService;
-use App\Services\Midtrans\CreateSnapTokenService;
 
 class BookingController extends Controller
 {
@@ -32,8 +30,6 @@ class BookingController extends Controller
     public function check(Request $request)
     {
         $homestay = Homestay::findOrFail($request->homestay_id);
-        $adults = $request->adults;
-        $children = $request->children;
         $checkin = Carbon::parse($request->checkin);
         $checkout = Carbon::parse($request->checkout);
         // check if homestay is available
@@ -83,6 +79,7 @@ class BookingController extends Controller
             'total_price' => $request->total,
             'user_id' => auth()->user()->id,
         ]);
+        //
         return redirect()->route('booking.show', $booking->id);
     }
 

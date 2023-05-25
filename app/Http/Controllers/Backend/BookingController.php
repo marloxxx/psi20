@@ -109,7 +109,6 @@ class BookingController extends Controller
 
     public function pdf()
     {
-        // dd('test');
         $bookings = Booking::with('homestay', 'user')->get();
         $this->setMeta('Booking Detail');
         $pdf = PDF::loadView('pages.backend.bookings.pdf', compact('bookings'));

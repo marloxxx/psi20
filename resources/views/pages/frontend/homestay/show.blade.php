@@ -2,6 +2,54 @@
 @push('custom-styles')
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .rate {
+            float: left;
+            height: 46px;
+            padding: 0 10px;
+        }
+
+        .rate:not(:checked)>input {
+            position: absolute;
+            top: -9999px;
+        }
+
+        .rate:not(:checked)>label {
+            float: right;
+            width: 1em;
+            overflow: hidden;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 30px;
+            color: #ccc;
+        }
+
+        .rate:not(:checked)>label:before {
+            content: '★ ';
+        }
+
+        .rate>input:checked~label {
+            color: #ffc700;
+        }
+
+        .rate:not(:checked)>label:hover,
+        .rate:not(:checked)>label:hover~label {
+            color: #deb217;
+        }
+
+        .rate>input:checked+label:hover,
+        .rate>input:checked+label:hover~label,
+        .rate>input:checked~label:hover,
+        .rate>input:checked~label:hover~label,
+        .rate>label:hover~input:checked~label {
+            color: #c59b08;
+        }
+    </style>
 @endpush
 @section('content')
     <section class="parallax-window" data-parallax="scroll"
@@ -267,15 +315,18 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Penilaian</label>
-                                    <select class="form-select" name="rating" id="rating">
-                                        <option value="">Pilih Penilaian</option>
-                                        <option value="1">Sangat Buruk</option>
-                                        <option value="2">Buruk</option>
-                                        <option value="3">Cukup</option>
-                                        <option value="4">Baik</option>
-                                        <option value="5">Sangat Baik</option>
-                                    </select>
+                                    <div class="rate">
+                                        <input type="radio" id="star5" name="rating" value="5" />
+                                        <label for="star5" title="text">5 stars</label>
+                                        <input type="radio" id="star4" name="rating" value="4" />
+                                        <label for="star4" title="text">4 stars</label>
+                                        <input type="radio" id="star3" name="rating" value="3" />
+                                        <label for="star3" title="text">3 stars</label>
+                                        <input type="radio" id="star2" name="rating" value="2" />
+                                        <label for="star2" title="text">2 stars</label>
+                                        <input type="radio" id="star1" name="rating" value="1" />
+                                        <label for="star1" title="text">1 star</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -415,7 +466,7 @@
         $('#review').submit(function(e) {
             e.preventDefault();
             var homestay_id = $('#homestay_id').val();
-            var rating = $('#rating').val();
+            var rating = $('input[name="rating"]:checked').val();
             var review_text = $('#review_text').val();
             $.ajax({
                 url: "{{ route('review') }}",

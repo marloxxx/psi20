@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3 col-sm-3">
-
+                <img src="{{ asset('images/' . getSettings('site_logo')) }}" alt="City tours">
             </div>
             <div class="col-md-2 col-sm-3">
                 <a href="#">About us</a>

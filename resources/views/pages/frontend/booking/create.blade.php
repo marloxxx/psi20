@@ -49,6 +49,8 @@
             <input type="hidden" name="checkin" value="{{ $checkin }}">
             <input type="hidden" name="checkout" value="{{ $checkout }}">
             <input type="hidden" name="total" value="{{ $total }}">
+            <input type="hidden" name="adults" value="{{ $adults }}">
+            <input type="hidden" name="children" value="{{ $children }}">
             <div class="container margin_60">
                 <div class="row">
                     <div class="col-lg-8 add_bottom_15">
@@ -114,6 +116,14 @@
                                         </td>
                                         <td class="text-end">
                                             {{ $checkout }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Tamu
+                                        </td>
+                                        <td class="text-end">
+                                            {{ $adults }} Dewasa, {{ $children }} Anak
                                         </td>
                                     </tr>
                                     <tr>

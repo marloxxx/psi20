@@ -21,7 +21,7 @@ class NotificationController extends Controller
 
         if (Auth::user()->notifications->count() > 0) {
             foreach (Auth::user()->notifications as $notification) {
-                if ($notification->type == 'topup') {
+                if ($notification->data['type'] == 'NewBookingNotification') {
                     $output .= '
                     <a href="javascript:;" class="navi-item">
 						<div class="navi-link">
@@ -34,15 +34,14 @@ class NotificationController extends Controller
                             </div>
                         </div>
                     </a>';
-                } elseif ($notification->type == 'coupon') {
+                } elseif ($notification->data['type'] == 'CancelBookingNotification') {
                     $output .= '
                     <a href="javascript:;" class="navi-item">
                         <div class="navi-link">
-                            <div class="navi-icon mr-2">
-                                <i class="fas fa-gift text-warning"></i>
+                            <i class="navi-icon mr-2 fas fa-times-circle text-danger"></i>
                             </div>
                             <div class="navi-text">
-                                <div class="font-weight-bold">' . $notification->message . '</div>
+                                <div class="font-weight-bold">' . $notification->data['message'] . '</div>
                                 <div class="text-muted">' . $notification->created_at->diffForHumans() . '</div>
                             </div>
                         </div>

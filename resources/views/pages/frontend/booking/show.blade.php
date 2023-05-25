@@ -126,7 +126,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        @if ($booking->payment_proof == null)
+                        @if ($booking->payment_proof == null || $payment->status != 2)
                             <!-- form-group -->
                             <form action="{{ route('booking.update', $booking->id) }}" method="POST"
                                 enctype="multipart/form-data" class="dropzone" id="dropzone">
@@ -204,7 +204,7 @@
                 });
             },
             removedfile: function(file) {
-            var name = file.name;
+                var name = file.name;
                 var fileRef;
                 return (fileRef = file.previewElement) != null ? fileRef.parentNode.removeChild(
                     file.previewElement) : void 0;

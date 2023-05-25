@@ -21,6 +21,95 @@
     <link href="{{ asset('frontend/css/vendors.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/toastr.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ asset('css/sweetalert.css') }}" type="text/css" />
+    <style>
+        .badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            padding: 5px 10px;
+            border-radius: 50%;
+            background: red;
+            color: white;
+        }
+
+        .notification {
+            position: relative;
+        }
+
+        .notification .dropdown-menu {
+            width: 320px;
+            padding: 0;
+            margin: 0;
+            border-radius: 0;
+            border: none;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .notification .dropdown-menu:before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            right: 10px;
+            border: 10px solid transparent;
+            border-bottom: 10px solid #f5f5f5;
+        }
+
+        .notification_header {
+            padding: 15px;
+            text-align: center;
+            background: #f5f5f5;
+        }
+
+        .notification_header h3 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .notification_body {
+            max-height: 250px;
+            width: 320px;
+            overflow-y: auto;
+        }
+
+        .notification_item {
+            padding: 15px;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .notification_item:last-child {
+            border-bottom: none;
+        }
+
+        .notification_item .icon {
+            float: left;
+            margin-right: 10px;
+        }
+
+        .notification_item .text {
+            overflow: hidden;
+        }
+
+        .notification_item .text small {
+            color: #999;
+        }
+
+        .notification_footer {
+            padding: 15px;
+            text-align: center;
+            background: #f5f5f5;
+        }
+
+        .notification_footer a {
+            color: #333;
+            font-weight: bold;
+        }
+
+        .notification_footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
     @stack('custom-styles')
 </head>
 
@@ -44,6 +133,24 @@
     @yield('content')
 
     @include('layouts.frontend.footer')
+    <!-- modal notification -->
+    <div class="modal fade" id="modal-notification" tabindex="-1" role="dialog" aria-labelledby="modal-notification"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-notification">Notification</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="notification_body notification_items" id="notification_items">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- modal content goes here -->
+    </div>
     <div id="toTop"></div><!-- Back to top button -->
     @include('layouts.frontend.script')
     @stack('custom-scripts')

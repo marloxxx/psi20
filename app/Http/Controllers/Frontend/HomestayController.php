@@ -150,7 +150,19 @@ class HomestayController extends Controller
         $homestay = Homestay::findOrFail($request->homestay_id);
         $user = User::findOrFail(auth()->user()->id);
         // check if user has booked this homestay
-        if ($user->bookings()->where('homestay_id', $homestay->id)->exists()) {
+        if (!$user->bookings()->where('homestay_id', $homestay->id)->exists()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Anda belum pernah memesan penginapan ini.',
+            ]);
+        }
+        // check if already reviewed
+        if ($user->reviews()->where('booking_id', $user->bookings()->where('homestay_id', $homestay->id)->first()->id)->exists()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Anda sudah pernah memberikan review.',
+            ]);
+        } else {
             $user->reviews()->create([
                 'rating' => $request->rating,
                 'review' => $request->review,
@@ -159,11 +171,6 @@ class HomestayController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Review added.',
-            ]);
-        } else {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Anda belum pernah memesan penginapan ini.',
             ]);
         }
     }

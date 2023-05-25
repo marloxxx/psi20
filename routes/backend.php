@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\FacilityController;
 use App\Http\Controllers\Backend\HomestayController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\NotificationController;
 
 Route::name('backend.')->middleware(['auth', 'role:admin|owner'])->group(function () {
     // Dashboard
@@ -49,6 +50,11 @@ Route::name('backend.')->middleware(['auth', 'role:admin|owner'])->group(functio
         Route::put('update_user', [SettingController::class, 'update_user'])->name('update_user');
         Route::put('update_seo', [SettingController::class, 'update_seo'])->name('update_seo');
     });
+
+    // Notifications
+    Route::get('counter', [NotificationController::class, 'counter'])->name('counter_notif');
+    Route::get('notification', [NotificationController::class, 'notification'])->name('notification');
+    Route::resource('notifications', NotificationController::class);
 
     Route::get('logout', [AuthController::class, 'do_logout'])->name('logout');
 });

@@ -2,11 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\EventController;
 use App\Http\Controllers\Frontend\BookingController;
-use App\Http\Controllers\Frontend\HomeController;
-use App\Http\Controllers\Frontend\HomestayController;
 use App\Http\Controllers\Frontend\ProfileController;
+use App\Http\Controllers\Frontend\NotificationController;
+use App\Http\Controllers\Frontend\HomestayController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -49,4 +50,9 @@ Route::middleware(['auth'])->group(function () {
     Route::put('profile/update-profile', [ProfileController::class, 'update_profile'])->name('profile.update-profile');
     Route::post('profile/upload-profile', [ProfileController::class, 'upload_profile'])->name('profile.upload-profile');
     Route::get('logout', [AuthController::class, 'do_logout'])->name('logout');
+
+    // Notifications
+    Route::get('counter', [NotificationController::class, 'counter'])->name('counter_notif');
+    Route::get('notification', [NotificationController::class, 'notification'])->name('notification');
+    Route::resource('notifications', NotificationController::class);
 });
