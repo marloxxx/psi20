@@ -62,7 +62,7 @@
             <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
                 <!--begin::Export-->
                 <a href="{{ route('backend.bookings.pdf') }}" target="_blank" class="btn btn-light-primary">
-                <i class="ki-outline ki-exit-up fs-2"></i> Export PDF
+                    <i class="ki-outline ki-exit-up fs-2"></i> Export PDF
                 </a>
                 <!--end::Export-->
                 <button type="button" onclick="delete_all();" class="btn btn-danger me-3" id="kt_toolbar_delete_button">
@@ -94,6 +94,8 @@
                             <th class="min-w-250px">Check Out</th>
                             <th class="min-w-250px">Total Price</th>
                             <th class="min-w-250px">Status</th>
+                            <th class="min-w-250px">Payment Status</th>
+                            <th class="min-w-250px">Payment Proof</th>
                             <th class="min-w-70px">Actions</th>
                         </tr>
                         <!--end::Table row-->
@@ -147,6 +149,14 @@
                     {
                         data: 'status',
                         name: 'status',
+                    },
+                    {
+                        data: 'payment_status',
+                        name: 'payment_status',
+                    },
+                    {
+                        data: 'payment_proof',
+                        name: 'payment_proof',
                     },
                     {
                         data: 'action',

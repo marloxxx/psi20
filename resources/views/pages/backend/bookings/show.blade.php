@@ -34,6 +34,27 @@
 @section('content')
     <!--begin::Order details page-->
     <div class="d-flex flex-column gap-7 gap-lg-10">
+        <div class="d-flex flex-wrap flex-stack gap-5 gap-lg-10">
+
+            <!--begin::Button-->
+            <a href="{{ route('backend.bookings.index') }}" class="btn btn-icon btn-light btn-sm ms-auto me-lg-n7">
+                <i class="ki-duotone ki-left fs-2"></i> </a>
+            <!--end::Button-->
+
+            @if ($booking->payment_status == '1' && $booking->payment_proof != null)
+                <!--begin::Button-->
+                <a href="javascript:;"
+                    onclick="handle_confirm('Apakah Anda Yakin?','Yakin','Tidak','PUT',' {{ route('backend.bookings.approve', $booking->id) }} ');"
+                    class="btn btn-primary btn-sm me-0">Approve</a>
+                <!--end::Button-->
+                <!--begin::Button-->
+                <a href="javascript:;"
+                    onclick="handle_confirm('Apakah Anda Yakin?','Yakin','Tidak','PUT',' {{ route('backend.bookings.reject', $booking->id) }} ');"
+                    class="btn btn-danger btn-sm">Reject</a>
+                <!--end::Button-->
+            @endif
+
+        </div>
         <!--begin::Order summary-->
         <div class="d-flex flex-column flex-xl-row gap-7 gap-lg-10">
             <!--begin::Order details-->
@@ -66,7 +87,12 @@
                                         </div>
                                     </td>
                                     <td class="fw-bold text-end">
-                                        {!! $booking->payment_status() !!}
+                                        {{-- <a href="{{ asset('images/payment-proofs/' . $booking->payment_proof) }}">
+                                            <i class="fa fa-money"></i> {!! $booking->payment_status() !!}
+                                        </a> --}}
+                                        <a href="{{ $booking->payment_proof }}" target="_blank">
+                                            <i class="fa fa-money"></i> {!! $booking->payment_status() !!}
+                                        </a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -112,7 +138,7 @@
                                         <div class="d-flex align-items-center justify-content-end">
                                             <!--begin:: Avatar -->
                                             <div class="symbol symbol-circle symbol-25px overflow-hidden me-3">
-                                                <a href="../../demo30/dist/apps/ecommerce/customers/details.html">
+                                                <a href="javascript:;">
                                                     <div class="symbol-label">
                                                         <img src="{{ asset('backend/media/avatars/300-23.jpg') }}"
                                                             alt="{{ $booking->user->first_name }} {{ $booking->user->last_name }}"
@@ -122,7 +148,7 @@
                                             </div>
                                             <!--end::Avatar-->
                                             <!--begin::Name-->
-                                            <a href="../../demo30/dist/apps/ecommerce/customers/details.html"
+                                            <a href="javascript:;"
                                                 class="text-gray-600 text-hover-primary">{{ $booking->user->first_name }}
                                                 {{ $booking->user->last_name }}</a>
                                             <!--end::Name-->
@@ -136,7 +162,7 @@
                                         </div>
                                     </td>
                                     <td class="fw-bold text-end">
-                                        <a href="../../demo30/dist/apps/user-management/users/view.html"
+                                        <a href="javascript:;"
                                             class="text-gray-600 text-hover-primary">{{ $booking->user->email }}</a>
                                     </td>
                                 </tr>
@@ -227,7 +253,7 @@
             <!--begin::Card header-->
             <div class="card-header">
                 <div class="card-title">
-                    <h2>#{{ $booking->code }}</h2>
+                    <h2>Booking #{{ $booking->code }}</h2>
                 </div>
             </div>
             <!--end::Card header-->
@@ -265,12 +291,12 @@
                                         <!--end::Title-->
                                     </div>
                                 </td>
-                                <td class="text-end">Rp. {{ number_format($booking->homestay->price) }}</td>
+                                <td class="text-end">Rp. {{ number_format($booking->homestay->price_per_night) }}</td>
                                 <td class="text-end">
                                     {{ \Carbon\Carbon::parse($booking->check_out)->diffInDays(\Carbon\Carbon::parse($booking->check_in)) }}
                                 </td>
                                 <td class="text-end">Rp.
-                                    {{ number_format($booking->homestay->price * \Carbon\Carbon::parse($booking->check_out)->diffInDays(\Carbon\Carbon::parse($booking->check_in))) }}
+                                    {{ number_format($booking->homestay->price_per_night * \Carbon\Carbon::parse($booking->check_out)->diffInDays(\Carbon\Carbon::parse($booking->check_in))) }}
                                 </td>
                                 <td class="text-end">Rp. {{ number_format($booking->total_price) }}</td>
                             </tr>

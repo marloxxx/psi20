@@ -1,4 +1,8 @@
 @extends('layouts.frontend.master')
+@push('custom-styles')
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+@endpush
+
 @section('content')
     <section id="hero_2" class="background-image" data-background="url(img/slide_hero_2.jpg)">
         <div class="opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.6)">
@@ -122,6 +126,17 @@
                                 </tr>
                             </tbody>
                         </table>
+                        @if ($booking->payment_proof == null)
+                            <!-- form-group -->
+                            <form action="{{ route('booking.update', $booking->id) }}" method="POST"
+                                enctype="multipart/form-data" class="dropzone" id="dropzone">
+                                @csrf
+                                @method('PUT')
+                            </form>
+                            <div class="mt-3">
+                                <button type="submit" id="submit-all" class="btn_full">Upload Bukti Pembayaran</button>
+                            </div>
+                        @endif
                     </div>
                     <!--End step -->
                 </div>
@@ -153,3 +168,47 @@
         <!--End container -->
     </main>
 @endsection
+@push('custom-scripts')
+    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+    <script>
+        Dropzone.options.dropzone = {
+            autoProcessQueue: false,
+            maxFilesize: 2, // MB
+            maxFiles: 1,
+            addRemoveLinks: true,
+            acceptedFiles: ".jpeg,.jpg,.png,.gif",
+            dictRemoveFile: "Remove",
+            init: function() {
+                var submitButton = document.querySelector("#submit-all");
+                myDropzone = this;
+                submitButton.addEventListener("click", function() {
+                    myDropzone.processQueue();
+                });
+                this.on("success", function(file, response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: response.message,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                });
+                this.on("error", function(file, response) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: response.message,
+                    });
+                    // remove file
+                    this.removeFile(file);
+                });
+            },
+            removedfile: function(file) {
+            var name = file.name;
+                var fileRef;
+                return (fileRef = file.previewElement) != null ? fileRef.parentNode.removeChild(
+                    file.previewElement) : void 0;
+            }
+        };
+    </script>
+@endpush

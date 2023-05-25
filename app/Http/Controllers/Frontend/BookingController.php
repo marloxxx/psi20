@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use Carbon\Carbon;
 use App\Models\Booking;
 use App\Models\Homestay;
+use PDF;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Artesaos\SEOTools\Facades\JsonLd;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\OpenGraph;
+use Illuminate\Support\Facades\Validator;
 use App\Services\Midtrans\CallbackService;
 use App\Services\Midtrans\CreateSnapTokenService;
-use Carbon\Carbon;
 
 class BookingController extends Controller
 {
@@ -70,7 +72,8 @@ class BookingController extends Controller
         // dd($request->all());
         // dd(Carbon::parse($request->checkin)->format('Y-m-d'));
         $homestay = Homestay::findOrFail($request->homestay_id);
-        $number = $homestay->bookings()->count() + 1;
+        // get last booking number, if null set to 1
+        $number = Booking::count() ? Booking::latest()->first()->id + 1 : 1;
         $booking = $homestay->bookings()->create([
             'code' => 'BOOK-' . $number,
             'adults' => $request->adults,
@@ -87,17 +90,6 @@ class BookingController extends Controller
     {
         $booking = Booking::findOrFail($id);
         $this->setMeta('Booking #' . $booking->code);
-        // $snapToken = $booking->snap_token;
-        // if (empty($snapToken)) {
-        // Jika snap token masih NULL, buat token snap dan simpan ke database
-
-        //     $midtrans = new CreateSnapTokenService($booking);
-        //     $snapToken = $midtrans->getSnapToken();
-
-        //     $booking->snap_token = $snapToken;
-        //     $booking->save();
-        // }
-        // dd($snapToken);
         return view('pages.frontend.booking.show', compact('booking'));
     }
 
@@ -113,50 +105,45 @@ class BookingController extends Controller
         ]);
     }
 
-    // public function callback()
-    // {
-    //     $callback = new CallbackService;
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Bukti pembayaran tidak valid.'
+            ], 422);
+        }
+        $booking = Booking::findOrFail($id);
+        $number = $booking->id;
+        $file = $request->file('file');
+        $fileName = 'PAYMENT-PROOF-' . $number . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path('images/payment-proofs'), $fileName);
+        $booking = Booking::findOrFail($id);
 
-    //     if ($callback->isSignatureKeyVerified()) {
-    //         $notification = $callback->getNotification();
-    //         $booking = $callback->getBooking();
-
-    //         if ($callback->isSuccess()) {
-    //             Booking::where('id', $booking->id)->update([
-    //                 'payment_status' => '2',
-    //             ]);
-    //         }
-
-    //         if ($callback->isExpire()) {
-    //             Booking::where('id', $booking->id)->update([
-    //                 'payment_status' => '3',
-    //             ]);
-    //         }
-
-    //         if ($callback->isCancelled()) {
-    //             Booking::where('id', $booking->id)->update([
-    //                 'payment_status' => '4',
-    //             ]);
-    //         }
-
-    //         return response()
-    //             ->json([
-    //                 'success' => true,
-    //                 'message' => 'Notifikasi berhasil diproses',
-    //             ]);
-    //     } else {
-    //         return response()
-    //             ->json([
-    //                 'error' => true,
-    //                 'message' => 'Signature key tidak terverifikasi',
-    //             ], 403);
-    //     }
-    // }
+        $booking->update([
+            'status' => 'completed',
+            'payment_status' => '1', // '1' = 'pending
+            'payment_proof' => $fileName,
+        ]);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Pemesanan berhasil diselesaikan.'
+        ]);
+    }
 
     public function invoice($id)
     {
         $booking = Booking::findOrFail($id);
         $this->setMeta('Invoice #' . $booking->code);
         return view('pages.frontend.booking.invoice', compact('booking'));
+    }
+
+    public function download($id)
+    {
+        $booking = Booking::findOrFail($id);
+        $pdf = PDF::loadView('pages.frontend.booking.pdf', compact('booking'));
+        return $pdf->download('invoice-' . $booking->code . '.pdf');
     }
 }

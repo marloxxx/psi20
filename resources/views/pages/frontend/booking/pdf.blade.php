@@ -2,23 +2,9 @@
 <html lang="en">
 
 <head>
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {!! SEO::generate(true) !!}
-    <link rel="icon" href="{{ asset('images/' . getSettings('site_favicon')) }}" type="image/x-icon" />
-    <link rel="shortcut icon" href="{{ asset('images/' . getSettings('site_favicon')) }}" type="image/x-icon" />
-    <script src="https://kit.fontawesome.com/07ad57e463.js" crossorigin="anonymous"></script>
-    <!-- GOOGLE WEB FONT -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Gochi+Hand&amp;family=Montserrat:wght@300;400;500;600;700&amp;display=swap"
-        rel="stylesheet">
-
     <!-- COMMON CSS -->
     <link href="{{ asset('frontend/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('frontend/css/style.css') }}" rel="stylesheet">
-    <link href="{{ asset('frontend/css/vendors.css') }}" rel="stylesheet">
     <style>
         .invoice-title h2,
         .invoice-title h3 {
@@ -90,7 +76,7 @@
                                     <tr>
                                         <td>{{ $booking->homestay->name }}</td>
                                         <td class="text-center">Rp.
-                                            {{ number_format($booking->homestay->price_per_night, 0, ',', '.') }}
+                                            {{ number_format($booking->homestay->price, 0, ',', '.') }}
                                         </td>
                                         <td class="text-center">
                                             {{ \Carbon\Carbon::parse($booking->check_in)->diffInDays($booking->check_out) }}
@@ -112,13 +98,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- download button -->
-        <div class="row d-flex justify-content-center mt-5">
-            <div class="col-12 text-center">
-                <a href="{{ route('booking.download', $booking->id) }}" class="btn_1" target="_blank">Download</a>
             </div>
         </div>
     </div>

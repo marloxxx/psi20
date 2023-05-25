@@ -66,24 +66,24 @@ class Booking extends Model
         }
     }
 
-    // public function payment_status()
-    // {
-    //     switch ($this->payment_status) {
-    //         case 1:
-    //             return '<span class="badge badge-secondary">Pending</span>';
-    //             break;
-    //         case 2:
-    //             return '<span class="badge badge-success">Success</span>';
-    //             break;
-    //         case 3:
-    //             return '<span class="badge badge-danger">Failed</span>';
-    //             break;
-    //         case 4:
-    //             return '<span class="badge badge-danger">Expired</span>';
-    //             break;
-    //         default:
-    //             return '<span class="badge badge-secondary">Pending</span>';
-    //             break;
-    //     }
-    // }
+    public function payment_status()
+    {
+        switch ($this->payment_status) {
+            case 1:
+                return '<span class="badge badge-secondary">Pending</span>';
+                break;
+            case 2:
+                return '<span class="badge badge-success">Success</span>';
+                break;
+            case 3:
+                return '<span class="badge badge-danger">Failed</span>';
+                break;
+            case 4:
+                return '<span class="badge badge-danger">Expired</span>';
+                break;
+            default:
+                return '<span class="badge badge-secondary">Pending</span>';
+                break;
+        }
+    }
 }

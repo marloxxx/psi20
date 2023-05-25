@@ -38,7 +38,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('booking/{id}', [BookingController::class, 'create'])->name('booking.create');
     Route::post('booking', [BookingController::class, 'store'])->name('booking.store');
     Route::get('booking/{id}', [BookingController::class, 'show'])->name('booking.show');
+    Route::put('booking/{id}', [BookingController::class, 'update'])->name('booking.update');
     Route::get('booking/{id}/invoice', [BookingController::class, 'invoice'])->name('booking.invoice');
+    Route::get('booking/{id}/download', [BookingController::class, 'download'])->name('booking.download');
     Route::put('booking/{id}/cancel', [BookingController::class, 'cancel'])->name('booking.cancel');
 
     // Profile

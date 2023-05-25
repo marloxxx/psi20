@@ -37,16 +37,18 @@ class BookingController extends Controller
                 })
                 ->addColumn('action', function ($booking) {
 
-
-                    return '<div class="btn-group" role="group">
-                                <a href="' . route('backend.bookings.show', $booking->id) . '" class="btn btn-primary">Detail</a>
-                                <a href="javascript:;" onclick="handle_confirm(\'Apakah Anda Yakin?\',\'Yakin\',\'Tidak\',\'PATCH\',\'' . route('backend.bookings.approve', $booking->id) . '\');" class="btn btn-success">
-                                    Setujui
+                    $action = '<div class="btn-group" role="group">
+                                <a href="' . route('backend.bookings.show', $booking->id) . '" class="btn btn-primary">Detail</a>';
+                    if ($booking->payment_status == '1' && $booking->payment_proof != null) {
+                        $action .=  '<a href="javascript:;" onclick="handle_confirm(\'Apakah Anda Yakin?\',\'Yakin\',\'Tidak\',\'PUT\',\'' . route('backend.bookings.approve', $booking->id) . '\');" class="btn btn-success">
+                                Setujui
                                 </a>
-                                <a href="javascript:;" onclick="handle_confirm(\'Apakah Anda Yakin?\',\'Yakin\',\'Tidak\',\'PATCH\',\'' . route('backend.bookings.reject', $booking->id) . '\');" class="btn btn-danger">
+                                <a href="javascript:;" onclick="handle_confirm(\'Apakah Anda Yakin?\',\'Yakin\',\'Tidak\',\'PUT\',\'' . route('backend.bookings.reject', $booking->id) . '\');" class="btn btn-danger">
                                     Tolak
-                                </a>
-                            </div>';
+                                </a>';
+                    }
+                    $action .= '</div>';
+                    return $action;
                 })
                 ->addColumn('homestay', function ($booking) {
                     return $booking->homestay->name;
@@ -66,7 +68,10 @@ class BookingController extends Controller
                 ->editColumn('total', function ($booking) {
                     return 'Rp ' . number_format($booking->total_price, 0, ',', '.');
                 })
-                ->rawColumns(['checkbox', 'action', 'homestay', 'user', 'check_in', 'check_out', 'status', 'total'])
+                ->editColumn('payment_proof', function ($booking) {
+                    return $booking->payment_proof ? '<a href="' . asset('images/payment-proofs/') . $booking->payment_proof . '" target="_blank">Lihat Bukti</a>' : '-';
+                })
+                ->rawColumns(['checkbox', 'action', 'homestay', 'user', 'check_in', 'check_out', 'status', 'total', 'payment_proof'])
                 ->make(true);
         }
         return view('pages.backend.bookings.index');
@@ -81,17 +86,25 @@ class BookingController extends Controller
     public function approve(Booking $booking)
     {
         $booking->update([
-            'status' => Booking::STATUS_APPROVED
+            'status' => Booking::STATUS_APPROVED,
+            'payment_status' => '2',
         ]);
-        return redirect()->back()->with('success', 'Berhasil mengubah status booking');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Berhasil mengubah status booking'
+        ]);
     }
 
     public function reject(Booking $booking)
     {
         $booking->update([
-            'status' => Booking::STATUS_REJECTED
+            'status' => Booking::STATUS_REJECTED,
+            'payment_status' => '3',
         ]);
-        return redirect()->back()->with('success', 'Berhasil mengubah status booking');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Berhasil mengubah status booking'
+        ]);
     }
 
     public function pdf()

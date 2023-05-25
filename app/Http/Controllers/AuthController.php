@@ -54,7 +54,7 @@ class AuthController extends Controller
     public function do_login(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email:rfc,dns|exists:users,email',
+            'email' => 'required|email|exists:users,email',
             'password' => 'required|min:8',
         ], [
             'email.exists' => 'Email tidak terdaftar',

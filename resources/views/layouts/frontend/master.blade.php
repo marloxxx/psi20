@@ -46,6 +46,7 @@
     @include('layouts.frontend.footer')
     <div id="toTop"></div><!-- Back to top button -->
     @include('layouts.frontend.script')
+    @stack('custom-scripts')
 </body>
 
 </html>

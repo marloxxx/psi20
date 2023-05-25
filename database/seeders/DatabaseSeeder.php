@@ -48,7 +48,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             HomestaySeeder::class,
             EventSeeder::class,
-            // BookingSeeder::class,
+            BookingSeeder::class,
         ]);
     }
 }

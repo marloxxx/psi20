@@ -13,5 +13,11 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         \App\Models\User::factory(10)->create();
+
+        // assign role to user
+        $users = \App\Models\User::where('id', '>', 1)->get();
+        foreach ($users as $user) {
+            $user->assignRole('customer');
+        }
     }
 }
