@@ -6,6 +6,8 @@ use App\Models\Booking;
 use PDF;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Notifications\ApproveBookingNotification;
+use App\Notifications\RejectBookingNotification;
 use Artesaos\SEOTools\Facades\JsonLd;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\OpenGraph;
@@ -89,6 +91,9 @@ class BookingController extends Controller
             'status' => Booking::STATUS_APPROVED,
             'payment_status' => '2',
         ]);
+        // send notification
+        $booking->user->notify(new ApproveBookingNotification($booking));
+
         return response()->json([
             'status' => 'success',
             'message' => 'Berhasil mengubah status booking'
@@ -101,6 +106,9 @@ class BookingController extends Controller
             'status' => Booking::STATUS_REJECTED,
             'payment_status' => '3',
         ]);
+        // send notification
+        $booking->user->notify(new RejectBookingNotification($booking));
+
         return response()->json([
             'status' => 'success',
             'message' => 'Berhasil mengubah status booking'

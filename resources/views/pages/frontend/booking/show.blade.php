@@ -9,7 +9,6 @@
             <div class="intro_title">
                 <h1>Place your order</h1>
                 <div class="bs-wizard row">
-
                     <div class="col-6 bs-wizard-step complete">
                         <div class="text-center bs-wizard-stepnum">Your details</div>
                         <div class="progress">
@@ -50,6 +49,14 @@
 
         <div class="container margin_60">
             <div class="row">
+                <div class="col-12 add_bottom_15">
+                    @if (session('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Success!</strong> {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                </div>
                 <div class="col-lg-8 add_bottom_15">
                     <div class="form_title">
                         <h3><strong><i class="icon-tag-1"></i></strong>Booking summary</h3>

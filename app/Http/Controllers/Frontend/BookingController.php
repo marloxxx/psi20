@@ -8,6 +8,8 @@ use App\Models\Homestay;
 use PDF;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Notifications\NewBookingNotification;
+use App\Notifications\UpdatePaymentNotification;
 use Artesaos\SEOTools\Facades\JsonLd;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\OpenGraph;
@@ -79,8 +81,10 @@ class BookingController extends Controller
             'total_price' => $request->total,
             'user_id' => auth()->user()->id,
         ]);
-        //
-        return redirect()->route('booking.show', $booking->id);
+        //send notifcation
+        $booking->homestay->user->notify(new NewBookingNotification($booking));
+
+        return redirect()->route('booking.show', $booking->id)->with('success', 'Pemesanan berhasil dibuat.');
     }
 
     public function show($id)
@@ -96,6 +100,10 @@ class BookingController extends Controller
         $booking->update([
             'status' => 'canceled',
         ]);
+
+        // send notification
+        $booking->homestay->owner->notify(new NewBookingNotification($booking, 'canceled'));
+
         return response()->json([
             'status' => 'success',
             'message' => 'Pemesanan berhasil dibatalkan.'
@@ -124,6 +132,10 @@ class BookingController extends Controller
             'payment_status' => '1', // '1' = 'pending
             'payment_proof' => $fileName,
         ]);
+
+        // send notification
+        $booking->homestay->owner->notify(new UpdatePaymentNotification($booking));
+
         return response()->json([
             'status' => 'success',
             'message' => 'Pemesanan berhasil diselesaikan.'
