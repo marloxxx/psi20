@@ -29,3 +29,17 @@ function load_notif(url) {
     });
 }
 
+function load_modal_notif(url, modal) {
+    $.ajax({
+        type: "GET",
+        url: url,
+        dataType: 'json',
+        success: function (response) {
+            $(modal).modal('show');
+            // set content modal
+            $(modal).find('.modal-body').html(response.notifications);
+            // set title modal
+            $(modal).find('.modal-title').html(response.title);
+        },
+    });
+}

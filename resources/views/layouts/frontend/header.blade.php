@@ -120,7 +120,7 @@
                             <!-- notification -->
                             <!-- show modal notification -->
                             <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modal-notification"
-                                onclick="load_notif('{{ route('notification') }}');">
+                                onclick="load_modal_notif('{{ route('notification') }}', '#modal-notification');">
                                 <i class="icon-bell"></i>
                                 <span class="badge badge-pill badge-danger top-notification-number"
                                     id="top-notification-number"></span>
