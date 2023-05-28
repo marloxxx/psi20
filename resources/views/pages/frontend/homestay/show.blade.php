@@ -1,7 +1,5 @@
 @extends('layouts.frontend.master')
 @push('custom-styles')
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <style>
         * {
             margin: 0;
@@ -201,44 +199,45 @@
 
                 <aside class="col-lg-4">
                     <div class="box_style_1 expose">
-                        <form method="POST" action="{{ route('booking.create', $homestay->id) }}">
-                            @csrf
-                            <h3 class="inner">Cek Ketersediaan</h3>
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label>Adults</label>
-                                        <div class="numbers-row">
-                                            <input type="text" value="1" class="qty2 form-control" name="adults">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label>Children</label>
-                                        <div class="numbers-row">
-                                            <input type="text" value="0" class="qty2 form-control" name="children">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label><i class="icon-calendar-7"></i> Check in / Check out</label>
-                                        <input class="date-pick form-control" type="text" placeholder="Select dates"
-                                            name="dates">
-                                    </div>
-                                </div>
-                            </div>
-                            <br>
-
-                            <button type="submit" class="btn_full" id="btn_check">
-                                Pesan Sekarang
-                            </button>
-                        </form>
                         @auth
+
+                            <form method="POST" action="{{ route('booking.create', $homestay->id) }}">
+                                @csrf
+                                <h3 class="inner">Cek Ketersediaan</h3>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label>Adults</label>
+                                            <div class="numbers-row">
+                                                <input type="text" value="1" class="qty2 form-control" name="adults">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label>Children</label>
+                                            <div class="numbers-row">
+                                                <input type="text" value="0" class="qty2 form-control" name="children">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label><i class="icon-calendar-7"></i> Check in / Check out</label>
+                                            <input class="date-pick form-control" type="text" placeholder="Select dates"
+                                                name="dates">
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+
+                                <button type="submit" class="btn_full" id="btn_check">
+                                    Pesan Sekarang
+                                </button>
+                            </form>
                             @if (auth()->user()->wishlists->contains($homestay->id))
                                 <a class="btn_full_outline" href="javascript:void(0)"
                                     onclick="toggleWishlist({{ $homestay->id }})">
@@ -491,13 +490,13 @@
             });
         });
     </script>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDxm2QMoIfo6njUl-Nl2RifVnidUsNcLgM&callback=initMap"
+        async></script>
     <script>
-        let map, markers = [];
+        let map, activeInfoWindow, markers = [];
         /* ----------------------------- Initialize Map ----------------------------- */
         function initMap() {
-            map = L.map('map', {
+            map = new google.maps.Map(document.getElementById("map"), {
                 center: {
                     lat: 2.333712,
                     lng: 99.083252
@@ -505,38 +504,49 @@
                 zoom: 13
             });
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 18,
-                attribution: '© OpenStreetMap'
-            }).addTo(map);
+            map.addListener("click", function(event) {
+                mapClicked(event);
+            });
 
-
-            map.on('click', mapClicked);
             initMarkers();
         }
-        initMap();
+
 
         function initMarkers() {
-            const initialMarkers = @json($initialMarkers);
+            const initialMarkers = @json($initialMarkers)
 
             for (let index = 0; index < initialMarkers.length; index++) {
 
-                const data = initialMarkers[index];
-                const marker = generateMarker(data, index);
-                marker.addTo(map).bindPopup(`<b>${data.position.lat},  ${data.position.lng}</b>`);
-                map.panTo(data.position);
-                markers.push(marker)
+                const markerData = initialMarkers[index];
+                const marker = new google.maps.Marker({
+                    position: markerData.position,
+                    label: markerData.label,
+                    draggable: markerData.draggable,
+                    map
+                });
+                markers.push(marker);
+
+                const infowindow = new google.maps.InfoWindow({
+                    content: `<b>${markerData.position.lat}, ${markerData.position.lng}</b>`,
+                });
+                marker.addListener("click", (event) => {
+                    if (activeInfoWindow) {
+                        activeInfoWindow.close();
+                    }
+                    infowindow.open({
+                        anchor: marker,
+                        shouldFocus: false,
+                        map
+                    });
+                    activeInfoWindow = infowindow;
+                    markerClicked(marker, index);
+                });
+
+                marker.addListener("dragend", (event) => {
+                    markerDragEnd(event, index);
+                });
             }
         }
-
-        function generateMarker(data, index) {
-            return L.marker(data.position, {
-                    draggable: data.draggable
-                })
-                .on('click', (event) => markerClicked(event, index))
-                .on('dragend', (event) => markerDragEnd(event, index));
-        }
-
 
         /* ------------------------- Handle Map Click Event ------------------------- */
         function mapClicked(event) {

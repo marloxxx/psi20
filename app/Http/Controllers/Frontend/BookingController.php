@@ -82,7 +82,7 @@ class BookingController extends Controller
             'user_id' => auth()->user()->id,
         ]);
         //send notifcation
-        $booking->homestay->user->notify(new NewBookingNotification($booking));
+        $booking->homestay->owner->notify(new NewBookingNotification($booking));
 
         return redirect()->route('booking.show', $booking->id)->with('success', 'Pemesanan berhasil dibuat.');
     }

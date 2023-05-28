@@ -27,7 +27,7 @@ class ImageFactory extends Factory
             'event_id' => $this->faker->randomElement($event_ids),
             'name' => $this->faker->name,
             'size' => $this->faker->randomNumber(),
-            'image_path' => $this->faker->imageUrl(640, 480),
+            'image_path' => $this->faker->imageUrl(1000, 667),
             'is_primary' => $this->faker->boolean,
         ];
     }

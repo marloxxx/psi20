@@ -2,13 +2,14 @@
     <nav aria-label="Page navigation">
         <ul class="pagination justify-content-center">
             @if ($paginator->onFirstPage())
-                <li class="page-item disabled"><span class="page-link" aria-label="Previous">
+                <li class="page-item disabled paginasi"><span class="page-link" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                         <span class="sr-only">Previous</span></span>
                 </li>
             @else
                 <li class="page-item">
-                    <a class="page-link" href="{{ $paginator->previousPageUrl() }}" aria-label="Previous">
+                    <a class="page-link paginasi" halaman="{{ $paginator->previousPageUrl() }}" href="javascript:;"
+                        aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                         <span class="sr-only">Previous</span>
                     </a>
@@ -25,8 +26,9 @@
                             <li class="page-item active"><span class="page-link">{{ $page }}</span>
                             </li>
                         @else
-                            <li class="page-item"><a class="page-link"
-                                    href="{{ $url }}">{{ $page }}</a>
+                            <li class="page-item">
+                                <a class="page-link paginasi" halaman="{{ $url }}"
+                                    href="javascript:;">{{ $page }}</a>
                             </li>
                         @endif
                     @endforeach
@@ -34,7 +36,8 @@
             @endforeach
             @if ($paginator->hasMorePages())
                 <li class="page-item">
-                    <a class="page-link" href="{{ $paginator->nextPageUrl() }}" aria-label="Next">
+                    <a class="page-link paginasi" halaman="{{ $paginator->nextPageUrl() }}" href="javascript:;"
+                        aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                         <span class="sr-only">Next</span>
                     </a>

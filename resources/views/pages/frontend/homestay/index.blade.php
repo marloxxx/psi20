@@ -31,7 +31,6 @@
         <!-- End Map -->
 
         <div class="container margin_60">
-
             <div class="row">
                 <aside class="col-lg-3">
                     <p>
@@ -251,7 +250,8 @@
             });
         }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDxm2QMoIfo6njUl-Nl2RifVnidUsNcLgM&callback=initMap"
+        async></script>
     <script>
         let map, activeInfoWindow, markers = [];
         /* ----------------------------- Initialize Map ----------------------------- */

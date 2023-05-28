@@ -210,7 +210,7 @@ class EventController extends Controller
             $imageName = (time() + rand(1, 100)) . '.' . $request->image->extension();
             // resize image
             $image = ImageIntervention::make($request->image->path());
-            $image->resize(1920, 1080, function ($constraint) {
+            $image->resize(1450, 750, function ($constraint) {
                 $constraint->aspectRatio();
             });
             $image->save(public_path('images/events/' . $imageName));

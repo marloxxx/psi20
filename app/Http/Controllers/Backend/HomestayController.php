@@ -140,7 +140,7 @@ class HomestayController extends Controller
         $imageName = (time() + rand(1, 100)) . '.' . $request->image->extension();
         // resize image
         $img = ImageIntervention::make($request->image->path());
-        $img->resize(1920, 1080, function ($constraint) {
+        $img->resize(1450, 750, function ($constraint) {
             $constraint->aspectRatio();
         });
         $img->save(public_path('images/homestays/' . $imageName));
@@ -230,7 +230,7 @@ class HomestayController extends Controller
             $imageName = time() . '.' . $request->image->extension();
             // resize image
             $img = ImageIntervention::make($request->image->path());
-            $img->resize(1920, 1080, function ($constraint) {
+            $img->resize(1000, 667, function ($constraint) {
                 $constraint->aspectRatio();
             });
             $img->save(public_path('images/homestays/' . $imageName));

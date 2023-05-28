@@ -64,7 +64,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="list_result"></div>
+                    <div class="row" id="list_result"></div>
                 </div>
             </div><!-- End row -->
 

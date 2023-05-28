@@ -1,7 +1,8 @@
 @extends('layouts.frontend.master')
 @push('custom-styles')
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <!-- REVOLUTION SLIDER CSS -->
+    <link href="{{ asset('frontend/rs-plugin/css/settings.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/css/extralayers.css') }}" rel="stylesheet">
     <link href="{{ asset('frontend/css/finaltilesgallery.css') }}" rel="stylesheet">
     <link href="{{ asset('frontend/css/lightbox2.css') }}" rel="stylesheet">
 @endpush
@@ -38,22 +39,17 @@
         <div class="container margin_60">
             <div class="row">
                 <div class="col-lg-12" id="single_tour_desc">
-                    <div id="gallery"
-                        class="final-tiles-gallery effect-dezoom effect-fade-out caption-top social-icons-right">
-                        <div class="ftg-items">
-                            @foreach ($event->images->where('is_primary', 0) as $image)
-                                <div class="tile">
-                                    <a class="tile-inner" data-lightbox="gallery" href="{{ asset($image->image_path) }}">
-                                        <img class="item"
-                                            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                                            data-src="{{ asset($image->image_path) }}" alt="Gallery image" />
-                                    </a>
-                                </div>
-                                <!-- End image -->
-                            @endforeach
-                        </div>
+                    <div class="owl-carousel owl-theme list_carousel add_bottom_30">
+                        @foreach ($event->images->where('is_primary', 0) as $image)
+                            <div class="tile">
+                                <a class="tile-inner" data-lightbox="gallery" href="{{ asset($image->image_path) }}">
+                                    <img class="item" src="{{ asset($image->image_path) }}" data-src=""
+                                        alt="Gallery image" />
+                                </a>
+                            </div>
+                            <!-- End image -->
+                        @endforeach
                     </div>
-
                     <hr>
 
                     <div class="row">
@@ -83,6 +79,10 @@
     <!-- End main -->
 @endsection
 @push('custom-scripts')
+    <!-- SLIDER REVOLUTION 4.x SCRIPTS  -->
+    <script src="{{ asset('frontend/rs-plugin/js/jquery.themepunch.tools.min.js') }}"></script>
+    <script src="{{ asset('frontend/rs-plugin/js/jquery.themepunch.revolution.min.js') }}"></script>
+    <script src="{{ asset('frontend/js/revolution_func.js') }}"></script>
     <script src="{{ asset('frontend/js/jquery.sliderPro.min.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function($) {
@@ -113,13 +113,13 @@
             $(".final-tiles-gallery").finalTilesGallery();
         });
     </script>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDxm2QMoIfo6njUl-Nl2RifVnidUsNcLgM&callback=initMap"
+        async></script>
     <script>
-        let map, markers = [];
+        let map, activeInfoWindow, markers = [];
         /* ----------------------------- Initialize Map ----------------------------- */
         function initMap() {
-            map = L.map('map', {
+            map = new google.maps.Map(document.getElementById("map"), {
                 center: {
                     lat: 2.333712,
                     lng: 99.083252
@@ -127,38 +127,49 @@
                 zoom: 13
             });
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 18,
-                attribution: '© OpenStreetMap'
-            }).addTo(map);
+            map.addListener("click", function(event) {
+                mapClicked(event);
+            });
 
-
-            map.on('click', mapClicked);
             initMarkers();
         }
-        initMap();
+
 
         function initMarkers() {
-            const initialMarkers = @json($initialMarkers);
+            const initialMarkers = @json($initialMarkers)
 
             for (let index = 0; index < initialMarkers.length; index++) {
 
-                const data = initialMarkers[index];
-                const marker = generateMarker(data, index);
-                marker.addTo(map).bindPopup(`<b>${data.position.lat},  ${data.position.lng}</b>`);
-                map.panTo(data.position);
-                markers.push(marker)
+                const markerData = initialMarkers[index];
+                const marker = new google.maps.Marker({
+                    position: markerData.position,
+                    label: markerData.label,
+                    draggable: markerData.draggable,
+                    map
+                });
+                markers.push(marker);
+
+                const infowindow = new google.maps.InfoWindow({
+                    content: `<b>${markerData.position.lat}, ${markerData.position.lng}</b>`,
+                });
+                marker.addListener("click", (event) => {
+                    if (activeInfoWindow) {
+                        activeInfoWindow.close();
+                    }
+                    infowindow.open({
+                        anchor: marker,
+                        shouldFocus: false,
+                        map
+                    });
+                    activeInfoWindow = infowindow;
+                    markerClicked(marker, index);
+                });
+
+                marker.addListener("dragend", (event) => {
+                    markerDragEnd(event, index);
+                });
             }
         }
-
-        function generateMarker(data, index) {
-            return L.marker(data.position, {
-                    draggable: data.draggable
-                })
-                .on('click', (event) => markerClicked(event, index))
-                .on('dragend', (event) => markerDragEnd(event, index));
-        }
-
 
         /* ------------------------- Handle Map Click Event ------------------------- */
         function mapClicked(event) {
