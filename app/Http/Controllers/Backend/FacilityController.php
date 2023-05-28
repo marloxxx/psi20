@@ -146,4 +146,15 @@ class FacilityController extends Controller
             'message' => 'Berhasil menghapus fasilitas'
         ]);
     }
+
+    public function delete_selected(Request $request)
+    {
+        $ids = $request->ids;
+        Facility::whereIn('id', $ids)->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User yang dipilih berhasil dihapus',
+        ]);
+    }
 }

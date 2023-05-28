@@ -13,6 +13,11 @@ class Homestay extends Model
     protected $table = 'homestays';
     protected $guarded = [];
 
+    protected $casts = [
+        'latitude' => 'float',
+        'longitude' => 'float',
+    ];
+
     public function facilities()
     {
         return $this->belongsToMany(Facility::class, 'homestay_has_facilities');

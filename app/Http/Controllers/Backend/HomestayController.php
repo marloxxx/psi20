@@ -132,8 +132,9 @@ class HomestayController extends Controller
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
             'owner_phone_number' => $request->owner_phone_number,
-            'owner_email' => $request->owner_email,
-        ], $this->message);
+            'owner_name' => $request->owner_name,
+            'is_approved' => auth()->user()->hasRole('admin') ? true : false,
+        ]);
 
         $homestay->facilities()->attach($request->facilities);
 
@@ -214,7 +215,8 @@ class HomestayController extends Controller
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
             'owner_phone_number' => $request->owner_phone_number,
-            'owner_email' => $request->owner_email,
+            'owner_name' => $request->owner_name,
+            'is_approved' => auth()->user()->hasRole('admin') ? true : false,
         ]);
 
         $homestay->facilities()->sync($request->facilities);
@@ -321,6 +323,17 @@ class HomestayController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Data berhasil dihapus',
+        ]);
+    }
+
+    public function delete_selected(Request $request)
+    {
+        $ids = $request->ids;
+        Homestay::whereIn('id', $ids)->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User yang dipilih berhasil dihapus',
         ]);
     }
 }

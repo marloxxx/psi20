@@ -301,4 +301,15 @@ class EventController extends Controller
             'message' => 'Gambar berhasil dihapus',
         ]);
     }
+
+    public function delete_selected(Request $request)
+    {
+        $ids = $request->ids;
+        Event::whereIn('id', $ids)->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User yang dipilih berhasil dihapus',
+        ]);
+    }
 }

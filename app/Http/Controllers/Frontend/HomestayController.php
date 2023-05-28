@@ -71,7 +71,7 @@ class HomestayController extends Controller
                     'lat' => $homestay->latitude,
                     'lng' => $homestay->longitude,
                 ],
-                'label' => ['color' => 'white', 'text' => $homestay->name],
+                'label' => ['color' => 'black', 'text' => $homestay->name],
                 'draggable' => true
             ];
         }
@@ -94,7 +94,7 @@ class HomestayController extends Controller
                     'lat' => $homestay->latitude,
                     'lng' => $homestay->longitude,
                 ],
-                'label' => ['color' => 'white', 'text' => $homestay->name],
+                'label' => ['color' => 'black', 'text' => $homestay->name],
                 'draggable' => false
             ]
         ];

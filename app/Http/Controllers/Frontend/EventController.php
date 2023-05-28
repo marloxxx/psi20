@@ -60,7 +60,7 @@ class EventController extends Controller
                     'lat' => $event->latitude,
                     'lng' => $event->longitude,
                 ],
-                'label' => ['color' => 'white', 'text' => $event->title],
+                'label' => ['color' => 'black', 'text' => $event->title],
                 'draggable' => true
             ];
         }
@@ -74,15 +74,32 @@ class EventController extends Controller
     {
         $this->setMeta($event->title);
 
+        // get the closest homestay from this event location based on distance by latitude and longitude
+        $closestHomestays = $event->getClosestHomestays();
         $initialMarkers = [];
+
+        // set the initial marker to the event location
         $initialMarkers[] = [
             'position' => [
                 'lat' => $event->latitude,
                 'lng' => $event->longitude,
             ],
-            'label' => ['color' => 'white', 'text' => $event->title],
+            'label' => ['color' => 'black', 'text' => $event->title],
             'draggable' => true
         ];
-        return view('pages.frontend.event.show', compact('event', 'initialMarkers'));
+
+        // set the initial marker to the closest homestay location
+        foreach ($closestHomestays as $homestay) {
+            $initialMarkers[] = [
+                'position' => [
+                    'lat' => $homestay->latitude,
+                    'lng' => $homestay->longitude,
+                ],
+                'label' => ['color' => 'black', 'text' => $homestay->name],
+                'draggable' => true
+            ];
+        }
+
+        return view('pages.frontend.event.show', compact('event', 'initialMarkers', 'closestHomestays'));
     }
 }

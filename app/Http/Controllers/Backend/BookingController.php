@@ -34,9 +34,6 @@ class BookingController extends Controller
                 $query->where('user_id', auth()->user()->id);
             })->with('homestay', 'user')->latest()->get();
             return datatables()->of($bookings)
-                ->addColumn('checkbox', function ($booking) {
-                    return '<input type="checkbox" name="id[]" value="' . $booking->id . '">';
-                })
                 ->addColumn('action', function ($booking) {
 
                     $action = '<div class="btn-group" role="group">
