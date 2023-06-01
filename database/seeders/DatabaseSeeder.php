@@ -46,9 +46,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             UserSeeder::class,
-            // HomestaySeeder::class,
-            // EventSeeder::class,
-            // BookingSeeder::class,
+            HomestaySeeder::class,
+            EventSeeder::class,
+            BookingSeeder::class,
         ]);
     }
 }
