@@ -7,16 +7,16 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class CompleteBookingNotification extends Notification
+class NewRequestHomestayNotification extends Notification
 {
     use Queueable;
-    private $booking;
+    private $homestay;
     /**
      * Create a new notification instance.
      */
-    public function __construct($booking)
+    public function __construct($homestay)
     {
-        $this->booking = $booking;
+        $this->homestay = $homestay;
     }
 
     /**
@@ -48,8 +48,8 @@ class CompleteBookingNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'type' => 'CompleteBookingNotification',
-            'message' => 'Your booking for ' . $this->booking->homestay->name . ' has been completed',
+            'type' => 'NewRequestHomestayNotification',
+            'message' => 'New homestay request from ' . $this->homestay->owner->name,
         ];
     }
 }

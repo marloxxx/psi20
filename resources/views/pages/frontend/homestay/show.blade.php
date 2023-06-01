@@ -509,8 +509,8 @@
         function initMap() {
             map = new google.maps.Map(document.getElementById("map"), {
                 center: {
-                    lat: 2.333712,
-                    lng: 99.083252
+                    lat: {{ $homestay->latitude }},
+                    lng: {{ $homestay->longitude }}
                 },
                 zoom: 13
             });

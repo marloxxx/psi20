@@ -33,7 +33,7 @@ Route::name('backend.')->middleware(['auth'])->group(function () {
     Route::post('delete-selected-homestays', [HomestayController::class, 'delete_selected'])->name('homestays.delete_selected');
 
     //Request Homestays
-    Route::prefix('request')->middleware('role:admin')->name('requests.')->group(function () {
+    Route::prefix('requests')->middleware('role:admin')->name('requests.')->group(function () {
         Route::get('', [RequestController::class, 'index'])->name('index');
         Route::get('{request}', [RequestController::class, 'show'])->name('show');
         Route::put('{request}/approve', [RequestController::class, 'approve'])->name('approve');

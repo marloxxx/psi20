@@ -7,6 +7,8 @@ use App\Models\Facility;
 use App\Models\Homestay;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Notifications\NewRequestHomestayNotification;
 use Artesaos\SEOTools\Facades\JsonLd;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\OpenGraph;
@@ -301,7 +303,10 @@ class HomestayController extends Controller
                 'is_primary' => false
             ]);
         }
-
+        $user = User::where('id', $homestay->owner_id)->first();
+        if (!$user->hasRole('admin')) {
+            $user->notify(new NewRequestHomestayNotification($homestay));
+        }
         return response()->json([
             'status' => 'success',
             'message' => 'Data berhasil ditambahkan',

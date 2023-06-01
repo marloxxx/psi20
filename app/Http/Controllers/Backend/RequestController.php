@@ -10,6 +10,7 @@ use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\OpenGraph;
 use Yajra\DataTables\Facades\DataTables;
 use App\Notifications\ApproveBookingNotification;
+use App\Notifications\ApprovedHomestayNotification;
 
 class RequestController extends Controller
 {
@@ -70,7 +71,7 @@ class RequestController extends Controller
         $homestay->save();
 
         try {
-            $homestay->owner->notify(new ApproveBookingNotification($homestay));
+            $homestay->owner->notify(new ApprovedHomestayNotification($homestay));
             return response()->json([
                 'status' => 'success',
                 'message' => 'Berhasil mengapprove homestay'

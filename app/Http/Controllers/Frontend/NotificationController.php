@@ -50,6 +50,45 @@ class NotificationController extends Controller
                             </div>
                         </div>
                     ';
+                } elseif ($notification->type == 'CompleteBookingNotification') {
+                    $output .= '
+                        <div class="notification_item">
+                            <div class="icon">
+                                <i class="fas fa-check-circle text-success"></i>
+                            </div>
+                            <div class="text">
+                            ' . $notification->message . '
+                                <br>
+                                <small>' . $notification->created_at->diffForHumans() . '</small>
+                            </div>
+                        </div>
+                    ';
+                } elseif ($notification->type == 'ApprovedHomestayNotification') {
+                    $output .= '
+                        <div class="notification_item">
+                            <div class="icon">
+                                <i class="fas fa-check-circle text-success"></i>
+                            </div>
+                            <div class="text">
+                            ' . $notification->message . '
+                                <br>
+                                <small>' . $notification->created_at->diffForHumans() . '</small>
+                            </div>
+                        </div>
+                    ';
+                } elseif ($notification->type == 'RejectedHomestayNotification') {
+                    $output .= '
+                        <div class="notification_item">
+                            <div class="icon">
+                                <i class="fas fa-times-circle text-danger"></i>
+                            </div>
+                            <div class="text">
+                            ' . $notification->message . '
+                                <br>
+                                <small>' . $notification->created_at->diffForHumans() . '</small>
+                            </div>
+                        </div>
+                    ';
                 }
             }
         } else {
