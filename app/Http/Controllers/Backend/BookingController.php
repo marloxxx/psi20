@@ -51,7 +51,7 @@ class BookingController extends Controller
                     }
                     // if booking status is approved
                     if ($booking->status == 'approved' && Carbon::now()->format('Y-m-d') >= $booking->check_out) {
-                        '<a href="javascript:;" onclick="handle_confirm(\'Apakah Anda Yakin?\',\'Yakin\',\'Tidak\',\'PUT\',\'' . route('backend.bookings.complete', $booking->id) . '\');" class="btn btn-success">
+                        $action .=  '<a href="javascript:;" onclick="handle_confirm(\'Apakah Anda Yakin?\',\'Yakin\',\'Tidak\',\'PUT\',\'' . route('backend.bookings.complete', $booking->id) . '\');" class="btn btn-success">
                                 Selesaikan
                             </a>';
                     }

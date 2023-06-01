@@ -74,40 +74,31 @@
         <!--end::Card header-->
         <!--begin::Card body-->
         <div class="card-body pt-0">
-            <div class="table-responsive">
-                <!--begin::Table-->
-                <table class="table align-middle table-row-dashed fs-6 gy-5" id="datatables">
-                    <!--begin::Table head-->
-                    <thead>
-                        <!--begin::Table row-->
-                        <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                            <th>
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="check-all"
-                                        onclick="check_all(this);">
-                                    <label class="custom-control-label" for="check-all"></label>
-                                </div>
-                            </th>
-                            <th class="min-w-250px">Customer</th>
-                            <th class="min-w-250px">Homestay</th>
-                            <th class="min-w-250px">Check In</th>
-                            <th class="min-w-250px">Check Out</th>
-                            <th class="min-w-250px">Total Price</th>
-                            <th class="min-w-250px">Status</th>
-                            <th class="min-w-250px">Payment Status</th>
-                            <th class="min-w-250px">Payment Proof</th>
-                            <th class="min-w-70px">Actions</th>
-                        </tr>
-                        <!--end::Table row-->
-                    </thead>
-                    <!--end::Table head-->
-                    <!--begin::Table body-->
-                    <tbody class="fw-semibold text-gray-600">
-                    </tbody>
-                    <!--end::Table body-->
-                </table>
-                <!--end::Table-->
-            </div>
+            <!--begin::Table-->
+            <table class="table align-middle table-row-dashed fs-6 gy-5" id="datatables">
+                <!--begin::Table head-->
+                <thead>
+                    <!--begin::Table row-->
+                    <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                        <th class="min-w-250px">Customer</th>
+                        <th class="min-w-250px">Homestay</th>
+                        <th class="min-w-250px">Check In</th>
+                        <th class="min-w-250px">Check Out</th>
+                        <th class="min-w-250px">Total Price</th>
+                        <th class="min-w-250px">Status</th>
+                        <th class="min-w-250px">Payment Status</th>
+                        <th class="min-w-250px">Payment Proof</th>
+                        <th class="min-w-70px">Actions</th>
+                    </tr>
+                    <!--end::Table row-->
+                </thead>
+                <!--end::Table head-->
+                <!--begin::Table body-->
+                <tbody class="fw-semibold text-gray-600">
+                </tbody>
+                <!--end::Table body-->
+            </table>
+            <!--end::Table-->
         </div>
         <!--end::Card body-->
     </div>
@@ -121,12 +112,6 @@
                 serverSide: true,
                 ajax: '{{ route('backend.bookings.index') }}',
                 columns: [{
-                        data: 'checkbox',
-                        name: 'checkbox',
-                        orderable: false,
-                        searchable: false,
-                    },
-                    {
                         data: 'user',
                         name: 'user',
                     },

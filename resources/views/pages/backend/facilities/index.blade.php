@@ -132,8 +132,7 @@
                 ],
                 order: [
                     [0, 'asc']
-                ],
-                responsive: true
+                ]
             });
 
             $('[data-filter="search"]').on('keyup', function() {

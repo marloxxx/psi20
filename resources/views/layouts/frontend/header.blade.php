@@ -30,7 +30,7 @@
         <div class="row">
             <div class="col-2">
                 <div id="logo_home"
-                    style="background-image: url({{ asset('images/' . getSettings('site_logo')) }}); background-repeat: no-repeat; background-position: center; background-size: contain; background-size: 50px 50px; width: 50px; height: 50px;">
+                    style="background-image: url({{ asset('images/' . getSettings('site_logo')) }}); background-repeat: no-repeat; background-position: center;">
                     <h1><a href="{{ route('home') }}" title="City tours travel template">City Tours travel template</a>
                     </h1>
                 </div>

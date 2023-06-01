@@ -74,35 +74,34 @@
         <!--end::Card header-->
         <!--begin::Card body-->
         <div class="card-body pt-0">
-            <div class="table-responsive">
-                <!--begin::Table-->
-                <table class="table align-middle table-row-dashed fs-6 gy-5" id="datatables">
-                    <!--begin::Table head-->
-                    <thead>
-                        <!--begin::Table row-->
-                        <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                            <th>
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="check-all"
-                                        onclick="check_all(this);">
-                                    <label class="custom-control-label" for="check-all"></label>
-                                </div>
-                            </th>
-                            <th class="min-w-250px">Title</th>
-                            <th class="min-w-250px">Start Date</th>
-                            <th class="min-w-250px">End Date</th>
-                            <th class="min-w-70px">Actions</th>
-                        </tr>
-                        <!--end::Table row-->
-                    </thead>
-                    <!--end::Table head-->
-                    <!--begin::Table body-->
-                    <tbody class="fw-semibold text-gray-600">
-                    </tbody>
-                    <!--end::Table body-->
-                </table>
-                <!--end::Table-->
-            </div>
+
+            <!--begin::Table-->
+            <table class="table align-middle table-row-dashed fs-6 gy-5" id="datatables">
+                <!--begin::Table head-->
+                <thead>
+                    <!--begin::Table row-->
+                    <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                        <th>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="check-all"
+                                    onclick="check_all(this);">
+                                <label class="custom-control-label" for="check-all"></label>
+                            </div>
+                        </th>
+                        <th class="min-w-250px">Title</th>
+                        <th class="min-w-250px">Start Date</th>
+                        <th class="min-w-250px">End Date</th>
+                        <th class="min-w-70px">Actions</th>
+                    </tr>
+                    <!--end::Table row-->
+                </thead>
+                <!--end::Table head-->
+                <!--begin::Table body-->
+                <tbody class="fw-semibold text-gray-600">
+                </tbody>
+                <!--end::Table body-->
+            </table>
+            <!--end::Table-->
         </div>
         <!--end::Card body-->
     </div>
@@ -142,7 +141,7 @@
                 ],
                 order: [
                     [0, 'asc']
-                ]
+                ],
             });
 
             $('[data-filter="search"]').on('keyup', function() {
