@@ -92,7 +92,8 @@
                                     <img src="{{ asset($popular->images->first()->image_path) }}" width="800"
                                         height="533" class="img-fluid" alt="image">
                                     <div class="short_info">
-                                        <span class="price"><sup>Rp. </sup>{{ number_format($popular->price) }}</span>
+                                        <span class="price"><sup>Rp.
+                                            </sup>{{ number_format($popular->price_per_night) }}</span>
                                     </div>
                                 </a>
                             </div>
