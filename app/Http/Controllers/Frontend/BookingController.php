@@ -8,6 +8,7 @@ use App\Models\Homestay;
 use PDF;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Notifications\CompleteBookingNotification;
 use App\Notifications\NewBookingNotification;
 use App\Notifications\UpdatePaymentNotification;
 use Artesaos\SEOTools\Facades\JsonLd;
@@ -67,8 +68,6 @@ class BookingController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
-        // dd(Carbon::parse($request->checkin)->format('Y-m-d'));
         $homestay = Homestay::findOrFail($request->homestay_id);
         // get last booking number, if null set to 1
         $number = Booking::count() ? Booking::latest()->first()->id + 1 : 1;
@@ -81,6 +80,10 @@ class BookingController extends Controller
             'total_price' => $request->total,
             'user_id' => auth()->user()->id,
         ]);
+
+        $booking->homestay->is_available = false;
+        $booking->homestay->save();
+
         //send notifcation
         $booking->homestay->owner->notify(new NewBookingNotification($booking));
 
@@ -89,7 +92,7 @@ class BookingController extends Controller
 
     public function show($id)
     {
-        $booking = Booking::findOrFail($id);
+        $booking = Booking::findOrFail($id)->load('homestay', 'user');
         $this->setMeta('Booking #' . $booking->code);
         return view('pages.frontend.booking.show', compact('booking'));
     }
@@ -101,12 +104,30 @@ class BookingController extends Controller
             'status' => 'canceled',
         ]);
 
+        $booking->homestay->is_available = true;
         // send notification
         $booking->homestay->owner->notify(new NewBookingNotification($booking, 'canceled'));
 
         return response()->json([
             'status' => 'success',
             'message' => 'Pemesanan berhasil dibatalkan.'
+        ]);
+    }
+
+    public function complete($id)
+    {
+        $booking = Booking::findOrFail($id);
+        $booking->update([
+            'status' => 'completed',
+        ]);
+
+        $booking->homestay->is_available = true;
+        // send notification
+        $booking->homestay->owner->notify(new CompleteBookingNotification($booking));
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Pemesanan telah diselesaikan.'
         ]);
     }
 

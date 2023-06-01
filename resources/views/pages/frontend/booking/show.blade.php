@@ -133,7 +133,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        @if ($booking->payment_proof == null || $payment->status != 2)
+                        @if ($booking->payment_proof == null || $booking->payment_status != 2)
                             <!-- form-group -->
                             <form action="{{ route('booking.update', $booking->id) }}" method="POST"
                                 enctype="multipart/form-data" class="dropzone" id="dropzone">
@@ -163,10 +163,19 @@
                                 <i class="icon-whatsapp"></i>
                                 Konfirmasi Pembayaran
                             </a>
+                            <a class="btn_full_outline mb-3" href="javascript:;"
+                                onclick="cancel({{ $booking->id }})">Batalkan
+                            </a>
+                        @endif
+                        @if ($booking->status == 'approved' && \Carbon\Carbon::now()->format('Y-m-d') >= $booking->check_out)
+                            <a class="btn_full_outline mb-3" href="javascript:;" onclick="complete({{ $booking->id }})">
+                                Selesaikan
+                            </a>
                         @endif
                         <a class="btn_full_outline" href="{{ route('booking.invoice', $booking->id) }}"
                             target="_blank">View
-                            your invoice</a>
+                            your invoice
+                        </a>
                     </div>
                 </aside>
             </div>
@@ -198,7 +207,11 @@
                         text: response.message,
                         showConfirmButton: false,
                         timer: 1500
-                    });
+                    }).then((result) => {
+                        if (result.dismiss === Swal.DismissReason.timer) {
+                            location.reload();
+                        }
+                    })
                 });
                 this.on("error", function(file, response) {
                     Swal.fire({
@@ -217,5 +230,90 @@
                     file.previewElement) : void 0;
             }
         };
+    </script>
+    <script>
+        function cancel(id) {
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Anda tidak dapat mengembalikan pesanan yang sudah dibatalkan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#aaa',
+                confirmButtonText: 'Ya, batalkan!',
+                cancelButtonText: 'Tidak, batal!',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{ route('booking.cancel', ':id') }}".replace(':id', id),
+                        type: "POST",
+                        data: {
+                            _method: 'PUT'
+                        },
+                        success: function(response) {
+                            if (response.status == 'success') {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success',
+                                    text: response.message,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }).then((result) => {
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: response.message,
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+        function complete(id) {
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Anda tidak dapat mengembalikan pesanan yang sudah diselesaikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#aaa',
+                confirmButtonText: 'Ya, selesaikan!',
+                cancelButtonText: 'Tidak, batal!',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{ route('booking.complete', ':id') }}".replace(':id', id),
+                        type: "POST",
+                        data: {
+                            _method: 'PUT'
+                        },
+                        success: function(response) {
+                            if (response.status == 'success') {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success',
+                                    text: response.message,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }).then((result) => {
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: response.message,
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+        }
     </script>
 @endpush

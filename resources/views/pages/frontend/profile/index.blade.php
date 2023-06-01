@@ -77,6 +77,11 @@
                                                 <a href="javascript:;" onclick="cancel({{ $booking->id }})"
                                                     class="btn_3">Batalkan</a>
                                             @endif
+                                            @if ($booking->status == 'approved' && \Carbon\Carbon::now()->format('Y-m-d') >= $booking->check_out)
+                                                <a href="javascript:;" onclick="complete({{ $booking->id }})"
+                                                    class="btn_3">Selesai
+                                                </a>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -302,6 +307,48 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         url: "{{ route('booking.cancel', ':id') }}".replace(':id', id),
+                        type: "POST",
+                        data: {
+                            _method: 'PUT'
+                        },
+                        success: function(response) {
+                            if (response.status == 'success') {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success',
+                                    text: response.message,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }).then((result) => {
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: response.message,
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+        function complete(id) {
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Anda tidak dapat mengembalikan pesanan yang sudah diselesaikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#aaa',
+                confirmButtonText: 'Ya, selesaikan!',
+                cancelButtonText: 'Tidak, batal!',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{ route('booking.complete', ':id') }}".replace(':id', id),
                         type: "POST",
                         data: {
                             _method: 'PUT'

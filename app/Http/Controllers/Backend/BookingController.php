@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Models\Booking;
 use PDF;
+use App\Models\Booking;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Notifications\ApproveBookingNotification;
-use App\Notifications\RejectBookingNotification;
 use Artesaos\SEOTools\Facades\JsonLd;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\OpenGraph;
+use App\Notifications\CancelBookingNotification;
+use App\Notifications\RejectBookingNotification;
+use App\Notifications\ApproveBookingNotification;
+use App\Notifications\CompleteBookingNotification;
+use Carbon\Carbon;
 
 class BookingController extends Controller
 {
@@ -45,6 +48,12 @@ class BookingController extends Controller
                                 <a href="javascript:;" onclick="handle_confirm(\'Apakah Anda Yakin?\',\'Yakin\',\'Tidak\',\'PUT\',\'' . route('backend.bookings.reject', $booking->id) . '\');" class="btn btn-danger">
                                     Tolak
                                 </a>';
+                    }
+                    // if booking status is approved
+                    if ($booking->status == 'approved' && Carbon::now()->format('Y-m-d') >= $booking->check_out) {
+                        '<a href="javascript:;" onclick="handle_confirm(\'Apakah Anda Yakin?\',\'Yakin\',\'Tidak\',\'PUT\',\'' . route('backend.bookings.complete', $booking->id) . '\');" class="btn btn-success">
+                                Selesaikan
+                            </a>';
                     }
                     $action .= '</div>';
                     return $action;
@@ -105,6 +114,36 @@ class BookingController extends Controller
         ]);
         // send notification
         $booking->user->notify(new RejectBookingNotification($booking));
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Berhasil mengubah status booking'
+        ]);
+    }
+
+    public function cancel(Booking $booking)
+    {
+        $booking->update([
+            'status' => Booking::STATUS_CANCELED,
+            'payment_status' => '4',
+        ]);
+        // send notification
+        $booking->homestay->owner->notify(new CancelBookingNotification($booking));
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Berhasil mengubah status booking'
+        ]);
+    }
+
+    public function complete(Booking $booking)
+    {
+        $booking->update([
+            'status' => Booking::STATUS_COMPLETED,
+            'payment_status' => '5',
+        ]);
+        // send notification
+        $booking->homestay->owner->notify(new CompleteBookingNotification($booking));
 
         return response()->json([
             'status' => 'success',

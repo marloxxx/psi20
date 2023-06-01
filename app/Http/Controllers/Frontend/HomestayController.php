@@ -31,12 +31,10 @@ class HomestayController extends Controller
         $this->setMeta('Homestay');
 
         if ($request->ajax()) {
-            // dd($request->all());
             $range = explode(';', $request->range);
-            // dd($range);
             $sort_price = $request->sort_price;
             $request_facilities = $request->facilities;
-            $rating = $request->rating; // [3, 5]
+            $rating = $request->rating;
             // get homestays with images and facilities based on price range, sort price, facilities, rating
             $homestays = Homestay::with('images', 'facilities')
                 ->whereBetween('price_per_night', [$range[0], $range[1]])
@@ -60,7 +58,7 @@ class HomestayController extends Controller
         // get the lowest price and maximum price
         $min_price = Homestay::min('price_per_night');
         $max_price = Homestay::max('price_per_night');
-        // dd($min_price, $max_price);
+
         // get facilities
         $facilities = Facility::limit(6)->get();
         $initialMarkers = [];

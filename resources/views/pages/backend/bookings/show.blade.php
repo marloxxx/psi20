@@ -53,7 +53,13 @@
                     class="btn btn-danger btn-sm">Reject</a>
                 <!--end::Button-->
             @endif
-
+            @if ($booking->status == 'approved' && \Carbon\Carbon::now()->format('Y-m-d') >= $booking->check_out)
+                <!--begin::Button-->
+                <a href="javascript:;"
+                    onclick="handle_confirm('Apakah Anda Yakin?','Yakin','Tidak','PUT',' {{ route('backend.bookings.complete', $booking->id) }} ');"
+                    class="btn btn-primary btn-sm me-0">Complete</a>
+                <!--end::Button-->
+            @endif
         </div>
         <!--begin::Order summary-->
         <div class="d-flex flex-column flex-xl-row gap-7 gap-lg-10">
@@ -87,10 +93,7 @@
                                         </div>
                                     </td>
                                     <td class="fw-bold text-end">
-                                        {{-- <a href="{{ asset('images/payment-proofs/' . $booking->payment_proof) }}">
-                                            <i class="fa fa-money"></i> {!! $booking->payment_status() !!}
-                                        </a> --}}
-                                        <a href="{{ $booking->payment_proof }}" target="_blank">
+                                        <a href="{{ asset('images/payment-proofs/' . $booking->payment_proof) }}">
                                             <i class="fa fa-money"></i> {!! $booking->payment_status() !!}
                                         </a>
                                     </td>

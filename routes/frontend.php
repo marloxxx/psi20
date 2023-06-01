@@ -42,6 +42,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('booking/{id}', [BookingController::class, 'update'])->name('booking.update');
     Route::get('booking/{id}/invoice', [BookingController::class, 'invoice'])->name('booking.invoice');
     Route::get('booking/{id}/download', [BookingController::class, 'download'])->name('booking.download');
+    Route::put('booking/{id}/complete', [BookingController::class, 'complete'])->name('booking.complete');
     Route::put('booking/{id}/cancel', [BookingController::class, 'cancel'])->name('booking.cancel');
 
     // Profile
