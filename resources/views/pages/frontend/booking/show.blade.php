@@ -133,6 +133,50 @@
                                 </tr>
                             </tbody>
                         </table>
+
+                        <div class="row mt-5">
+                            <!-- list rekening -->
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">DANA</h5>
+                                        <p class="card-text">
+                                        <ul class="list-unstyled">
+                                            <li>Atas Nama: Horas Marolop Amsal Siregar</li>
+                                            <li>No Rekening: 082386143124</li>
+                                        </ul>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">OVO</h5>
+                                        <p class="card-text">
+                                        <ul class="list-unstyled">
+                                            <li>Atas Nama: Horas Marolop Amsal Siregar</li>
+                                            <li>No Rekening: 082386143124</li>
+                                        </ul>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">GOPAY</h5>
+                                        <p class="card-text">
+                                        <ul class="list-unstyled">
+                                            <li>Atas Nama: Horas Marolop Amsal Siregar</li>
+                                            <li>No Rekening: 082386143124</li>
+                                        </ul>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         @if ($booking->payment_proof == null || $booking->payment_status != 2)
                             <!-- form-group -->
                             <form action="{{ route('booking.update', $booking->id) }}" method="POST"
@@ -141,7 +185,8 @@
                                 @method('PUT')
                             </form>
                             <div class="mt-3">
-                                <button type="submit" id="submit-all" class="btn_full">Upload Bukti Pembayaran</button>
+                                <button type="submit" id="submit-all" class="btn_full">Upload Bukti
+                                    Pembayaran</button>
                             </div>
                         @endif
                     </div>
@@ -153,11 +198,12 @@
                     <div class="box_style_1">
                         <h3 class="inner">Terima kasih!</h3>
                         <p>
-                            Anda telah berhasil melakukan booking homestay. Silahkan lakukan pembayaran dan konfirmasi
+                            Anda telah berhasil melakukan booking homestay. Silahkan lakukan pembayaran dan
+                            konfirmasi
                         </p>
                         <hr>
                         {{-- contact to wa --}}
-                        @if ($booking->status == 'pending')
+                        @if ($booking->status == 'pending' && $booking->payment_proof != null)
                             <a class="btn_full_outline mb-3" target="_blank"
                                 href="https://api.whatsapp.com/send?phone={{ $booking->homestay->owner->phone_number }}&text=Halo%20Admin%20Saya%20Mau%20Konfirmasi%20Pembayaran%20Booking%20Saya%20Dengan%20ID%20{{ $booking->code }}%20dan%20nama%20{{ Auth::user()->first_name }}%20{{ Auth::user()->last_name }}%20">
                                 <i class="icon-whatsapp"></i>
