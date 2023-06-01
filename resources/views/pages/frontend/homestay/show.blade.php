@@ -198,92 +198,103 @@
                 <!--End  single_tour_desc-->
 
                 <aside class="col-lg-4">
-                    <div class="box_style_1 expose">
+                    @if ($homestay->is_available)
+                        <div class="box_style_1 expose">
+                            @auth
+
+                                <form method="POST" action="{{ route('booking.create', $homestay->id) }}">
+                                    @csrf
+                                    <h3 class="inner">Cek Ketersediaan</h3>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Adults</label>
+                                                <div class="numbers-row">
+                                                    <input type="text" value="1" class="qty2 form-control"
+                                                        name="adults">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Children</label>
+                                                <div class="numbers-row">
+                                                    <input type="text" value="0" class="qty2 form-control"
+                                                        name="children">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label><i class="icon-calendar-7"></i> Check in / Check out</label>
+                                                <input class="date-pick form-control" type="text" placeholder="Select dates"
+                                                    name="dates">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+
+                                    <button type="submit" class="btn_full" id="btn_check">
+                                        Pesan Sekarang
+                                    </button>
+                                </form>
+                                @if (auth()->user()->wishlists->contains($homestay->id))
+                                    <a class="btn_full_outline" href="javascript:void(0)"
+                                        onclick="toggleWishlist({{ $homestay->id }})">
+                                        <i class="fa fa-heart"></i>
+                                        Hapus dari Favorit
+                                    </a>
+                                @else
+                                    <a class="btn_full_outline" href="javascript:void(0)"
+                                        onclick="toggleWishlist({{ $homestay->id }})">
+                                        <i class="fa fa-heart-o"></i>
+                                        Tambah ke Favorit
+                                    </a>
+                                @endif
+                            @endauth
+
+                        </div>
+                        <!--/box_style_1 -->
+
+                        <div class="box_style_4">
+                            <i class="icon_set_1_icon-90"></i>
+                            <h4><span>Pesan</span> lewat telepon</h4>
+                            <a href="tel://{{ $homestay->owner_phone_number }}"
+                                class="phone">{{ $homestay->owner_phone_number }}</a>
+                            <small>Senin - Jumat 9.00 - 18.00 WIB</small>
+                        </div>
                         @auth
-
-                            <form method="POST" action="{{ route('booking.create', $homestay->id) }}">
-                                @csrf
-                                <h3 class="inner">Cek Ketersediaan</h3>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label>Adults</label>
-                                            <div class="numbers-row">
-                                                <input type="text" value="1" class="qty2 form-control" name="adults">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label>Children</label>
-                                            <div class="numbers-row">
-                                                <input type="text" value="0" class="qty2 form-control" name="children">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label><i class="icon-calendar-7"></i> Check in / Check out</label>
-                                            <input class="date-pick form-control" type="text" placeholder="Select dates"
-                                                name="dates">
-                                        </div>
-                                    </div>
-                                </div>
-                                <br>
-
-                                <button type="submit" class="btn_full" id="btn_check">
-                                    Pesan Sekarang
-                                </button>
-                            </form>
-                            @if (auth()->user()->wishlists->contains($homestay->id))
-                                <a class="btn_full_outline" href="javascript:void(0)"
-                                    onclick="toggleWishlist({{ $homestay->id }})">
-                                    <i class="fa fa-heart"></i>
-                                    Hapus dari Favorit
-                                </a>
-                            @else
-                                <a class="btn_full_outline" href="javascript:void(0)"
-                                    onclick="toggleWishlist({{ $homestay->id }})">
-                                    <i class="fa fa-heart-o"></i>
-                                    Tambah ke Favorit
-                                </a>
-                            @endif
-                        @endauth
-
-                    </div>
-                    <!--/box_style_1 -->
-
-                    <div class="box_style_4">
-                        <i class="icon_set_1_icon-90"></i>
-                        <h4><span>Pesan</span> lewat telepon</h4>
-                        <a href="tel://{{ $homestay->owner_phone_number }}"
-                            class="phone">{{ $homestay->owner_phone_number }}</a>
-                        <small>Senin - Jumat 9.00 - 18.00 WIB</small>
-                    </div>
-                    @auth
-                        <!-- check if user already review this homestay -->
-                        @if (auth()->user()->reviews->contains('homestay_id', $homestay->id))
-                            <div class="box_style_4">
-                                <h3>Ulasan</h3>
-                                <p>
-                                    Anda sudah memberikan ulasan untuk homestay ini
-                                </p>
-                            </div>
-                        @else
-                            <!-- check if booking date is passed -->
-                            @if (auth()->user()->bookings->where('homestay_id', $homestay->id)->where('status', 1)->where('check_out', '<', \Carbon\Carbon::now())->count() > 0)
+                            <!-- check if user already review this homestay -->
+                            @if (auth()->user()->reviews->contains('homestay_id', $homestay->id))
                                 <div class="box_style_4">
                                     <h3>Ulasan</h3>
-                                    <a href="#" class="btn_1 add_bottom_30" data-bs-toggle="modal"
-                                        data-bs-target="#myReview">Tinggalkan Ulasan
-                                    </a>
+                                    <p>
+                                        Anda sudah memberikan ulasan untuk homestay ini
+                                    </p>
                                 </div>
+                            @else
+                                <!-- check if booking date is passed -->
+                                @if (auth()->user()->bookings->where('homestay_id', $homestay->id)->where('status', 1)->where('check_out', '<', \Carbon\Carbon::now())->count() > 0)
+                                    <div class="box_style_4">
+                                        <h3>Ulasan</h3>
+                                        <a href="#" class="btn_1 add_bottom_30" data-bs-toggle="modal"
+                                            data-bs-target="#myReview">Tinggalkan Ulasan
+                                        </a>
+                                    </div>
+                                @endif
                             @endif
-                        @endif
-                    @endauth
+                        @endauth
+                    @else
+                        <div class="box_style_4">
+                            <h3>Ulasan</h3>
+                            <p>
+                                Homestay ini tidak tersedia untuk dipesan
+                            </p>
+                        </div>
+                    @endif
 
                 </aside>
             </div>
