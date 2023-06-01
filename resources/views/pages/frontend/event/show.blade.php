@@ -36,7 +36,7 @@
         </div>
         <!-- End Position -->
 
-        <div class="container margin_60">
+        <div class="container margin_60" style="margin: 0 150px 0 150px;">
             <div class="row">
                 <div class="col-lg-12" id="single_tour_desc">
                     <div class="owl-carousel owl-theme list_carousel add_bottom_30">
@@ -54,7 +54,9 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            {!! $event->description !!}
+                            <div class="text-justify">
+                                {!! $event->description !!}
+                            </div>
                             <!-- End row  -->
 
                         </div>
