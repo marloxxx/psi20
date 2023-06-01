@@ -9,6 +9,7 @@ use Artesaos\SEOTools\Facades\JsonLd;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\OpenGraph;
 use Yajra\DataTables\Facades\DataTables;
+use App\Notifications\ApproveBookingNotification;
 
 class RequestController extends Controller
 {
@@ -63,51 +64,41 @@ class RequestController extends Controller
         return view('pages.backend.requests.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function approve(Homestay $homestay)
     {
-        //
+        $homestay->is_approved = true;
+        $homestay->save();
+
+        try {
+            $homestay->owner->notify(new ApproveBookingNotification($homestay));
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Berhasil mengapprove homestay'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Gagal mengapprove homestay'
+            ]);
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function reject(Homestay $homestay)
     {
-        //
-    }
+        $homestay->is_approved = false;
+        $homestay->save();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Homestay $homestay)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Homestay $homestay)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Homestay $homestay)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Homestay $homestay)
-    {
-        //
+        try {
+            $homestay->owner->notify(new ApproveBookingNotification($homestay));
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Berhasil menolak homestay'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Gagal menolak homestay'
+            ]);
+        }
     }
 }
