@@ -15,11 +15,11 @@
         <!--begin::Logo-->
         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-lg-15">
             <a href="{{ route('backend.dashboard') }}">
-                <img alt="Logo" src="{{ asset('images/' . getSettings('site_logo')) }}" class="h-25px d-lg-none" />
+                <img alt="Logo" src="{{ asset('images/' . getSettings('site_logo')) }}" class="h-75px d-lg-none" />
                 <img alt="Logo" src="{{ asset('images/' . getSettings('site_logo')) }}"
-                    class="h-25px d-none d-lg-inline app-sidebar-logo-default theme-light-show" />
+                    class="h-75px d-none d-lg-inline app-sidebar-logo-default theme-light-show" />
                 <img alt="Logo" src="{{ asset('images/' . getSettings('site_logo')) }}"
-                    class="h-25px d-none d-lg-inline app-sidebar-logo-default theme-dark-show" />
+                    class="h-75px d-none d-lg-inline app-sidebar-logo-default theme-dark-show" />
             </a>
         </div>
         <!--end::Logo-->

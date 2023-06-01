@@ -57,7 +57,7 @@
             <div class="d-flex flex-column gap-7 gap-lg-10 py-5">
                 <!--begin::Form-->
                 <form id="edit_site_form" class="form d-flex flex-column flex-lg-row"
-                    action="{{ route('backend.update_site') }}" method="PUT" enctype="multipart/form-data">
+                    action="{{ route('backend.settings.update_site') }}" method="PUT" enctype="multipart/form-data">
                     <!--begin::Aside column-->
                     <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
                         <!--begin::Logo settings-->
@@ -305,7 +305,7 @@
             <div class="d-flex flex-column gap-7 gap-lg-10 py-5">
                 <!--begin::Form-->
                 <form id="edit_user_form" class="form d-flex flex-column flex-lg-row"
-                    action="{{ route('backend.update_user') }}" method="PUT">
+                    action="{{ route('backend.settings.update_user') }}" method="PUT">
                     <!--begin::Main column-->
                     <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
                         <!--begin::General options-->
@@ -409,7 +409,7 @@
             <div class="d-flex flex-column gap-7 gap-lg-10 py-5">
                 <!--begin::Form-->
                 <form id="edit_seo_form" class="form d-flex flex-column flex-lg-row"
-                    action="{{ route('backend.update_seo') }}" method="PUT">
+                    action="{{ route('backend.settings.update_seo') }}" method="PUT">
                     <!--begin::Main column-->
                     <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
                         <!--begin::General options-->
