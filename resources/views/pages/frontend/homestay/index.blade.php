@@ -154,11 +154,12 @@
                                     </select>
                                 </div>
                             </div>
-                            {{-- <div class="col-md-6 col-sm-4 d-none d-sm-block text-end">
-                                <a href="#" class="bt_filters"><i class="icon-th"></i></a>
-                                <a href="all_hotels_list.html" class="bt_filters"><i class=" icon-list"></i>
-                                </a>
-                            </div> --}}
+                            <div class="col-md-6 col-sm-4 d-none d-sm-block text-end">
+                                <!-- Tambah homestay -->
+                                <a href="{{ route('backend.homestays.index') }}" class="btn_1 py-2 px-4">Tambah
+                                    Homestay</a>
+
+                            </div>
                         </div>
                     </div>
                     <!--End tools -->
