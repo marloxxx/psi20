@@ -7,8 +7,7 @@
                     <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8">
                         <div id="login">
                             <div class="text-center">
-                                <img src="{{ asset('images/' . getSettings('site_logo')) }}" alt="Image" width="160"
-                                    height="34">
+                                <img src="{{ asset('images/' . getSettings('site_logo')) }}" alt="Image" />
                             </div>
                             <hr>
                             <form method="POST" action="{{ route('login') }}" id="login-form">

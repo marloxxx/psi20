@@ -35,7 +35,7 @@ class RequestController extends Controller
     {
         $this->setMeta('Homestay');
         if ($request->ajax()) {
-            return DataTables::of(Homestay::where('owner_id', '!=', auth()->user()->id)->with('facilities')->get())
+            return DataTables::of(Homestay::where('owner_id', '!=', auth()->user()->id)->with('facilities', 'owner')->get())
                 ->addColumn('checkbox', function ($data) {
                     return '<input type="checkbox" name="id[]" value="' . $data->id . '">';
                 })

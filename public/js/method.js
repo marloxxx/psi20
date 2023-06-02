@@ -9,16 +9,6 @@ $.ajaxSetup({
     }
 });
 $(document).ready(function () {
-    $(document).on('click', '.paginasi', function (event) {
-        event.preventDefault();
-        $('.paginasi').removeClass('active');
-        $(this).parent('.paginasi').addClass('active');
-        // var myurl = $(this).attr('href');
-        page = $(this).attr('halaman').split('page=')[1];
-        load_data(page);
-    });
-});
-$(document).ready(function () {
     $(window).keydown(function (event) {
         if (event.keyCode == 13) {
             event.preventDefault();
