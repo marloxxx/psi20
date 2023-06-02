@@ -59,7 +59,7 @@
                                                 <i class="icon_set_1_icon-81 voted"></i>
                                                 <i class="icon_set_1_icon-81 voted"></i>
                                                 <i class="icon_set_1_icon-81 voted"></i>
-                                            </span>(15)
+                                            </span>
                                             <input type="checkbox" name="rating[]" value="5">
                                             <span class="checkmark"></span>
                                         </label>
@@ -71,7 +71,7 @@
                                                     class="icon_set_1_icon-81 voted"></i><i
                                                     class="icon_set_1_icon-81 voted"></i><i
                                                     class="icon_set_1_icon-81 voted"></i><i class="icon_set_1_icon-81"></i>
-                                            </span>(10)
+                                            </span>
                                             <input type="checkbox" name="rating[]" value="4">
                                             <span class="checkmark"></span>
                                         </label>
@@ -83,7 +83,7 @@
                                                     class="icon_set_1_icon-81 voted"></i><i
                                                     class="icon_set_1_icon-81 voted"></i><i
                                                     class="icon_set_1_icon-81"></i><i class="icon_set_1_icon-81"></i>
-                                            </span>(22)
+                                            </span>
                                             <input type="checkbox" name="rating[]" value="3">
                                             <span class="checkmark"></span>
                                         </label>
@@ -95,7 +95,7 @@
                                                     class="icon_set_1_icon-81 voted"></i><i
                                                     class="icon_set_1_icon-81"></i><i class="icon_set_1_icon-81"></i><i
                                                     class="icon_set_1_icon-81"></i>
-                                            </span>(08)
+                                            </span>
                                             <input type="checkbox" name="rating[]" value="2">
                                             <span class="checkmark"></span>
                                         </label>
@@ -106,7 +106,7 @@
                                                 <i class="icon_set_1_icon-81 voted"></i><i class="icon_set_1_icon-81"></i><i
                                                     class="icon_set_1_icon-81"></i><i class="icon_set_1_icon-81"></i><i
                                                     class="icon_set_1_icon-81"></i>
-                                            </span>(08)
+                                            </span>
                                             <input type="checkbox" name="rating[]" value="1">
                                             <span class="checkmark"></span>
                                         </label>
@@ -143,25 +143,17 @@
 
                 <div class="col-lg-9">
 
-                    <div id="tools">
-                        <div class="row justify-content-between">
-                            <div class="col-md-3 col-sm-4">
-                                <div class="styled-select-filters">
-                                    <select name="sort_price" id="sort_price">
-                                        <option value="" selected>Urutkan berdasarkan</option>
-                                        <option value="min">Harga terendah</option>
-                                        <option value="max">Harga tertinggi</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-4 d-none d-sm-block text-end">
-                                <!-- Tambah homestay -->
-                                <a href="{{ route('backend.homestays.index') }}" class="btn_1 py-2 px-4">Tambah
-                                    Homestay</a>
 
-                            </div>
+                    <div class="row justify-content-end" style="margin-bottom: 28px">
+
+                        <div class="col-md-6 col-sm-4 d-none d-sm-block text-end">
+                            <!-- Tambah homestay -->
+                            <a href="{{ route('backend.homestays.index') }}" class="btn_1 py-2 px-4">Tambah
+                                Homestay</a>
+
                         </div>
                     </div>
+
                     <!--End tools -->
 
                     <div id="list_result"></div>

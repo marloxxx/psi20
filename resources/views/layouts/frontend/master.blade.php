@@ -113,7 +113,7 @@
     @stack('custom-styles')
 </head>
 
-<body>
+<body >
     <div id="preloader">
         <div class="sk-spinner sk-spinner-wave">
             <div class="sk-rect1"></div>

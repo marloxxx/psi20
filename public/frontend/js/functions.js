@@ -141,7 +141,7 @@
                         a = o.parent().find("input").val();
                     if ("+" == o.text()) var t = parseFloat(a) + 1;
                     else if (a > 1) t = parseFloat(a) - 1;
-                    else t = 0;
+                    else t = 1;
                     o.parent().find("input").val(t);
                 });
         }),

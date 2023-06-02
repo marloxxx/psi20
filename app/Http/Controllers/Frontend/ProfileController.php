@@ -27,7 +27,6 @@ class ProfileController extends Controller
     {
         $this->setMeta('Profile');
         $user = User::findOrFail(auth()->user()->id)->load('bookings.homestay', 'wishlists');
-        // dd($user->wishlists->first()->name);
         return view('pages.frontend.profile.index', compact('user'));
     }
 
@@ -72,10 +71,10 @@ class ProfileController extends Controller
     public function update_profile(Request $request)
     {
         $validator = validator($request->all(), [
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'phone_number' => 'required',
-            'date_of_birth' => 'required'
+            'first_name' => 'required|min:3',
+            'last_name' => 'required|min:3',
+            'phone_number' => 'required|numeric|digits_between:10,13|unique:users,phone_number,' . auth()->user()->id . ',id|starts_with:08',
+            'date_of_birth' => 'required|date_format:Y-m-d'
         ], [
             'first_name.required' => 'Nama depan tidak boleh kosong',
             'last_name.required' => 'Nama belakang tidak boleh kosong',

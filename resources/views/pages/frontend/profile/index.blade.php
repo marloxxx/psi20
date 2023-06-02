@@ -2,6 +2,7 @@
 @push('custom-styles')
     <link href="{{ asset('frontend/css/admin.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @endpush
 @section('content')
     <section class="parallax-window" data-parallax="scroll" data-image-src="{{ asset('frontend/img/admin_top.jpg') }}"
@@ -9,7 +10,6 @@
         <div class="parallax-content-1 opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.4)">
             <div class="animated fadeInDown">
                 <h1>Hello {{ Auth::user()->first_name }}</h1>
-                <p>Update your profile</p>
             </div>
         </div>
     </section>
@@ -37,7 +37,7 @@
                         </li>
                         <li><a href="#section-2" class="icon-wishlist"><span>Favoritku</span></a>
                         </li>
-                        <li><a href="#section-3" class="icon-settings"><span>Pengaturan</span></a>
+                        <li><a href="#section-3" class="icon-settings"><span>Ganti Password</span></a>
                         </li>
                         <li><a href="#section-4" class="icon-profile"><span>Profil</span></a>
                         </li>
@@ -251,6 +251,10 @@
     <!-- End main -->
 @endsection
 @push('custom-scripts')
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        flatpickr('#date_of_birth');
+    </script>
     <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
     <script>
         var myDropzone = new Dropzone("#drop-zone", {

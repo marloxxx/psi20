@@ -37,18 +37,18 @@ class DatabaseSeeder extends Seeder
         $admin->assignRole('admin');
 
         Setting::create([
-            'site_name' => 'Laravel 10',
+            'site_name' => 'Tobatabo',
             'site_logo' => 'logo.png',
             'site_favicon' => 'favicon.png',
             'site_email' => 'help@gmail.com',
             'site_phone' => '6282386143124',
         ]);
 
-        // $this->call([
-        //     UserSeeder::class,
-        //     HomestaySeeder::class,
-        //     EventSeeder::class,
-        //     BookingSeeder::class,
-        // ]);
+        $this->call([
+            UserSeeder::class,
+            HomestaySeeder::class,
+            EventSeeder::class,
+            BookingSeeder::class,
+        ]);
     }
 }

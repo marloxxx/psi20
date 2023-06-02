@@ -82,12 +82,7 @@
                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                         <th class="min-w-250px">Customer</th>
                         <th class="min-w-250px">Homestay</th>
-                        <th class="min-w-250px">Check In</th>
-                        <th class="min-w-250px">Check Out</th>
                         <th class="min-w-250px">Total Price</th>
-                        <th class="min-w-250px">Status</th>
-                        <th class="min-w-250px">Payment Status</th>
-                        <th class="min-w-250px">Payment Proof</th>
                         <th class="min-w-70px">Actions</th>
                     </tr>
                     <!--end::Table row-->
@@ -119,29 +114,10 @@
                         data: 'homestay',
                         name: 'homestay',
                     },
-                    {
-                        data: 'check_in',
-                        name: 'check_in',
-                    },
-                    {
-                        data: 'check_out',
-                        name: 'check_out',
-                    },
+
                     {
                         data: 'total_price',
                         name: 'total_price',
-                    },
-                    {
-                        data: 'status',
-                        name: 'status',
-                    },
-                    {
-                        data: 'payment_status',
-                        name: 'payment_status',
-                    },
-                    {
-                        data: 'payment_proof',
-                        name: 'payment_proof',
                     },
                     {
                         data: 'action',

@@ -128,7 +128,7 @@
             <!--begin::Navbar-->
             <div class="app-navbar flex-shrink-0">
                 <!--begin::Notifications-->
-                <div class="app-navbar-item ms-1 ms-lg-5">
+                {{-- <div class="app-navbar-item ms-1 ms-lg-5">
                     <!--begin::Menu- wrapper-->
                     <a href="#" onclick="load_notif('{{ route('backend.notification') }}');"
                         class="btn btn-icon btn-custom btn-color-gray-600 btn-active-light btn-active-color-primary w-35px h-35px w-md-40px h-md-40px"
@@ -153,7 +153,7 @@
                     </div>
                     <!--end::Menu-->
                     <!--end::Menu wrapper-->
-                </div>
+                </div> --}}
                 <!--end::Notifications-->
                 <!--begin::User menu-->
                 <div class="app-navbar-item ms-3 ms-lg-5" id="kt_header_user_menu_toggle">

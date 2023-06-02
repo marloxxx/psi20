@@ -32,10 +32,10 @@ class BookingController extends Controller
     {
         $this->setMeta('Pemesanan');
         if ($request->ajax()) {
-            // get bookings where homestay owner is me
-            $bookings = Booking::whereHas('homestay', function ($query) {
-                $query->where('user_id', auth()->user()->id);
-            })->with('homestay', 'user')->latest()->get();
+            // get bookings where homestay owner is auth user
+            $bookings = Booking::with('homestay', 'user')->whereHas('homestay', function ($query) {
+                $query->where('owner_id', auth()->user()->id);
+            })->latest('created_at')->get();
             return datatables()->of($bookings)
                 ->addColumn('action', function ($booking) {
 
@@ -64,22 +64,10 @@ class BookingController extends Controller
                 ->addColumn('user', function ($booking) {
                     return $booking->user->first_name . ' ' . $booking->user->last_name;
                 })
-                ->editColumn('check_in', function ($booking) {
-                    return $booking->check_in->format('d F Y');
-                })
-                ->editColumn('check_out', function ($booking) {
-                    return $booking->check_out->format('d F Y');
-                })
-                ->editColumn('status', function ($booking) {
-                    return $booking->status();
-                })
                 ->editColumn('total', function ($booking) {
                     return 'Rp ' . number_format($booking->total_price, 0, ',', '.');
                 })
-                ->editColumn('payment_proof', function ($booking) {
-                    return $booking->payment_proof ? '<a href="' . asset('images/payment-proofs/') . $booking->payment_proof . '" target="_blank">Lihat Bukti</a>' : '-';
-                })
-                ->rawColumns(['checkbox', 'action', 'homestay', 'user', 'check_in', 'check_out', 'status', 'total', 'payment_proof'])
+                ->rawColumns(['action'])
                 ->make(true);
         }
         return view('pages.backend.bookings.index');

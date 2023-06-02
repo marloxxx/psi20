@@ -89,7 +89,7 @@
                                         Dashboard Owner</a>
                                 </li>
                             @endrole
-                            @auth
+                            {{-- @auth
                                 <li class="last" id="notification">
                                     <!-- dropdown notification -->
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"
@@ -110,11 +110,11 @@
                                         </div>
                                     </ul>
                                 </li>
-                            @endauth
+                            @endauth --}}
                         @endauth
                     </ul>
                 </div><!-- End main-menu -->
-                <ul id="top_tools">
+                {{-- <ul id="top_tools">
                     @auth
                         <li class="me-3">
                             <!-- notification -->
@@ -127,7 +127,7 @@
                             </a>
                         </li>
                     @endauth
-                </ul>
+                </ul> --}}
             </nav>
         </div>
     </div><!-- container -->

@@ -1,7 +1,8 @@
 @extends('layouts.frontend.master')
 @section('content')
     <main>
-        <section id="hero" class="login">
+        <section id="hero" class="login"
+            style="background: url({{ asset('frontend/img/slides/slide_home_1.jpg') }}) no-repeat center center;  background-size: cover;">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8">
@@ -19,9 +20,9 @@
                                     <label>Password</label>
                                     <input type="password" class="form-control" placeholder="Password" name="password" />
                                 </div>
-                                <p class="small">
+                                {{-- <p class="small">
                                     <a href="#">Lupa password?</a>
-                                </p>
+                                </p> --}}
                                 <button type="submit" class="btn_full">Masuk</button>
                                 <a href="{{ route('register') }}" class="btn_full_outline">Daftar</a>
                             </form>

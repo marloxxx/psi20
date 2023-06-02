@@ -134,50 +134,50 @@
                             </tbody>
                         </table>
 
-                        <div class="row mt-5">
-                            <!-- list rekening -->
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">DANA</h5>
-                                        <p class="card-text">
-                                        <ul class="list-unstyled">
-                                            <li>Atas Nama: Horas Marolop Amsal Siregar</li>
-                                            <li>No Rekening: 082386143124</li>
-                                        </ul>
-                                        </p>
+                        @if ($booking->payment_proof == null)
+                            <div class="row mt-5">
+                                <!-- list rekening -->
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">DANA</h5>
+                                            <p class="card-text">
+                                            <ul class="list-unstyled">
+                                                <li>Atas Nama: Horas Marolop Amsal Siregar</li>
+                                                <li>No Rekening: 082386143124</li>
+                                            </ul>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">OVO</h5>
+                                            <p class="card-text">
+                                            <ul class="list-unstyled">
+                                                <li>Atas Nama: Horas Marolop Amsal Siregar</li>
+                                                <li>No Rekening: 082386143124</li>
+                                            </ul>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">GOPAY</h5>
+                                            <p class="card-text">
+                                            <ul class="list-unstyled">
+                                                <li>Atas Nama: Horas Marolop Amsal Siregar</li>
+                                                <li>No Rekening: 082386143124</li>
+                                            </ul>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">OVO</h5>
-                                        <p class="card-text">
-                                        <ul class="list-unstyled">
-                                            <li>Atas Nama: Horas Marolop Amsal Siregar</li>
-                                            <li>No Rekening: 082386143124</li>
-                                        </ul>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">GOPAY</h5>
-                                        <p class="card-text">
-                                        <ul class="list-unstyled">
-                                            <li>Atas Nama: Horas Marolop Amsal Siregar</li>
-                                            <li>No Rekening: 082386143124</li>
-                                        </ul>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
-                        @if ($booking->payment_proof == null || $booking->payment_status != 2)
                             <!-- form-group -->
                             <form action="{{ route('booking.update', $booking->id) }}" method="POST"
                                 enctype="multipart/form-data" class="dropzone" id="dropzone">
