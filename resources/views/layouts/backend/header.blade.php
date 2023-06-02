@@ -81,9 +81,9 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link {{ request()->is('backend/events') ? 'active' : '' }}"
-                                href="{{ route('backend.events.index') }}">
-                                <span class="menu-title">Events</span>
+                            <a class="menu-link {{ request()->is('backend/requests') ? 'active' : '' }}"
+                                href="{{ route('backend.requests.index') }}">
+                                <span class="menu-title">Requests</span>
                             </a>
                             <!--end:Menu link-->
                         </div>
