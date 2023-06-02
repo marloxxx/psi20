@@ -44,11 +44,11 @@ class DatabaseSeeder extends Seeder
             'site_phone' => '6282386143124',
         ]);
 
-        $this->call([
-            UserSeeder::class,
-            HomestaySeeder::class,
-            EventSeeder::class,
-            BookingSeeder::class,
-        ]);
+        // $this->call([
+        //     UserSeeder::class,
+        //     HomestaySeeder::class,
+        //     EventSeeder::class,
+        //     BookingSeeder::class,
+        // ]);
     }
 }
