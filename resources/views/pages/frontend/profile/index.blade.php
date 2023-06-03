@@ -241,7 +241,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Nama Awal</label>
+                                        <label>Nama Depan</label>
                                         <input class="form-control" name="first_name" id="first_name" type="text"
                                             value="{{ $user->first_name }}" />
                                     </div>

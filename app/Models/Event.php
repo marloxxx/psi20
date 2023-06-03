@@ -26,7 +26,7 @@ class Event extends Model
 
     public function getClosestHomestays()
     {
-        $homestays = Homestay::with('images', 'facilities', 'reviews')->get();
+        $homestays = Homestay::with('images', 'facilities', 'bookings')->get();
         $closestHomestays = [];
         foreach ($homestays as $homestay) {
             $distance = $this->distance(
