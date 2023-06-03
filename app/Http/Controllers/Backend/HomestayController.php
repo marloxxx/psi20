@@ -58,7 +58,7 @@ class HomestayController extends Controller
         if ($request->ajax()) {
             return DataTables::of(Homestay::where('owner_id', auth()->user()->id)->with('facilities')->get())
                 ->addColumn('checkbox', function ($data) {
-                    return '<input type="checkbox" name="id[]" value="' . $data->id . '">';
+                    return '<input type="checkbox" name="id[]" value="' . $data->id . '" onclick="check(this)" />';
                 })
                 ->addColumn('action', function ($data) {
                     return '<div class="btn-group" role="group">
@@ -295,7 +295,6 @@ class HomestayController extends Controller
             });
             $img->save(public_path('images/homestays/' . $imageName));
             $size = $img->filesize();
-            // $image->move(public_path('images/homestays'), $imageName);
             $homestay->images()->create([
                 'name' => $imageName,
                 'size' => $size,

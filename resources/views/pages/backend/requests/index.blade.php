@@ -74,38 +74,34 @@
         <!--end::Card header-->
         <!--begin::Card body-->
         <div class="card-body pt-0">
-            <div class="table-responsive">
-                <!--begin::Table-->
-                <table class="table align-middle table-row-dashed fs-6 gy-5" id="datatables">
-                    <!--begin::Table head-->
-                    <thead>
-                        <!--begin::Table row-->
-                        <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                            <th>
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="check-all"
-                                        onclick="check_all(this);">
-                                    <label class="custom-control-label" for="check-all"></label>
-                                </div>
-                            </th>
-                            <th class="min-w-250px">Nama</th>
-                            <th class="min-w-250px">Fasilitas</th>
-                            <th class="min-w-250px">Harga</th>
-                            <th class="min-w-250px">Kapasitas</th>
-                            <th class="min-w-250px">Status</th>
-                            <th class="min-w-250px">Pemilik</th>
-                            <th class="min-w-70px">Aksi</th>
-                        </tr>
-                        <!--end::Table row-->
-                    </thead>
-                    <!--end::Table head-->
-                    <!--begin::Table body-->
-                    <tbody class="fw-semibold text-gray-600">
-                    </tbody>
-                    <!--end::Table body-->
-                </table>
-                <!--end::Table-->
-            </div>
+            <!--begin::Table-->
+            <table class="table align-middle table-row-dashed fs-6 gy-5" id="datatables">
+                <!--begin::Table head-->
+                <thead>
+                    <!--begin::Table row-->
+                    <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                        <th>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="check-all"
+                                    onclick="check_all(this);">
+                                <label class="custom-control-label" for="check-all"></label>
+                            </div>
+                        </th>
+                        <th class="min-w-250px">Nama</th>
+                        <th class="min-w-250px">Harga</th>
+                        <th class="min-w-250px">Status</th>
+                        <th class="min-w-250px">Pemilik</th>
+                        <th class="min-w-70px">Aksi</th>
+                    </tr>
+                    <!--end::Table row-->
+                </thead>
+                <!--end::Table head-->
+                <!--begin::Table body-->
+                <tbody class="fw-semibold text-gray-600">
+                </tbody>
+                <!--end::Table body-->
+            </table>
+            <!--end::Table-->
         </div>
         <!--end::Card body-->
     </div>
@@ -117,7 +113,7 @@
             $('#kt_toolbar_delete_button').hide();
             $('#datatables').DataTable({
                 serverSide: true,
-                ajax: '{{ route('backend.homestays.index') }}',
+                ajax: '{{ route('backend.requests.index') }}',
                 columns: [{
                         data: 'checkbox',
                         name: 'checkbox',
@@ -127,18 +123,12 @@
                     {
                         data: 'name',
                         name: 'name',
-                    },
-                    {
-                        data: 'facilities',
-                        name: 'facilities',
+                        orderable: false,
+                        searchable: false
                     },
                     {
                         data: 'price_per_night',
                         name: 'price_per_night',
-                    },
-                    {
-                        data: 'total_rooms',
-                        name: 'total_rooms',
                     },
                     {
                         data: 'is_available',
@@ -147,6 +137,8 @@
                     {
                         data: 'owner_name',
                         name: 'owner_name',
+                        orderable: false,
+                        searchable: false
                     },
                     {
                         data: 'action',
@@ -154,9 +146,6 @@
                         orderable: false,
                         searchable: false
                     }
-                ],
-                order: [
-                    [0, 'asc']
                 ]
             });
 
@@ -166,6 +155,17 @@
                 ).draw();
             });
         });
+
+        function check(el) {
+            var is_checked = $(el).is(':checked');
+            if (is_checked) {
+                $('#kt_toolbar_delete_button').show();
+                $('#kt_toolbar_primary_button').hide();
+            } else {
+                $('#kt_toolbar_delete_button').hide();
+                $('#kt_toolbar_primary_button').show();
+            }
+        }
 
         function check_all(el) {
             var is_checked = $(el).is(':checked');

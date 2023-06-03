@@ -35,9 +35,9 @@ Route::name('backend.')->middleware(['auth'])->group(function () {
     //Request Homestays
     Route::prefix('requests')->middleware('role:admin')->name('requests.')->group(function () {
         Route::get('', [RequestController::class, 'index'])->name('index');
-        Route::get('{request}', [RequestController::class, 'show'])->name('show');
-        Route::put('{request}/approve', [RequestController::class, 'approve'])->name('approve');
-        Route::put('{request}/reject', [RequestController::class, 'reject'])->name('reject');
+        Route::get('{homestay}', [RequestController::class, 'show'])->name('show');
+        Route::put('{homestay}/approve', [RequestController::class, 'approve'])->name('approve');
+    Route::put('{homestay}/reject', [RequestController::class, 'reject'])->name('reject');
     });
 
     //Events

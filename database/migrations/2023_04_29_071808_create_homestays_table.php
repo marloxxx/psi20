@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('longitude', 50)->nullable(false);
             $table->string('owner_phone_number', 20)->nullable(false);
             $table->string('owner_name', 50)->nullable(false);
-            $table->boolean('is_approved')->nullable(false)->default(false);
+            $table->string('is_approved', 20)->nullable(false)->default('pending');
             $table->integer('views')->nullable(false)->default(0);
             $table->timestamps();
             $table->softDeletes();

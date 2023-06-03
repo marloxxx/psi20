@@ -109,15 +109,21 @@
                 columns: [{
                         data: 'user',
                         name: 'user',
+                        orderable: false,
+                        searchable: false
                     },
                     {
                         data: 'homestay',
                         name: 'homestay',
+                        orderable: false,
+                        searchable: false
                     },
 
                     {
                         data: 'total_price',
                         name: 'total_price',
+                        orderable: false,
+                        searchable: false
                     },
                     {
                         data: 'action',
@@ -125,9 +131,6 @@
                         orderable: false,
                         searchable: false
                     }
-                ],
-                order: [
-                    [0, 'asc']
                 ]
             });
 

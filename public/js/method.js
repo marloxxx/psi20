@@ -32,7 +32,7 @@ function handle_confirm(title, confirm_title, deny_title, method, route) {
                 dataType: 'json',
                 success: function (response) {
                     $('#datatables').DataTable().ajax.reload();
-                    Swal.fire(response.message, '', response.alert)
+                    Swal.fire(response.message, '', response.status)
                 },
                 error: function (response) {
                     Swal.fire(response.responseJSON.message, '', 'error')

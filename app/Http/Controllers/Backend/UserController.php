@@ -49,7 +49,7 @@ class UserController extends Controller
         if ($request->ajax()) {
             return DataTables::of(User::query())
                 ->addColumn('checkbox', function ($data) {
-                    return '<input type="checkbox" name="id[]" value="' . $data->id . '">';
+                    return '<input type="checkbox" name="id[]" value="' . $data->id . '" onclick="check(this)" />';
                 })
                 ->addColumn('roles', function ($data) {
                     return $data->getRoleNames()->implode(', ');

@@ -84,9 +84,6 @@ class BookingController extends Controller
         $booking->homestay->is_available = false;
         $booking->homestay->save();
 
-        //send notifcation
-        $booking->homestay->owner->notify(new NewBookingNotification($booking));
-
         return redirect()->route('booking.show', $booking->id)->with('success', 'Pemesanan berhasil dibuat.');
     }
 
@@ -105,29 +102,10 @@ class BookingController extends Controller
         ]);
 
         $booking->homestay->is_available = true;
-        // send notification
-        $booking->homestay->owner->notify(new NewBookingNotification($booking, 'canceled'));
 
         return response()->json([
             'status' => 'success',
             'message' => 'Pemesanan berhasil dibatalkan.'
-        ]);
-    }
-
-    public function complete($id)
-    {
-        $booking = Booking::findOrFail($id);
-        $booking->update([
-            'status' => 'completed',
-        ]);
-
-        $booking->homestay->is_available = true;
-        // send notification
-        $booking->homestay->owner->notify(new CompleteBookingNotification($booking));
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Pemesanan telah diselesaikan.'
         ]);
     }
 
@@ -154,9 +132,6 @@ class BookingController extends Controller
             'payment_proof' => $fileName,
         ]);
 
-        // send notification
-        $booking->homestay->owner->notify(new UpdatePaymentNotification($booking));
-
         return response()->json([
             'status' => 'success',
             'message' => 'Pemesanan berhasil diselesaikan.'
@@ -175,5 +150,40 @@ class BookingController extends Controller
         $booking = Booking::findOrFail($id);
         $pdf = PDF::loadView('pages.frontend.booking.pdf', compact('booking'));
         return $pdf->download('invoice-' . $booking->code . '.pdf');
+    }
+
+    public function review(Request $request, $id)
+    {
+        // dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'rating' => 'required|numeric|min:1|max:5',
+            'review' => 'required|string|min:10|max:255',
+        ], [
+            'rating.required' => 'Rating tidak boleh kosong',
+            'rating.numeric' => 'Rating harus berupa angka',
+            'rating.min' => 'Rating minimal 1',
+            'rating.max' => 'Rating maksimal 5',
+            'review.required' => 'Review tidak boleh kosong',
+            'review.string' => 'Review harus berupa string',
+            'review.min' => 'Review minimal 10 karakter',
+            'review.max' => 'Review maksimal 255 karakter',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $validator->errors()->first(),
+            ]);
+        }
+
+        $booking = Booking::findOrFail($id);
+        $booking->update([
+            'status' => 'completed',
+            'rating' => $request->rating,
+            'review' => $request->review,
+        ]);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Review added.',
+        ]);
     }
 }

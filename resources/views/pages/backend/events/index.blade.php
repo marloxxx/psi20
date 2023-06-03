@@ -151,6 +151,17 @@
             });
         });
 
+        function check(el) {
+            var is_checked = $(el).is(':checked');
+            if (is_checked) {
+                $('#kt_toolbar_delete_button').show();
+                $('#kt_toolbar_primary_button').hide();
+            } else {
+                $('#kt_toolbar_delete_button').hide();
+                $('#kt_toolbar_primary_button').show();
+            }
+        }
+
         function check_all(el) {
             var is_checked = $(el).is(':checked');
             if (is_checked) {

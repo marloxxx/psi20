@@ -37,7 +37,7 @@ class FacilityController extends Controller
         if ($request->ajax()) {
             return DataTables::of(Facility::query())
                 ->addColumn('checkbox', function ($data) {
-                    return '<input type="checkbox" name="id[]" value="' . $data->id . '">';
+                    return '<input type="checkbox" name="id[]" value="' . $data->id . '" onclick="check(this)" />';
                 })
                 ->addColumn('action', function ($data) {
                     return '<div class="btn-group" role="group">

@@ -274,25 +274,7 @@
                         <small>Senin - Jumat 9.00 - 18.00 WIB</small>
                     </div>
                     @auth
-                        <!-- check if user already review this homestay -->
-                        @if (auth()->user()->reviews->contains('homestay_id', $homestay->id))
-                            <div class="box_style_4">
-                                <h3>Ulasan</h3>
-                                <p>
-                                    Anda sudah memberikan ulasan untuk homestay ini
-                                </p>
-                            </div>
-                        @else
-                            <!-- check if booking date is passed -->
-                            @if (auth()->user()->bookings->where('homestay_id', $homestay->id)->where('status', 1)->where('check_out', '<', \Carbon\Carbon::now())->count() > 0)
-                                <div class="box_style_4">
-                                    <h3>Ulasan</h3>
-                                    <a href="#" class="btn_1 add_bottom_30" data-bs-toggle="modal"
-                                        data-bs-target="#myReview">Tinggalkan Ulasan
-                                    </a>
-                                </div>
-                            @endif
-                        @endif
+
                     @endauth
 
                 </aside>
@@ -306,51 +288,6 @@
 
     </main>
     <!-- End main -->
-    <!-- Modal Review -->
-    <div class="modal fade" id="myReview" tabindex="-1" role="dialog" aria-labelledby="myReviewLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myReviewLabel">Tuangkan Ulasanmu</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div id="message-review">
-                    </div>
-                    <form method="post" action="" id="review">
-                        <input name="homestay_id" id="homestay_id" type="hidden" value="{{ $homestay->id }}">
-                        <!-- End row -->
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <div class="rate">
-                                        <input type="radio" id="star5" name="rating" value="5" />
-                                        <label for="star5" title="text">5 stars</label>
-                                        <input type="radio" id="star4" name="rating" value="4" />
-                                        <label for="star4" title="text">4 stars</label>
-                                        <input type="radio" id="star3" name="rating" value="3" />
-                                        <label for="star3" title="text">3 stars</label>
-                                        <input type="radio" id="star2" name="rating" value="2" />
-                                        <label for="star2" title="text">2 stars</label>
-                                        <input type="radio" id="star1" name="rating" value="1" />
-                                        <label for="star1" title="text">1 star</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End row -->
-                        <div class="form-group">
-                            <textarea name="review_text" id="review_text" class="form-control" style="height:100px"
-                                placeholder="Write your review"></textarea>
-                        </div>
-                        <button type="submit" id="submit-review" class="btn_1">Kirim</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End modal review -->
 @endsection
 @push('custom-scripts')
     <script src="{{ asset('frontend/js/jquery.sliderPro.min.js') }}"></script>
@@ -466,34 +403,6 @@
                 }
             });
         }
-
-        $('#review').submit(function(e) {
-            e.preventDefault();
-            var homestay_id = $('#homestay_id').val();
-            var rating = $('input[name="rating"]:checked').val();
-            var review_text = $('#review_text').val();
-            $.ajax({
-                url: "{{ route('review') }}",
-                type: "POST",
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    homestay_id: homestay_id,
-                    rating: rating,
-                    review: review_text
-                },
-                success: function(response) {
-                    if (response.status == 'success') {
-                        toastr.success(response.message);
-                        // set timeout to wait for toastr to finish
-                        setTimeout(function() {
-                            window.location.reload();
-                        }, 1000);
-                    } else {
-                        toastr.error(response.message);
-                    }
-                }
-            });
-        });
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDxm2QMoIfo6njUl-Nl2RifVnidUsNcLgM&callback=initMap"
         async></script>

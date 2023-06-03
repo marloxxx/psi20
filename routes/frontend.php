@@ -32,7 +32,7 @@ Route::get('password/change', [AuthController::class, 'change'])->name('password
 Route::post('payments/midtrans-notification', [BookingController::class, 'callback']);
 
 Route::middleware(['auth'])->group(function () {
-    Route::post('review', [HomestayController::class, 'review'])->name('review');
+
 
     // Booking
     Route::post('booking/check', [BookingController::class, 'check'])->name('booking.check');
@@ -42,8 +42,8 @@ Route::middleware(['auth'])->group(function () {
     Route::put('booking/{id}', [BookingController::class, 'update'])->name('booking.update');
     Route::get('booking/{id}/invoice', [BookingController::class, 'invoice'])->name('booking.invoice');
     Route::get('booking/{id}/download', [BookingController::class, 'download'])->name('booking.download');
-    Route::put('booking/{id}/complete', [BookingController::class, 'complete'])->name('booking.complete');
     Route::put('booking/{id}/cancel', [BookingController::class, 'cancel'])->name('booking.cancel');
+    Route::post('booking/{id}/review', [BookingController::class, 'review'])->name('booking.review');
 
     // Profile
     Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');

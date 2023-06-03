@@ -26,6 +26,8 @@ return new class extends Migration
             $table->string('payment_proof')->nullable();
             // $table->string('snap_token', 36)->nullable();
             $table->enum('payment_status', ['1', '2', '3', '4'])->comment('1: pending, 2: success, 3: failed, 4: expired')->default('1');
+            $table->integer('rating')->nullable();
+            $table->text('review')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

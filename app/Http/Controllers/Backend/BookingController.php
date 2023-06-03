@@ -85,8 +85,6 @@ class BookingController extends Controller
             'status' => Booking::STATUS_APPROVED,
             'payment_status' => '2',
         ]);
-        // send notification
-        $booking->user->notify(new ApproveBookingNotification($booking));
 
         return response()->json([
             'status' => 'success',
@@ -100,8 +98,6 @@ class BookingController extends Controller
             'status' => Booking::STATUS_REJECTED,
             'payment_status' => '3',
         ]);
-        // send notification
-        $booking->user->notify(new RejectBookingNotification($booking));
 
         return response()->json([
             'status' => 'success',
@@ -115,8 +111,6 @@ class BookingController extends Controller
             'status' => Booking::STATUS_CANCELED,
             'payment_status' => '4',
         ]);
-        // send notification
-        $booking->homestay->owner->notify(new CancelBookingNotification($booking));
 
         return response()->json([
             'status' => 'success',
@@ -130,8 +124,6 @@ class BookingController extends Controller
             'status' => Booking::STATUS_COMPLETED,
             'payment_status' => '5',
         ]);
-        // send notification
-        $booking->homestay->owner->notify(new CompleteBookingNotification($booking));
 
         return response()->json([
             'status' => 'success',

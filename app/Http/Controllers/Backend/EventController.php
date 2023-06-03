@@ -55,7 +55,7 @@ class EventController extends Controller
         if ($request->ajax()) {
             return DataTables::of(Event::query())
                 ->addColumn('checkbox', function ($data) {
-                    return '<input type="checkbox" name="id[]" value="' . $data->id . '">';
+                    return '<input type="checkbox" name="id[]" value="' . $data->id . '" onclick="check(this)" />';
                 })
                 ->editColumn('start_date', function ($data) {
                     return $data->start_date->format('d M Y');
@@ -129,8 +129,6 @@ class EventController extends Controller
         });
         $image->save(public_path('images/events/' . $imageName));
         $size = $image->filesize();
-        // $size = $request->file('image')->getSize();
-        // $request->image->move(public_path('images/events'), $imageName);
 
         $event->images()->create([
             'name' => $imageName,
@@ -215,9 +213,6 @@ class EventController extends Controller
             });
             $image->save(public_path('images/events/' . $imageName));
             $size = $image->filesize();
-
-            // $size = $request->file('image')->getSize();
-            // $request->image->move(public_path('images/events'), $imageName);
 
             $event->images()->create([
                 'name' => $imageName,

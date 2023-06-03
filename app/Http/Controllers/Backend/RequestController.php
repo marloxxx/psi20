@@ -37,10 +37,11 @@ class RequestController extends Controller
         if ($request->ajax()) {
             return DataTables::of(Homestay::where('owner_id', '!=', auth()->user()->id)->with('facilities', 'owner')->get())
                 ->addColumn('checkbox', function ($data) {
-                    return '<input type="checkbox" name="id[]" value="' . $data->id . '">';
+                    return '<input type="checkbox" name="id[]" value="' . $data->id . '" onclick="check(this)" />';
                 })
                 ->addColumn('action', function ($data) {
-                    return '<div class="btn-group" role="group">
+                    if ($data->is_approved == 'pending') {
+                        return '<div class="btn-group" role="group">
                     <a href="javascript:;" onclick="handle_confirm(\'Apakah Anda Yakin?\',\'Yakin\',\'Tidak\',\'PUT\',\'' . route('backend.requests.approve', $data->id) . '\');" class="btn btn-primary">
                         Approve
                     </a>
@@ -48,6 +49,11 @@ class RequestController extends Controller
                         Reject
                     </a>
                 </div>';
+                    } else if ($data->is_approved == 'approved') {
+                        return '<span class="badge badge-success">Sudah diapprove</span>';
+                    } else {
+                        return '<span class="badge badge-danger">Sudah ditolak</span>';
+                    }
                 })
                 ->addColumn('facilities', function ($data) {
                     $facilities = '';
@@ -67,39 +73,22 @@ class RequestController extends Controller
 
     public function approve(Homestay $homestay)
     {
-        $homestay->is_approved = true;
+        $homestay->is_approved = 'approved';
         $homestay->save();
-
-        try {
-            $homestay->owner->notify(new ApprovedHomestayNotification($homestay));
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Berhasil mengapprove homestay'
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Gagal mengapprove homestay'
-            ]);
-        }
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Berhasil mengapprove homestay'
+        ]);
     }
 
     public function reject(Homestay $homestay)
     {
-        $homestay->is_approved = false;
+        $homestay->is_approved = 'rejected';
         $homestay->save();
 
-        try {
-            $homestay->owner->notify(new ApproveBookingNotification($homestay));
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Berhasil menolak homestay'
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Gagal menolak homestay'
-            ]);
-        }
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Berhasil menolak homestay'
+        ]);
     }
 }

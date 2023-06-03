@@ -3,6 +3,54 @@
     <link href="{{ asset('frontend/css/admin.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .rate {
+            float: left;
+            height: 46px;
+            padding: 0 10px;
+        }
+
+        .rate:not(:checked)>input {
+            position: absolute;
+            top: -9999px;
+        }
+
+        .rate:not(:checked)>label {
+            float: right;
+            width: 1em;
+            overflow: hidden;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 30px;
+            color: #ccc;
+        }
+
+        .rate:not(:checked)>label:before {
+            content: '★ ';
+        }
+
+        .rate>input:checked~label {
+            color: #ffc700;
+        }
+
+        .rate:not(:checked)>label:hover,
+        .rate:not(:checked)>label:hover~label {
+            color: #deb217;
+        }
+
+        .rate>input:checked+label:hover,
+        .rate>input:checked+label:hover~label,
+        .rate>input:checked~label:hover,
+        .rate>input:checked~label:hover~label,
+        .rate>label:hover~input:checked~label {
+            color: #c59b08;
+        }
+    </style>
 @endpush
 @section('content')
     <section class="parallax-window" data-parallax="scroll" data-image-src="{{ asset('frontend/img/admin_top.jpg') }}"
@@ -79,7 +127,7 @@
                                             @endif
                                             @if ($booking->status == 'approved' && \Carbon\Carbon::now()->format('Y-m-d') >= $booking->check_out)
                                                 <a href="javascript:;" onclick="complete({{ $booking->id }})"
-                                                    class="btn_3">Selesai
+                                                    href="javascript:;" class="btn_3">Selesai
                                                 </a>
                                             @endif
                                         </div>
@@ -339,47 +387,6 @@
             });
         }
 
-        function complete(id) {
-            Swal.fire({
-                title: 'Apakah anda yakin?',
-                text: "Anda tidak dapat mengembalikan pesanan yang sudah diselesaikan!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#aaa',
-                confirmButtonText: 'Ya, selesaikan!',
-                cancelButtonText: 'Tidak, batal!',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: "{{ route('booking.complete', ':id') }}".replace(':id', id),
-                        type: "POST",
-                        data: {
-                            _method: 'PUT'
-                        },
-                        success: function(response) {
-                            if (response.status == 'success') {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Success',
-                                    text: response.message,
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                }).then((result) => {
-                                    location.reload();
-                                });
-                            } else {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Oops...',
-                                    text: response.message,
-                                });
-                            }
-                        }
-                    });
-                }
-            });
-        }
         $('#update-password').on('submit', function(e) {
             e.preventDefault();
             let old_password = $('#old_password').val();
@@ -414,6 +421,36 @@
                 }
             });
         });
+
+        function complete(id) {
+            $('#myReview').modal('show');
+            $('#review').submit(function(e) {
+                e.preventDefault();
+                var rating = $('input[name="rating"]:checked').val();
+                var review_text = $('#review_text').val();
+                $.ajax({
+                    url: "{{ route('booking.review', ':id') }}".replace(':id', id),
+                    type: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        rating: rating,
+                        review: review_text
+                    },
+                    success: function(response) {
+                        if (response.status == 'success') {
+                            toastr.success(response.message);
+                            // set timeout to wait for toastr to finish
+                            setTimeout(function() {
+                                window.location.reload();
+                            }, 1000);
+                        } else {
+                            toastr.error(response.message);
+                        }
+                    }
+                });
+            });
+        }
+
 
         $('#update-profile').on('submit', function(e) {
             e.preventDefault();

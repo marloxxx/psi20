@@ -89,9 +89,7 @@
                                 </div>
                             </th>
                             <th class="min-w-250px">Nama</th>
-                            <th class="min-w-250px">Fasilitas</th>
                             <th class="min-w-250px">Harga</th>
-                            <th class="min-w-250px">Kapasitas</th>
                             <th class="min-w-250px">Status</th>
                             <th class="min-w-70px">Aksi</th>
                         </tr>
@@ -128,16 +126,8 @@
                         name: 'name',
                     },
                     {
-                        data: 'facilities',
-                        name: 'facilities',
-                    },
-                    {
                         data: 'price_per_night',
                         name: 'price_per_night',
-                    },
-                    {
-                        data: 'total_rooms',
-                        name: 'total_rooms',
                     },
                     {
                         data: 'is_available',
@@ -161,6 +151,17 @@
                 ).draw();
             });
         });
+
+        function check(el) {
+            var is_checked = $(el).is(':checked');
+            if (is_checked) {
+                $('#kt_toolbar_delete_button').show();
+                $('#kt_toolbar_primary_button').hide();
+            } else {
+                $('#kt_toolbar_delete_button').hide();
+                $('#kt_toolbar_primary_button').show();
+            }
+        }
 
         function check_all(el) {
             var is_checked = $(el).is(':checked');

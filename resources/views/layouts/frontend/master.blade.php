@@ -113,7 +113,7 @@
     @stack('custom-styles')
 </head>
 
-<body >
+<body>
     <div id="preloader">
         <div class="sk-spinner sk-spinner-wave">
             <div class="sk-rect1"></div>
@@ -152,6 +152,50 @@
         <!-- modal content goes here -->
     </div>
     <div id="toTop"></div><!-- Back to top button -->
+    <!-- Modal Review -->
+    <div class="modal fade" id="myReview" tabindex="-1" role="dialog" aria-labelledby="myReviewLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myReviewLabel">Tuangkan Ulasanmu</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="message-review">
+                    </div>
+                    <form method="post" id="review">
+                        <!-- End row -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="rate">
+                                        <input type="radio" id="star5" name="rating" value="5" />
+                                        <label for="star5" title="text">5 stars</label>
+                                        <input type="radio" id="star4" name="rating" value="4" />
+                                        <label for="star4" title="text">4 stars</label>
+                                        <input type="radio" id="star3" name="rating" value="3" />
+                                        <label for="star3" title="text">3 stars</label>
+                                        <input type="radio" id="star2" name="rating" value="2" />
+                                        <label for="star2" title="text">2 stars</label>
+                                        <input type="radio" id="star1" name="rating" value="1" />
+                                        <label for="star1" title="text">1 star</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End row -->
+                        <div class="form-group">
+                            <textarea name="review_text" id="review_text" class="form-control" style="height:100px"
+                                placeholder="Write your review"></textarea>
+                        </div>
+                        <button type="submit" id="submit-review" class="btn_1">Kirim</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End modal review -->
     @include('layouts.frontend.script')
     @stack('custom-scripts')
 </body>
