@@ -26,7 +26,8 @@ class ProfileController extends Controller
     public function index()
     {
         $this->setMeta('Profile');
-        $user = User::findOrFail(auth()->user()->id)->load('bookings.homestay', 'wishlists');
+        $user = User::findOrFail(auth()->user()->id)->load('wishlists');
+        $bookings = $user->bookings()->with('homestay')->latest('created_at')->get();
         return view('pages.frontend.profile.index', compact('user'));
     }
 
