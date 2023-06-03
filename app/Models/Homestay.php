@@ -58,6 +58,10 @@ class Homestay extends Model
         return $this->hasMany(Booking::class);
     }
 
+    public function reviews()
+    {
+        return $this->bookings()->where('status', 'completed')->whereNotNull('rating');
+    }
 
     public function getRatingAttribute()
     {

@@ -160,7 +160,7 @@
                     <div class="row">
 
                         <div class="col-lg-12">
-                            @foreach ($homestay->bookings as $review)
+                            @foreach ($homestay->reviews as $review)
                                 <div class="review_strip_single">
                                     @if ($review->user->profile_picture)
                                         <img src="{{ asset('images/profile/' . $review->user->profile_picture) }}"
