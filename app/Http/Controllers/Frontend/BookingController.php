@@ -127,7 +127,6 @@ class BookingController extends Controller
         $booking = Booking::findOrFail($id);
 
         $booking->update([
-            'status' => 'completed',
             'payment_status' => '1', // '1' = 'pending
             'payment_proof' => $fileName,
         ]);
