@@ -305,7 +305,9 @@
     </script>
     <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
     <script>
+        Dropzone.autoDiscover = false;
         var myDropzone = new Dropzone("#drop-zone", {
+            autoProcessQueue: false,
             url: "{{ route('profile.upload-profile') }}",
             maxFiles: 1,
             maxFilesize: 2,
@@ -314,23 +316,50 @@
             headers: {
                 'X-CSRF-TOKEN': "{{ csrf_token() }}"
             },
-            success: function(file, response) {
-                if (response.status == 'success') {
+            init: function() {
+                var myDropzone = this;
+                $('#update-profile').on('submit', function(e) {
+                    e.preventDefault();
+                    let first_name = $('#first_name').val();
+                    let last_name = $('#last_name').val();
+                    let phone_number = $('#phone_number').val();
+                    let date_of_birth = $('#date_of_birth').val();
+                    $.ajax({
+                        url: "{{ route('profile.update-profile') }}",
+                        type: "POST",
+                        data: {
+                            first_name: first_name,
+                            last_name: last_name,
+                            phone_number: phone_number,
+                            date_of_birth: date_of_birth,
+                            _method: 'PUT'
+                        },
+                        success: function(response) {
+                            if (response.status == 'success') {
+                                myDropzone.processQueue();
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: response.message,
+                                });
+                            }
+                        }
+                    });
+                });
+                this.on("complete", function(file) {
                     Swal.fire({
                         icon: 'success',
                         title: 'Success',
-                        text: response.message,
+                        text: 'Profil berhasil diubah',
                         showConfirmButton: false,
                         timer: 1500
+                    }).then((result) => {
+                        location.reload();
                     });
-                    $('#update-profile')[0].reset();
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: response.message,
-                    });
-                }
+                    myDropzone.removeFile(file);
+                    location.reload();
+                });
             }
         });
     </script>
@@ -450,43 +479,5 @@
                 });
             });
         }
-
-
-        $('#update-profile').on('submit', function(e) {
-            e.preventDefault();
-            let first_name = $('#first_name').val();
-            let last_name = $('#last_name').val();
-            let phone_number = $('#phone_number').val();
-            let date_of_birth = $('#date_of_birth').val();
-            $.ajax({
-                url: "{{ route('profile.update-profile') }}",
-                type: "POST",
-                data: {
-                    first_name: first_name,
-                    last_name: last_name,
-                    phone_number: phone_number,
-                    date_of_birth: date_of_birth,
-                    _method: 'PUT'
-                },
-                success: function(response) {
-                    if (response.status == 'success') {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success',
-                            text: response.message,
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                        $('#update-profile')[0].reset();
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: response.message,
-                        });
-                    }
-                }
-            });
-        });
     </script>
 @endpush
