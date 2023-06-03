@@ -43,11 +43,13 @@ class EventController extends Controller
                     ->whereBetween('end_date', [$start_date, $end_date])
                     ->where('title', 'like', '%' . $title . '%')
                     ->with('images')
+                    ->latest()
                     ->paginate(6);
             } else {
                 // get events where title is like $title
                 $events = Event::where('title', 'like', '%' . $title . '%')
                     ->with('images')
+                    ->latest()
                     ->paginate(6);
             }
             return view('pages.frontend.event.list', compact('events'))->render();

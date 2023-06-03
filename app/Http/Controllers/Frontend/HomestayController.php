@@ -49,6 +49,7 @@ class HomestayController extends Controller
                 ->when($rating, function ($query, $rating) {
                     return $query->where('rating', '>=', $rating);
                 })
+                ->latest()
                 ->paginate(6);
             return view('pages.frontend.homestay.list', compact('homestays'))->render();
         }
