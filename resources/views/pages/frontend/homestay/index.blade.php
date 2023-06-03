@@ -35,7 +35,9 @@
                 <aside class="col-lg-3">
                     <p>
                         <a class="btn_map" data-bs-toggle="collapse" href="#collapseMap" aria-expanded="false"
-                            aria-controls="collapseMap" data-text-swap="Hide map" data-text-original="View on map">Lihat
+                            aria-controls="collapseMap" data-text-swap="Tutup Peta"
+                            data-text-original="Lihat
+                            Peta">Lihat
                             Peta</a>
                     </p>
 

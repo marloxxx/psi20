@@ -64,7 +64,7 @@
                             <li class="last">
                                 <a href="{{ route('index') }}">
                                     <i class="icon-login"></i>
-                                    Sign in
+                                    Masuk
                                 </a>
                             </li>
                         @endguest
@@ -73,61 +73,25 @@
                                 <a href="{{ route('logout') }}">
                                     <i class="icon-logout"></i>
                                     {{ auth()->user()->first_name }}
-                                    Sign out
+                                    Keluar
                                 </a>
                             </li>
                             <li class="last">
                                 <a href="{{ route('profile.index') }}">
                                     <i class="icon-user"></i>
-                                    My Profile
+                                    Profil Saya
                                 </a>
                             </li>
                             @role('owner')
                                 <li class="last">
                                     <a href="{{ route('backend.dashboard') }}">
                                         <i class="icon-home"></i>
-                                        Dashboard Owner</a>
+                                        Dashboard Pemilik</a>
                                 </li>
                             @endrole
-                            {{-- @auth
-                                <li class="last" id="notification">
-                                    <!-- dropdown notification -->
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                                        onmouseover="load_notif('{{ route('notification') }}');"><i class="icon-bell"></i>
-                                        Notification
-                                        <span class="badge badge-pill badge-danger count top-notification-number"
-                                            id="top-notification-number"></span>
-                                    </a>
-
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <div class="notification_header">
-                                                <h3>You have <span class="count"></span> new notification</h3>
-                                            </div>
-                                        </li>
-                                        <div class="notification_body" id="notification_items">
-
-                                        </div>
-                                    </ul>
-                                </li>
-                            @endauth --}}
                         @endauth
                     </ul>
                 </div><!-- End main-menu -->
-                {{-- <ul id="top_tools">
-                    @auth
-                        <li class="me-3">
-                            <!-- notification -->
-                            <!-- show modal notification -->
-                            <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modal-notification"
-                                onclick="load_modal_notif('{{ route('notification') }}', '#modal-notification');">
-                                <i class="icon-bell"></i>
-                                <span class="badge badge-pill badge-danger top-notification-number"
-                                    id="top-notification-number"></span>
-                            </a>
-                        </li>
-                    @endauth
-                </ul> --}}
             </nav>
         </div>
     </div><!-- container -->
