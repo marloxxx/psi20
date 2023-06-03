@@ -39,7 +39,7 @@ class HomestayController extends Controller
             $homestays = Homestay::with('images', 'facilities')
                 ->whereBetween('price_per_night', [$range[0], $range[1]])
                 ->when($sort_price, function ($query, $sort_price) {
-                    return $query->orderBy('price', $sort_price);
+                    return $query->orderBy('price_per_night', $sort_price);
                 })
                 ->when($request_facilities, function ($query, $request_facilities) {
                     return $query->whereHas('facilities', function ($query) use ($request_facilities) {
@@ -47,9 +47,7 @@ class HomestayController extends Controller
                     });
                 })
                 ->when($rating, function ($query, $rating) {
-                    return $query->whereHas('reviews', function ($query) use ($rating) {
-                        return $query->whereIn('rating', $rating);
-                    });
+                    return $query->where('rating', '>=', $rating);
                 })
                 ->paginate(6);
             return view('pages.frontend.homestay.list', compact('homestays'))->render();
@@ -79,13 +77,11 @@ class HomestayController extends Controller
     public function show($id)
     {
         // get homestay with images, facilities
-        $homestay = Homestay::findOrFail($id)->load('images', 'facilities');
+        $homestay = Homestay::findOrFail($id)->load('images', 'facilities', 'owner', 'bookings');
         // update views
         $homestay->increment('views');
         // set meta title
         $this->setMeta($homestay->name);
-        // get reviews from booking and homestay table
-        $reviews = $homestay->reviews()->with('booking.user')->get();
         $initialMarkers = [
             [
                 'position' => [
@@ -96,7 +92,7 @@ class HomestayController extends Controller
                 'draggable' => false
             ]
         ];
-        return view('pages.frontend.homestay.show', compact('homestay', 'reviews', 'initialMarkers'));
+        return view('pages.frontend.homestay.show', compact('homestay', 'initialMarkers'));
     }
 
     public function toggle_wishlist(Request $request)
