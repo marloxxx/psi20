@@ -336,7 +336,9 @@
                         },
                         success: function(response) {
                             if (response.status == 'success') {
-                                myDropzone.processQueue();
+                                if (myDropzone.getQueuedFiles().length > 0) {
+                                    myDropzone.processQueue();
+                                }
                             } else {
                                 Swal.fire({
                                     icon: 'error',
