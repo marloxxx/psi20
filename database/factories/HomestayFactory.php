@@ -28,6 +28,7 @@ class HomestayFactory extends Factory
             'longitude' => $this->faker->longitude,
             'owner_name' => $this->faker->name,
             'owner_phone_number' => $this->faker->phoneNumber,
+            'is_approved' => 'approved',
             'created_at' => $this->faker->dateTimeBetween('-1 years', 'now'),
             'updated_at' => $this->faker->dateTimeBetween('-1 years', 'now'),
         ];

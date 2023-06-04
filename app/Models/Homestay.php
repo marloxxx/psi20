@@ -11,22 +11,8 @@ class Homestay extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'homestays';
-    protected $fillable = [
-        'name',
-        'description',
-        'address',
-        'latitude',
-        'longitude',
-        'price_per_night',
-        'total_rooms',
-        'owner_id',
-        'owner_name',
-        'owner_phone',
-        'is_approved',
-        'is_available',
-        'views',
-    ];
-    // protected $guarded = [];
+
+    protected $guarded = [];
 
     protected $appends = [
         'primary_image',

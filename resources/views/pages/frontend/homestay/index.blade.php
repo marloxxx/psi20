@@ -244,6 +244,26 @@
                 }
             });
         }
+        $(window).on('hashchange', function() {
+            if (window.location.hash) {
+                page = window.location.hash.replace('#', '');
+                if (page == Number.NaN || page <= 0) {
+                    return false;
+                } else {
+                    load_list(page);
+                }
+            }
+        });
+        $(document).ready(function() {
+            $(document).on('click', '.paginasi', function(event) {
+                event.preventDefault();
+                $('.paginasi').removeClass('active');
+                $(this).parent('.paginasi').addClass('active');
+                // var myurl = $(this).attr('href');
+                page = $(this).attr('halaman').split('page=')[1];
+                load_data(page);
+            });
+        });
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDxm2QMoIfo6njUl-Nl2RifVnidUsNcLgM&callback=initMap"
         async></script>

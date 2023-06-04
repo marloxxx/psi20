@@ -38,6 +38,7 @@ class HomestayController extends Controller
             // get homestays with images and facilities based on price range, sort price, facilities, rating
             $homestays = Homestay::with('images', 'facilities')
                 ->whereBetween('price_per_night', [$range[0], $range[1]])
+                ->where('is_approved', 'approved')
                 ->when($sort_price, function ($query, $sort_price) {
                     return $query->orderBy('price_per_night', $sort_price);
                 })

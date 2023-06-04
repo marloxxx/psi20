@@ -17,6 +17,8 @@ $(document).ready(function () {
     });
 });
 
+let page;
+
 function handle_confirm(title, confirm_title, deny_title, method, route) {
     Swal.fire({
         title: title,

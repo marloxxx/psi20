@@ -134,8 +134,7 @@ class HomestayController extends Controller
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
             'owner_phone_number' => $request->owner_phone_number,
-            'owner_name' => $request->owner_name,
-            'is_approved' => auth()->user()->hasRole('admin') ? true : false,
+            'owner_name' => $request->owner_name
         ]);
 
         $homestay->facilities()->attach($request->facilities);
@@ -217,8 +216,7 @@ class HomestayController extends Controller
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
             'owner_phone_number' => $request->owner_phone_number,
-            'owner_name' => $request->owner_name,
-            'is_approved' => auth()->user()->hasRole('admin') ? true : false,
+            'owner_name' => $request->owner_name
         ]);
 
         $homestay->facilities()->sync($request->facilities);
@@ -301,10 +299,6 @@ class HomestayController extends Controller
                 'image_path' => "images/homestays/" . $imageName,
                 'is_primary' => false
             ]);
-        }
-        $user = User::where('id', $homestay->owner_id)->first();
-        if (!$user->hasRole('admin')) {
-            $user->notify(new NewRequestHomestayNotification($homestay));
         }
         return response()->json([
             'status' => 'success',

@@ -42,16 +42,16 @@ class RequestController extends Controller
                 ->addColumn('action', function ($data) {
                     if ($data->is_approved == 'pending') {
                         return '<div class="btn-group" role="group">
-                    <a href="javascript:;" onclick="handle_confirm(\'Apakah Anda Yakin?\',\'Yakin\',\'Tidak\',\'PUT\',\'' . route('backend.requests.approve', $data->id) . '\');" class="btn btn-primary">
-                        Approve
-                    </a>
-                    <a href="javascript:;" onclick="handle_confirm(\'Apakah Anda Yakin?\',\'Yakin\',\'Tidak\',\'PUT\',\'' . route('backend.requests.reject', $data->id) . '\');" class="btn btn-danger">
-                        Reject
-                    </a>
-                </div>';
+                                <a href="javascript:;" onclick="handle_confirm(\'Apakah Anda Yakin?\',\'Yakin\',\'Tidak\',\'PUT\',\'' . route('backend.requests.approve', $data->id) . '\');" class="btn btn-primary">
+                                    Approve
+                                </a>
+                                <a href="javascript:;" onclick="handle_confirm(\'Apakah Anda Yakin?\',\'Yakin\',\'Tidak\',\'PUT\',\'' . route('backend.requests.reject', $data->id) . '\');" class="btn btn-danger">
+                                    Reject
+                                </a>
+                            </div>';
                     } else if ($data->is_approved == 'approved') {
                         return '<span class="badge badge-success">Sudah diapprove</span>';
-                    } else {
+                    } else if ($data->is_approved == 'rejected') {
                         return '<span class="badge badge-danger">Sudah ditolak</span>';
                     }
                 })
