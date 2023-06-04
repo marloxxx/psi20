@@ -151,6 +151,10 @@ class HomestayController extends Controller
         $img->resize(1450, 750, function ($constraint) {
             $constraint->aspectRatio();
         });
+        // check path
+        if (!file_exists(public_path('images/homestays'))) {
+            mkdir(public_path('images/homestays'), 0777, true);
+        }
         $img->save(public_path('images/homestays/' . $imageName));
         $size = $img->filesize();
 

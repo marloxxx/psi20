@@ -211,6 +211,10 @@ class EventController extends Controller
             $image->resize(1450, 750, function ($constraint) {
                 $constraint->aspectRatio();
             });
+            // check if image directory exists
+            if (!file_exists(public_path('images/events'))) {
+                mkdir(public_path('images/events'), 0777, true);
+            }
             $image->save(public_path('images/events/' . $imageName));
             $size = $image->filesize();
 
