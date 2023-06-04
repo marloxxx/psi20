@@ -82,6 +82,7 @@ class BookingController extends Controller
     public function approve(Booking $booking)
     {
         $booking->update([
+            'is_available' => false,
             'status' => Booking::STATUS_APPROVED,
             'payment_status' => '2',
         ]);
@@ -121,6 +122,7 @@ class BookingController extends Controller
     public function complete(Booking $booking)
     {
         $booking->update([
+            'is_available' => true,
             'status' => Booking::STATUS_COMPLETED,
             'payment_status' => '5',
         ]);

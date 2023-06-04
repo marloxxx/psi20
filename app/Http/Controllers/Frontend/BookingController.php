@@ -81,7 +81,6 @@ class BookingController extends Controller
             'user_id' => auth()->user()->id,
         ]);
 
-        $booking->homestay->is_available = false;
         $booking->homestay->save();
 
         return redirect()->route('booking.show', $booking->id)->with('success', 'Pemesanan berhasil dibuat.');
