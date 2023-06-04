@@ -182,7 +182,7 @@
                             </tbody>
                         </table>
 
-                        @if ($booking->payment_proof == null || $booking->status != 'canceled')
+                        @if ($booking->payment_proof == null && $booking->status != 'canceled')
                             <div class="row mt-5">
                                 <!-- list rekening -->
                                 <div class="col-md-4">
