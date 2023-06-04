@@ -29,7 +29,12 @@ class DashboardController extends Controller
     {
         $this->setMeta('Dashboard');
         $total_user = User::count();
-        $total_homestay = Homestay::where('owner_id', auth()->user()->id)->count();
+        $total_homestay = 0;
+        if (auth()->user()->role == 'admin') {
+            $total_homestay = Homestay::count();
+        } else if (auth()->user()->role == 'owner') {
+            $total_homestay = Homestay::where('owner_id', auth()->user()->id)->count();
+        }
         $total_event = Event::count();
         $total_booking = Booking::where('user_id', auth()->user()->id)->count();
         return view('pages.backend.dashboard.index', compact('total_user', 'total_homestay', 'total_event', 'total_booking'));

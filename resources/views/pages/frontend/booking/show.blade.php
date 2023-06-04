@@ -182,7 +182,7 @@
                             </tbody>
                         </table>
 
-                        @if ($booking->payment_proof == null)
+                        @if ($booking->payment_proof == null || $booking->status != 'canceled')
                             <div class="row mt-5">
                                 <!-- list rekening -->
                                 <div class="col-md-4">
@@ -245,26 +245,28 @@
                 <aside class="col-lg-4">
                     <div class="box_style_1">
                         <h3 class="inner">Terima kasih!</h3>
-                        <p>
-                            Anda telah berhasil melakukan booking homestay. Silahkan lakukan pembayaran dan
-                            konfirmasi
-                        </p>
-                        <hr>
-                        {{-- contact to wa --}}
-                        @if ($booking->status == 'pending' && $booking->payment_proof != null)
-                            <a class="btn_full_outline mb-3" target="_blank"
-                                href="https://api.whatsapp.com/send?phone={{ $booking->homestay->owner->phone_number }}&text=Halo%20Admin%20Saya%20Mau%20Konfirmasi%20Pembayaran%20Booking%20Saya%20Dengan%20ID%20{{ $booking->code }}%20dan%20nama%20{{ Auth::user()->first_name }}%20{{ Auth::user()->last_name }}%20">
-                                <i class="icon-whatsapp"></i>
-                                Konfirmasi Pembayaran
-                            </a>
-                            <a class="btn_full_outline mb-3" href="javascript:;"
-                                onclick="cancel({{ $booking->id }})">Batalkan
-                            </a>
-                        @endif
-                        @if ($booking->status == 'approved' && \Carbon\Carbon::now()->format('Y-m-d') >= $booking->check_out)
-                            <a class="btn_full_outline mb-3" href="javascript:;" onclick="complete({{ $booking->id }})">
-                                Selesaikan
-                            </a>
+                        @if ($booking->status != 'canceled')
+                            @if ($booking->status == 'pending' && $booking->payment_proof != null)
+                                <p>
+                                    Anda telah berhasil melakukan booking homestay. Silahkan lakukan pembayaran dan
+                                    konfirmasi
+                                </p>
+                                <hr>
+                                <a class="btn_full_outline mb-3" target="_blank"
+                                    href="https://api.whatsapp.com/send?phone={{ $booking->homestay->owner->phone_number }}&text=Halo%20Admin%20Saya%20Mau%20Konfirmasi%20Pembayaran%20Booking%20Saya%20Dengan%20ID%20{{ $booking->code }}%20dan%20nama%20{{ Auth::user()->first_name }}%20{{ Auth::user()->last_name }}%20">
+                                    <i class="icon-whatsapp"></i>
+                                    Konfirmasi Pembayaran
+                                </a>
+                                <a class="btn_full_outline mb-3" href="javascript:;"
+                                    onclick="cancel({{ $booking->id }})">Batalkan
+                                </a>
+                            @endif
+                            @if ($booking->status == 'approved' && \Carbon\Carbon::now()->format('Y-m-d') >= $booking->check_out)
+                                <a class="btn_full_outline mb-3" href="javascript:;"
+                                    onclick="complete({{ $booking->id }})">
+                                    Selesaikan
+                                </a>
+                            @endif
                         @endif
                         <a class="btn_full_outline" href="{{ route('booking.invoice', $booking->id) }}"
                             target="_blank">View
