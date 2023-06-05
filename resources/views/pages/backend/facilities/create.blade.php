@@ -63,6 +63,21 @@
                         <!--end::Description-->
                     </div>
                     <!--end::Input group-->
+                    <!--begin::Input group-->
+                    <div class="mb-10 fv-row">
+                        <!--begin::Label-->
+                        <label class="required form-label">Icon</label>
+                        <!--end::Label-->
+                        <!--begin::Input-->
+                        <input type="text" name="icon" class="form-control form-control-solid"
+                            placeholder="Enter icon" />
+                        <!--end::Input-->
+                        <!--begin::Description-->
+                        <div class="text-muted fs-7">Enter the icon for the menu.
+                        </div>
+                        <!--end::Description-->
+                    </div>
+                    <!--end::Input group-->
                 </div>
             </div>
             <!--end::General options-->

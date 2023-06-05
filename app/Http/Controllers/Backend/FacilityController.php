@@ -20,6 +20,7 @@ class FacilityController extends Controller
         parent::__construct();
         $this->message = [
             'name.required' => 'Nama tidak boleh kosong',
+            'icon.required' => 'Icon tidak boleh kosong',
         ];
     }
     private function setMeta(string $title)
@@ -71,6 +72,7 @@ class FacilityController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name'  => 'required',
+            'icon'  => 'required',
         ], $this->message);
 
         if ($validator->fails()) {
@@ -115,6 +117,7 @@ class FacilityController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name'  => 'required',
+            'icon'  => 'required',
         ], $this->message);
 
         if ($validator->fails()) {
