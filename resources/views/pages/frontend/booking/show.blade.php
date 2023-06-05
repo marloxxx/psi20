@@ -191,7 +191,7 @@
                                             <h5 class="card-title">DANA</h5>
                                             <p class="card-text">
                                             <ul class="list-unstyled">
-                                                <li>Atas Nama: Horas Marolop Amsal Siregar</li>
+                                                <li>Atas Nama: Rani Aulia</li>
                                                 <li>No Rekening: 082386143124</li>
                                             </ul>
                                             </p>
@@ -204,7 +204,7 @@
                                             <h5 class="card-title">OVO</h5>
                                             <p class="card-text">
                                             <ul class="list-unstyled">
-                                                <li>Atas Nama: Horas Marolop Amsal Siregar</li>
+                                                <li>Atas Nama: Rani Aulia</li>
                                                 <li>No Rekening: 082386143124</li>
                                             </ul>
                                             </p>
@@ -217,7 +217,7 @@
                                             <h5 class="card-title">GOPAY</h5>
                                             <p class="card-text">
                                             <ul class="list-unstyled">
-                                                <li>Atas Nama: Horas Marolop Amsal Siregar</li>
+                                                <li>Atas Nama: Rani Aulia</li>
                                                 <li>No Rekening: 082386143124</li>
                                             </ul>
                                             </p>
