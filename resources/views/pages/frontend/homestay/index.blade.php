@@ -265,7 +265,7 @@
             });
         });
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDxm2QMoIfo6njUl-Nl2RifVnidUsNcLgM&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBR4PDxBIpinD2cg0_vpjeNkbP1TCppsI0&callback=initMap"
         async></script>
     <script>
         let map, activeInfoWindow, markers = [];
