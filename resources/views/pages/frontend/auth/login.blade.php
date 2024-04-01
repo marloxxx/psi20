@@ -2,7 +2,7 @@
 @section('content')
     <main>
         <section id="hero" class="login"
-            style="background: url({{ asset('frontend/img/slides/slide_home_1.jpg') }}) no-repeat center center;  background-size: cover;">
+            style="background: url({{ asset('frontend/img/auth_bg.jpg') }}) no-repeat center center;  background-size: cover;">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8">
@@ -12,6 +12,8 @@
                             </div>
                             <hr>
                             <form method="POST" action="{{ route('login') }}" id="login-form">
+                                <a href="#0" class="social_bt facebook">Login with Facebook</a>
+                                <a href="#0" class="social_bt google">Login with Google</a>
                                 <div class="form-group">
                                     <label>Email</label>
                                     <input type="email" class="form-control" placeholder="Email" name="email" />
@@ -20,9 +22,9 @@
                                     <label>Password</label>
                                     <input type="password" class="form-control" placeholder="Password" name="password" />
                                 </div>
-                                {{-- <p class="small">
-                                    <a href="#">Lupa password?</a>
-                                </p> --}}
+                                <p class="small">
+                                    <a href="#">Forgot Password?</a>
+                                </p>
                                 <button type="submit" class="btn_full">Masuk</button>
                                 <a href="{{ route('register') }}" class="btn_full_outline">Daftar</a>
                             </form>

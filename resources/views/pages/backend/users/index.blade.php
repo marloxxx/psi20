@@ -108,145 +108,146 @@
             <!--end::Card body-->
         </div>
         <!--end::Menu-->
-    @endsection
-    @push('custom-scripts')
-        <script>
-            $(document).ready(function() {
-                $('#kt_toolbar_delete_button').hide();
-                $('#datatables').DataTable({
-                    serverSide: true,
-                    ajax: '{{ route('backend.users.index') }}',
-                    columns: [{
-                            data: 'checkbox',
-                            name: 'checkbox',
-                            orderable: false,
-                            searchable: false,
-                        },
-                        {
-                            data: 'first_name',
-                            name: 'first_name',
-                        },
-                        {
-                            data: 'last_name',
-                            name: 'last_name',
-                        },
-                        {
-                            data: 'email',
-                            name: 'email',
-                        },
-                        {
-                            data: 'phone_number',
-                            name: 'phone_number',
-                        },
-                        {
-                            data: 'roles',
-                            name: 'roles',
-                        },
-                        {
-                            data: 'action',
-                            name: 'action',
-                            orderable: false,
-                            searchable: false
-                        }
-                    ],
-                    order: [
-                        [0, 'asc']
-                    ]
-                });
-
-                $('[data-filter="search"]').on('keyup', function() {
-                    $('#datatables').DataTable().search(
-                        $(this).val()
-                    ).draw();
-                });
+    </div>
+@endsection
+@push('custom-scripts')
+    <script>
+        $(document).ready(function() {
+            $('#kt_toolbar_delete_button').hide();
+            $('#datatables').DataTable({
+                serverSide: true,
+                ajax: '{{ route('backend.users.index') }}',
+                columns: [{
+                        data: 'checkbox',
+                        name: 'checkbox',
+                        orderable: false,
+                        searchable: false,
+                    },
+                    {
+                        data: 'first_name',
+                        name: 'first_name',
+                    },
+                    {
+                        data: 'last_name',
+                        name: 'last_name',
+                    },
+                    {
+                        data: 'email',
+                        name: 'email',
+                    },
+                    {
+                        data: 'phone_number',
+                        name: 'phone_number',
+                    },
+                    {
+                        data: 'roles',
+                        name: 'roles',
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    }
+                ],
+                order: [
+                    [0, 'asc']
+                ]
             });
 
-            function check(el) {
-                var is_checked = $(el).is(':checked');
-                if (is_checked) {
-                    $('#kt_toolbar_delete_button').show();
-                    $('#kt_toolbar_primary_button').hide();
-                } else {
-                    $('#kt_toolbar_delete_button').hide();
-                    $('#kt_toolbar_primary_button').show();
-                }
+            $('[data-filter="search"]').on('keyup', function() {
+                $('#datatables').DataTable().search(
+                    $(this).val()
+                ).draw();
+            });
+        });
+
+        function check(el) {
+            var is_checked = $(el).is(':checked');
+            if (is_checked) {
+                $('#kt_toolbar_delete_button').show();
+                $('#kt_toolbar_primary_button').hide();
+            } else {
+                $('#kt_toolbar_delete_button').hide();
+                $('#kt_toolbar_primary_button').show();
+            }
+        }
+
+        function check_all(el) {
+            var is_checked = $(el).is(':checked');
+            if (is_checked) {
+                $('#datatables').find('tbody input[type="checkbox"]').prop('checked', true);
+                $('#kt_toolbar_delete_button').show();
+                $('#kt_toolbar_primary_button').hide();
+            } else {
+                $('#datatables').find('tbody input[type="checkbox"]').prop('checked', false);
+                $('#kt_toolbar_delete_button').hide();
+                $('#kt_toolbar_primary_button').show();
             }
 
-            function check_all(el) {
-                var is_checked = $(el).is(':checked');
-                if (is_checked) {
-                    $('#datatables').find('tbody input[type="checkbox"]').prop('checked', true);
-                    $('#kt_toolbar_delete_button').show();
-                    $('#kt_toolbar_primary_button').hide();
-                } else {
-                    $('#datatables').find('tbody input[type="checkbox"]').prop('checked', false);
-                    $('#kt_toolbar_delete_button').hide();
-                    $('#kt_toolbar_primary_button').show();
-                }
+        }
 
-            }
-
-            function delete_all() {
-                var ids = [];
-                $('#datatables').find('tbody input[type="checkbox"]:checked').each(function(i) {
-                    ids[i] = $(this).val();
-                });
-                if (ids.length > 0) {
-                    Swal.fire({
-                        title: "Apakah anda yakin?",
-                        text: "Data yang dipilih akan dihapus!",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "Ya, Hapus!"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $.ajax({
-                                url: '',
-                                type: 'POST',
-                                data: {
-                                    ids: ids,
-                                    _token: '{{ csrf_token() }}'
-                                },
-                                success: function(response) {
-                                    if (response.alert) {
-                                        Swal.fire({
-                                            title: 'Berhasil!',
-                                            text: response.message,
-                                            icon: 'success',
-                                            confirmButtonText: 'Ok'
-                                        }).then((result) => {
-                                            $('#datatables').DataTable().ajax.reload();
-                                            $('#check-all').prop('checked', false);
-                                        });
-                                    } else {
-                                        Swal.fire({
-                                            title: 'Gagal!',
-                                            text: 'Terjadi kesalahan saat menghapus data',
-                                            icon: 'error',
-                                            confirmButtonText: 'Ok'
-                                        });
-                                    }
+        function delete_all() {
+            var ids = [];
+            $('#datatables').find('tbody input[type="checkbox"]:checked').each(function(i) {
+                ids[i] = $(this).val();
+            });
+            if (ids.length > 0) {
+                Swal.fire({
+                    title: "Apakah anda yakin?",
+                    text: "Data yang dipilih akan dihapus!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ya, Hapus!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '',
+                            type: 'POST',
+                            data: {
+                                ids: ids,
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(response) {
+                                if (response.alert) {
+                                    Swal.fire({
+                                        title: 'Berhasil!',
+                                        text: response.message,
+                                        icon: 'success',
+                                        confirmButtonText: 'Ok'
+                                    }).then((result) => {
+                                        $('#datatables').DataTable().ajax.reload();
+                                        $('#check-all').prop('checked', false);
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'Gagal!',
+                                        text: 'Terjadi kesalahan saat menghapus data',
+                                        icon: 'error',
+                                        confirmButtonText: 'Ok'
+                                    });
                                 }
-                            });
-                        } else {
-                            Swal.fire({
-                                title: 'Batal!',
-                                text: 'Konfirmasi dibatalkan',
-                                icon: 'info',
-                                confirmButtonText: 'Ok'
-                            });
-                        }
-                    });
-                } else {
-                    Swal.fire({
-                        title: "Pilih data yang akan dihapus!",
-                        text: "",
-                        icon: "warning",
-                        confirmButtonText: 'Ok'
-                    });
-                }
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Batal!',
+                            text: 'Konfirmasi dibatalkan',
+                            icon: 'info',
+                            confirmButtonText: 'Ok'
+                        });
+                    }
+                });
+            } else {
+                Swal.fire({
+                    title: "Pilih data yang akan dihapus!",
+                    text: "",
+                    icon: "warning",
+                    confirmButtonText: 'Ok'
+                });
             }
-        </script>
-    @endpush
+        }
+    </script>
+@endpush

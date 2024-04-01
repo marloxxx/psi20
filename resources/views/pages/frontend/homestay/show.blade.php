@@ -404,8 +404,8 @@
             });
         }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDxm2QMoIfo6njUl-Nl2RifVnidUsNcLgM&callback=initMap"
-        async></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&callback=initMap" async>
+    </script>
     <script>
         let map, activeInfoWindow, markers = [];
         /* ----------------------------- Initialize Map ----------------------------- */
