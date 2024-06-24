@@ -69,7 +69,7 @@
     </main>
     <!-- End main -->
 @endsection
-@push('custom-scripts')
+@push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
         $(document).ready(function() {

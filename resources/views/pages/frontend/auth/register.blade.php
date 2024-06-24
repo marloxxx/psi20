@@ -44,7 +44,7 @@
         </section>
     </main><!-- End main -->
 @endsection
-@push('custom-scripts')
+@push('scripts')
     <script src="{{ asset('js/FormControls.js') }}"></script>
     <script>
         "use strict";

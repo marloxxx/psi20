@@ -177,7 +177,7 @@
         </div>
     </form>
 @endsection
-@push('custom-scripts')
+@push('scripts')
     <script src="{{ asset('js/FormControls.js') }}"></script>
     <script>
         $('input[name="date_of_birth"]').flatpickr({

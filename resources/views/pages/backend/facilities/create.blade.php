@@ -97,7 +97,7 @@
         <!--end::Main column-->
     </form>
 @endsection
-@push('custom-scripts')
+@push('scripts')
     <script src="{{ asset('js/FormControls.js') }}"></script>
     <script>
         const formEl = $('#form_input');

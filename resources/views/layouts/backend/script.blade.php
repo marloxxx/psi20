@@ -4,4 +4,4 @@
 <script src="{{ asset('js/plugin.js') }}"></script>
 <script src="{{ asset('backend/plugins/custom/datatables/datatables.bundle.js') }}"></script>
 <script src="{{ asset('backend/plugins/custom/formrepeater/formrepeater.bundle.js') }}"></script>
-@stack('custom-scripts')
+@stack('scripts')

@@ -169,7 +169,7 @@
     </main>
     <!-- End main -->
 @endsection
-@push('custom-scripts')
+@push('scripts')
     <script>
         $("#range").ionRangeSlider({
             hide_min_max: !0,

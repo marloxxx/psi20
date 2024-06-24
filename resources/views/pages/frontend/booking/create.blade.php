@@ -168,5 +168,5 @@
     </main>
     <!-- End main -->
 @endsection
-@push('custom-scripts')
+@push('scripts')
 @endpush

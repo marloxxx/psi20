@@ -110,7 +110,7 @@
         <!--end::Menu-->
     </div>
 @endsection
-@push('custom-scripts')
+@push('scripts')
     <script>
         $(document).ready(function() {
             $('#kt_toolbar_delete_button').hide();

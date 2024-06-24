@@ -197,7 +197,7 @@
     </div>
     <!-- End modal review -->
     @include('layouts.frontend.script')
-    @stack('custom-scripts')
+    @stack('scripts')
 </body>
 
 </html>

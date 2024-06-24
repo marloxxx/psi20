@@ -289,7 +289,7 @@
     </main>
     <!-- End main -->
 @endsection
-@push('custom-scripts')
+@push('scripts')
     <script src="{{ asset('frontend/js/jquery.sliderPro.min.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function($) {

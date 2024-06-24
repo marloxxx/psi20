@@ -80,7 +80,7 @@
     </main>
     <!-- End main -->
 @endsection
-@push('custom-scripts')
+@push('scripts')
     <!-- SLIDER REVOLUTION 4.x SCRIPTS  -->
     <script src="{{ asset('frontend/rs-plugin/js/jquery.themepunch.tools.min.js') }}"></script>
     <script src="{{ asset('frontend/rs-plugin/js/jquery.themepunch.revolution.min.js') }}"></script>

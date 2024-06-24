@@ -303,7 +303,7 @@
         <!--end::Main column-->
     </form>
 @endsection
-@push('custom-scripts')
+@push('scripts')
     <script src="{{ asset('js/FormControls.js') }}"></script>
     <script>
         $('input[name="start_date"]').flatpickr({
